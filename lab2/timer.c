@@ -45,7 +45,20 @@ int (timer_display_conf)(uint8_t timer, uint8_t st,
                         enum timer_status_field field) {
   /* To be implemented by the students */
   union timer_status_field_val test;
-  
+  if(field == tsf_all){
+    test.byte = st;
+  }
+  else if(field == tsf_initial){
+    test.in_mode = (st & (BIT(5) | BIT(4)));
+  }
+  else if(field == tsf_mode){
+    test.count_mode = (st & (BIT(1) | BIT(2) | BIT(3) ));
+  }
+  else if(field == tsf_base){
+    test.bcd = (st & BIT(0));
+  }
+  timer_print_config(timer,field,test);
+
   printf("%s is not yet implemented!\n", __func__);
 
   return 1;
