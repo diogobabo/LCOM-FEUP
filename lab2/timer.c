@@ -34,9 +34,15 @@ void (timer_int_handler)() {
 int (timer_get_conf)(uint8_t timer, uint8_t *st) {
   uint8_t readBCMD = (TIMER_RB_CMD | TIMER_RB_SEL(timer)|TIMER_RB_COUNT_);
 
-  sys_outb(TIMER_CTRL,(u32_t)readBCMD);
- 
-  sys_inb(TIMER_0+timer,st);
+   if(sys_outb(TIMER_CTRL,(u32_t)readBCMD) != 0) {
+    printf("SYS OUTB NOT WORKING");
+    return 1;
+  }
+
+ if(sys_inb(TIMER_0+timer,st) != 0) {
+    printf("SYS INB NOT WORKING");
+    return 1;
+  }
   //printf("%s is not yet implemented!\n", __func__);
   return 0;
 }
