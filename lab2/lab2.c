@@ -33,7 +33,7 @@ int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   unsigned char st;
   timer_get_conf(timer,&st);
   timer_display_conf(timer,st,field);
-  printf("%s is not yet implemented!\n", __func__);
+  //printf("%s is not yet implemented!\n", __func__);
 
   return 1;
 }

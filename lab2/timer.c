@@ -39,7 +39,7 @@ int (timer_get_conf)(uint8_t timer, uint8_t *st) {
     return 1;
   }
 
- if(sys_inb(TIMER_0+timer,st) != 0) {
+ if(sys_inb(TIMER_0+timer,(u32_t *) &st) != 0) {
     printf("SYS INB NOT WORKING");
     return 1;
   }
