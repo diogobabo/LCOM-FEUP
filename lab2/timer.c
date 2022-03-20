@@ -49,13 +49,13 @@ int (timer_get_conf)(uint8_t timer, uint8_t *st) {
 }
 enum timer_init init_mode_func(uint8_t *st){
 
-  *st = *st >> 4;
-  *st &= 0x03;
+  *st = *st >> 4; // por os bits 4 e 5 no inicio
+  *st &= 0x03; // fazer & com 00000011, assim então dá os bits 4 e 5
 
   if(*st == 0x01){
     return LSB_only;
   }
-  else if(*st == 0x01){
+  else if(*st == 0x02){
     return MSB_only;
   }
   else if(*st == 0x03){
