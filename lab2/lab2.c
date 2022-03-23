@@ -31,18 +31,24 @@ int main(int argc, char *argv[]) {
 
 int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   uint8_t st;
-  timer_get_conf(timer,&st);
-  timer_display_conf(timer,st,field);
-  //printf("%s is not yet implemented!\n", __func__);
+  int error1,error2;
+  error1 = timer_get_conf(timer,&st);
+  if(error1 != 0 ){
+    return 1;
+  }
+  error2 = timer_display_conf(timer,st,field);
+  if(error2 != 0 ){
+    return 1;
+  }
 
   return 0;
 }
 
 int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  int error;
+  error = timer_set_frequency(timer,freq);
 
-  return 1;
+  return error;
 }
 
 int(timer_test_int)(uint8_t time) {
