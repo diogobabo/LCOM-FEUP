@@ -13,14 +13,14 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
     return 1;
   }
 
-  uint8_t st;
+  uint8_t st,ts;
   int error = timer_get_conf(timer,&st);
   if(error != 0) {
     printf("ERROR GETTING CONFIG!");
     return 1;
   }
 
-  st &= 0x0F;
+  ts = st & 0x0F; // 4 primeiros bits q
   st = st | TIMER_LSB_MSB; // resetar os bits todos menos os 4 lsbs
 
   if(timer == 0){
