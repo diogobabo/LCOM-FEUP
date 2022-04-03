@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "keyboard.h"
 
 /** @defgroup lab3 lab3
  * @{

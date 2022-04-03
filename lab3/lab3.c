@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "keyboard.h"
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -36,6 +37,7 @@ int(kbd_test_scan)() {
   message msg;
   int r;
   uint8_t bit_no;
+  uint8_t arr[1];
   keyboard_subscribe_int(&bit_no);
   uint32_t irq_set = BIT(bit_no);
   while( scode != 0x81 ) { /* You may want to use a different condition */
@@ -53,7 +55,8 @@ int(kbd_test_scan)() {
                   if(flag == 0){
 
                     bool make = scode & BIT(7);/* cheking break code or make code*/
-                    kbd_print_scancode(!make,8,scode);
+                    arr[0] = scode;
+                    kbd_print_scancode(!make,1,arr);
                   }
                   
                 }
