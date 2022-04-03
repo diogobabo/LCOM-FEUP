@@ -9,8 +9,8 @@
 #define ERROR_PARITY  BIT(7)
 #define ERROR_TIMEOUT  BIT(6)
 #define WAIT_KBC    20000
-#define KBC_OBF BIT(0)
-#define KBC_AUX BIT(5)
+#define KBC_OBF  BIT(0)
+#define KBC_AUX  BIT(5)
 
 
 

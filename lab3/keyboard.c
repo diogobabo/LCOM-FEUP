@@ -36,6 +36,27 @@ int (util_sys_inb)(int port, uint8_t *value) {
      return;
    }
  }
+  void (kbc_ph)(){
+   
+   int error1,error = util_sys_inb(STAT_REG,&status);
+   error1 = util_sys_inb(OUT_BUF,&scode);
+   if(error != 0 || error1 != 0){
+     printf("error reading status");
+     flag = 1;
+     return;
+   }
+   if((status & (ERROR_PARITY | ERROR_TIMEOUT)) != 0){
+     printf("error in kdb");
+     flag =1;
+     return;
+   }
+   uint8_t temp = status & (KBC_OBF | KBC_AUX);
+   if(temp != 1){
+     flag =1;
+     return;
+   }
+ }
+
  int (keyboard_subscribe_int)(uint8_t *bit_no){
     *bit_no = hook_id;
     sys_irqsetpolicy(1,IRQ_REENABLE |IRQ_EXCLUSIVE,&hook_id);

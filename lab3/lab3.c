@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "keyboard.h"
+#include "kbd.h"
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -53,7 +54,6 @@ int(kbd_test_scan)() {
                 if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
                   kbc_ih();
                   if(flag == 0){
-
                     bool make = scode & BIT(7);/* cheking break code or make code*/
                     arr[0] = scode;
                     kbd_print_scancode(!make,1,arr);
@@ -72,23 +72,21 @@ int(kbd_test_scan)() {
 }
 
 int(kbd_test_poll)() {
-  uint8_t stat;
-  uint8_t data;
+  extern int flag;
+  extern uint8_t status;
+  extern uint8_t scode;
   uint8_t arr[1];
-  while(data !=  0x81)) {
-    util_sys_inb(STAT_REG, &stat); /* assuming it returns OK */
-    /* loop while 8042 output buffer is empty */
-    uint8_t temp = stat & (KBC_OBF | KBC_AUX);
-    if(temp == 1) {
-      util_sys_inb(OUT_BUF, &data); /* ass. it returns OK */
-      if ((stat & (ERROR_PARITY | ERROR_TIMEOUT)) == 0 )
-        bool make = scode & BIT(7);/* cheking break code or make code*/
-        arr[0] = scode;
-        kbd_print_scancode(!make,1,arr);
-      else
-        return -1;
+  while(scode !=  0x81) {
+    kbc_ph();
+    if (flag == 0){
+      bool make = scode & BIT(7);/* cheking break code or make code*/
+      arr[0] = scode;
+      kbd_print_scancode(!make,1,arr);
     }
-    delay(WAIT_KBC); // e.g. tickdelay()
+    else{
+      return -1;
+    }    
+    tickdelay(WAIT_KBC); // e.g. tickdelay()
   }
   return 0;
 }
