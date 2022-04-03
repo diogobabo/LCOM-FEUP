@@ -1,5 +1,5 @@
 # name of the program (Minix service)
-PROG=lab23
+PROG=lab3
 
 # source code files to be compiled
 SRCS = lab3.c keyboard.c
