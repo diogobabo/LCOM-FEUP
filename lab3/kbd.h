@@ -5,7 +5,8 @@
 
 #define STAT_REG 0x64
 #define OUT_BUF 0x60
-#define CMD 0x20
+#define CMD1 0x20
+#define CMD2 0X60
 #define INT  BIT(0)
 #define IRQ_KB 1
 #define ERROR_PARITY  BIT(7)

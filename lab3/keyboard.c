@@ -74,6 +74,6 @@ int (util_sys_inb)(int port, uint8_t *value) {
 
     kbc |= INT;
 
-    sys_outb(STAT_REG, OUT_BUF);
+    sys_outb(STAT_REG, CMD2);
     sys_outb(OUT_BUF, kbc);
   }
