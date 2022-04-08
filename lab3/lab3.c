@@ -76,7 +76,7 @@ int(kbd_test_poll)() {
   extern uint8_t status;
   extern uint8_t scode;
   uint8_t arr[1];
-  extern int counter;
+  extern int counter_kb;
   while(scode !=  0x81) {
     kbc_ph();
     if (flag == 0){
@@ -90,7 +90,7 @@ int(kbd_test_poll)() {
     } 
   }
   enable_interrupts();
-  kbd_print_no_sysinb(counter);
+  kbd_print_no_sysinb(counter_kb);
   return 0;
 }
 
@@ -108,7 +108,7 @@ int(kbd_test_timed_scan)(uint8_t n) {
   keyboard_subscribe_int(&bit_no);
   uint32_t irq_set = BIT(bit_no);
   uint32_t irq_set_timer = BIT(bit_no_timer);
-  while( scode != 0x81 ) { /* You may want to use a different condition */
+  while( scode != 0x81 && n > 0) { /* You may want to use a different condition */
         /* Get a request message. */
         if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
           printf("driver_receive failed with: %d", r);
@@ -125,6 +125,14 @@ int(kbd_test_timed_scan)(uint8_t n) {
                     arr[0] = scode;
                     kbd_print_scancode(!make,1,arr);
                   }
+                }
+
+                if (msg.m_notify.interrupts & irq_set_timer) { /* subscri ... process it */
+                  timer_int_handler();
+                  if(counter % 60 == 0){
+                    timer_print_elapsed_time();
+                    n--;
+                  }
                   
                 }
                 break;
@@ -133,6 +141,7 @@ int(kbd_test_timed_scan)(uint8_t n) {
             }
         }
   }
+  timer_unsubscribe_int();
   keyboard_unsubscribe_int();
 
   return 0;

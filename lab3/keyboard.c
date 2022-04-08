@@ -9,7 +9,7 @@ uint8_t status = 0;
 uint8_t scode = 0;
 static int hook_id = 3;
 int flag = 0;
-int counter = 0;
+int counter_kb = 0;
 
 int (util_sys_inb)(int port, uint8_t *value) {
   u32_t val = 0;
@@ -19,7 +19,7 @@ int (util_sys_inb)(int port, uint8_t *value) {
   in = sys_inb(port,&val);
 
   *value = (uint8_t)val;
-  counter++;
+  counter_kb++;
   return in;
 }
  void (kbc_ih)(){
