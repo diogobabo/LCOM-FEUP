@@ -76,6 +76,7 @@ int(kbd_test_poll)() {
   extern uint8_t status;
   extern uint8_t scode;
   uint8_t arr[1];
+  extern int counter;
   while(scode !=  0x81) {
     kbc_ph();
     if (flag == 0){
@@ -84,11 +85,12 @@ int(kbd_test_poll)() {
       kbd_print_scancode(!make,1,arr);
     }
     else{
-      return -1;
-    }    
-    tickdelay(WAIT_KBC); // e.g. tickdelay()
+      tickdelay(micros_to_ticks(WAIT_KBC));
+      continue;
+    } 
   }
   enable_interrupts();
+  kbd_print_no_sysinb(counter);
   return 0;
 }
 
