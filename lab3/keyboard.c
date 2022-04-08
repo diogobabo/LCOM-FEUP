@@ -38,9 +38,8 @@ int (util_sys_inb)(int port, uint8_t *value) {
  }
   void (kbc_ph)(){
    
-   int error1,error = util_sys_inb(STAT_REG,&status);
-   error1 = util_sys_inb(OUT_BUF,&scode);
-   if(error != 0 || error1 != 0){
+   int error1, error = util_sys_inb(STAT_REG,&status);
+   if(error != 0){
      printf("error reading status");
      flag = 1;
      return;
@@ -50,11 +49,18 @@ int (util_sys_inb)(int port, uint8_t *value) {
      flag =1;
      return;
    }
-   uint8_t temp = status & (KBC_OBF | KBC_AUX);
-   if(temp != 1){
+   //uint8_t temp = status & (KBC_OBF | KBC_AUX);
+   if(!(status & KBC_OBF) || (status & KBC_AUX)){
      flag =1;
      return;
    }
+   error1 = util_sys_inb(OUT_BUF,&scode);
+   if( error1 != 0){
+     flag =1;
+     printf("error reading status");
+     return;
+   }
+   flag = 0;
  }
 
  int (keyboard_subscribe_int)(uint8_t *bit_no){
@@ -69,11 +75,11 @@ int (util_sys_inb)(int port, uint8_t *value) {
 
   void (enable_interrupts)() {
     uint8_t kbc;
-    sys_outb(STAT_REG, CMD);
+    sys_outb(STAT_REG, CMD1);
     util_sys_inb(OUT_BUF, &kbc);
 
     kbc |= INT;
 
-    sys_outb(STAT_REG, OUT_BUF);
+    sys_outb(STAT_REG, CMD2);
     sys_outb(OUT_BUF, kbc);
   }
