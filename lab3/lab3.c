@@ -88,6 +88,7 @@ int(kbd_test_poll)() {
     }    
     tickdelay(WAIT_KBC); // e.g. tickdelay()
   }
+  enable_interrupts();
   return 0;
 }
 

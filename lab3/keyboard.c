@@ -66,3 +66,14 @@ int (util_sys_inb)(int port, uint8_t *value) {
   sys_irqrmpolicy(&hook_id);
   return 0;
   }
+
+  void (enable_interrupts)() {
+    uint8_t kbc;
+    sys_outb(STAT_REG, CMD);
+    util_sys_inb(OUT_BUF, &kbc);
+
+    kbc |= INT;
+
+    sys_outb(STAT_REG, OUT_BUF);
+    sys_outb(OUT_BUF, kbc);
+  }

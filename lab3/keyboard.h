@@ -15,4 +15,6 @@ int (keyboard_unsubscribe_int)();
 
 void (kbc_ph)();
 
+void(enable_interrupts)();
+
 #endif

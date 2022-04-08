@@ -1,0 +1,17 @@
+@lcflib.a:2019, lcf_start
+  kbd_test_poll()
+  @keyboard.c:19, util_sys_inb
+    sys_inb(port, &val)
+  > sys_inb(0x64, addr: 0xeffff740)
+  < sys_inb(0x64, addr: 0xeffff740 [0x1d = 0b00011101])
+  @keyboard.c:19, util_sys_inb
+    sys_inb(port, &val)
+  > sys_inb(0x60, addr: 0xeffff744)
+  < sys_inb(0x60, addr: 0xeffff744 [0x9c = 0b10011100])
+  @lab3.c:84, kbd_test_poll
+    kbd_print_scancode(!make, 1, arr)
+    "Breakcode: 0x9c"
+  < kbd_print_scancode(false, 1, addr: 0xeffff773 [0x9c]) -> (ret: 0)
+  @lab3.c:89, kbd_test_poll
+    tickdelay(WAIT_KBC)
+  > tickdelay(20000 [333 s])
