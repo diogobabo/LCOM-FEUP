@@ -14,6 +14,8 @@
 #define WAIT_KBC    20000
 #define KBC_OBF  BIT(0)
 #define KBC_AUX  BIT(5)
+#define DEFSCAN 0xe0
+#define ESCSCAN 0x81
 
 
 
