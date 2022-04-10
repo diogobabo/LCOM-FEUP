@@ -62,12 +62,14 @@ int(kbd_test_scan)() {
                       kbd_print_scancode(!make,2,arr);
                     }
                     else {
-                      if(scode == DEFSCAN) { // caso o 1 byte seja 0xe0, então é pq é um scode de 2 bytes
-                        twoBytes = true;
+                      if(scode != DEFSCAN) { // caso o 1 byte seja 0xe0, então é pq é um scode de 2 bytes
+                        bool make = scode & BIT(7);/* cheking break code or make code*/
+                        arr[0] = scode;
+                        kbd_print_scancode(!make,1,arr); // aqui o size do array passa para 1
                       }
-                      bool make = scode & BIT(7);/* cheking break code or make code*/
-                      arr[0] = scode;
-                      kbd_print_scancode(!make,1,arr); // aqui o size do array passa para 1
+                     else {
+                       twoBytes = true;
+                     }
                     }
                   }
                 }
@@ -99,12 +101,14 @@ int(kbd_test_poll)() {
         kbd_print_scancode(!make,2,arr);
       }
       else {
-        if(scode == DEFSCAN) { // caso o 1 byte seja 0xe0, então é pq é um scode de 2 bytes
+        if(scode != DEFSCAN) { // caso o 1 byte seja 0xe0, então é pq é um scode de 2 bytes
+          bool make = scode & BIT(7);/* cheking break code or make code*/
+          arr[0] = scode;
+          kbd_print_scancode(!make,1,arr); // aqui o size do array passa para 1
+        }
+        else {
           twoBytes = true;
         }
-        bool make = scode & BIT(7);/* cheking break code or make code*/
-        arr[0] = scode;
-        kbd_print_scancode(!make,1,arr); // aqui o size do array passa para 1
       }
     }
     else{
@@ -153,12 +157,14 @@ int(kbd_test_timed_scan)(uint8_t n) {
                       kbd_print_scancode(!make,2,arr);
                     }
                     else {
-                      if(scode == DEFSCAN) {
+                      if(scode != DEFSCAN) { // caso o 1 byte seja 0xe0, então é pq é um scode de 2 bytes
+                        bool make = scode & BIT(7);/* cheking break code or make code*/
+                        arr[0] = scode;
+                        kbd_print_scancode(!make,1,arr); // aqui o size do array passa para 1
+                      }
+                      else {
                         twoBytes = true;
                       }
-                      bool make = scode & BIT(7);/* cheking break code or make code*/
-                      arr[0] = scode;
-                      kbd_print_scancode(!make,1,arr);
                     }
                   }
                   counter = 0; // dar reset ao counter do timer
