@@ -13,24 +13,24 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
     return 1;
   }
 
-  uint8_t st,ts;
+  uint8_t st;
   int error = timer_get_conf(timer,&st);
   if(error != 0) {
     printf("ERROR GETTING CONFIG!");
     return 1;
   }
 
-  ts = st & 0x0F; // 4 primeiros bits q
+  st = st & 0x0F; // 4 primeiros bits q
   st = st | TIMER_LSB_MSB; // resetar os bits todos menos os 4 lsbs
 
   if(timer == 0){
-    st = (st|TIMER_SEL0|TIMER_LSB_MSB);
+    st = (st|TIMER_SEL0);
   }
   else if(timer == 1){
-    st = (st|TIMER_SEL1|TIMER_LSB_MSB);
+    st = (st|TIMER_SEL1);
   }
   else if(timer == 2){
-    st = (st|TIMER_SEL2|TIMER_LSB_MSB);
+    st = (st|TIMER_SEL2);
   }
 
   uint16_t timer_freq = TIMER_FREQ / freq; // dividir a freq default pela rate HZ;
