@@ -69,6 +69,7 @@ int(kbd_test_scan)() {
                       }
                      else {
                        twoBytes = true;
+                       arr[0] = scode;
                      }
                     }
                   }
@@ -108,6 +109,7 @@ int(kbd_test_poll)() {
         }
         else {
           twoBytes = true;
+          arr[0] = scode;
         }
       }
     }
@@ -164,6 +166,7 @@ int(kbd_test_timed_scan)(uint8_t n) {
                       }
                       else {
                         twoBytes = true;
+                        arr[0] = scode;
                       }
                     }
                   }
