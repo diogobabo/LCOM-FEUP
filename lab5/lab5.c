@@ -5,6 +5,8 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include "graphics.h"
+#include "VBE.h"
 
 // Any header files included below this line should have been created by you
 
@@ -33,8 +35,21 @@ int main(int argc, char *argv[]) {
 }
 
 int(video_test_init)(uint16_t mode, uint8_t delay) {
+  reg86_t r86;
+  memset(&r86, 0, sizeof(r86));
+  r86.ah = 0x4F;
+  r86.al = 0x02;
+  r86.bx = mode | BIT(14);
+  r86.intno = 0x10;
+  if( sys_int86(&r86) != OK ) {
+    printf("\tvg_exit(): sys_int86() failed \n");
+    return 1;
+  }
+  tickdelay(micros_to_ticks(delay*(1000000)));
+  vg_exit();
   
-  return 1;
+
+  return 0;
 }
 
 int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
