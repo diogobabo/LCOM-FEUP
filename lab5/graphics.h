@@ -4,6 +4,5 @@
 #include <lcom/lcf.h>
 #include "VBE.h"
 
-int (video_set_VBEmode)(reg86_t *r86,uint16_t mode);
-
+int (video_set_graphics)(uint16_t mode);
 #endif
