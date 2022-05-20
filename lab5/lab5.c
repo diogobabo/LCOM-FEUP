@@ -6,7 +6,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "graphics.h"
-#include "VBE.h"
+#include "vbeMacros.h"
+#include "i8042.h"
+#include "keyboard.h"
+
 
 // Any header files included below this line should have been created by you
 
@@ -35,17 +38,11 @@ int main(int argc, char *argv[]) {
 }
 
 int(video_test_init)(uint16_t mode, uint8_t delay) {
-  reg86_t r86;
-  memset(&r86, 0, sizeof(r86));
-  r86.ah = 0x4F;
-  r86.al = 0x02;
-  r86.bx = mode | BIT(14);
-  r86.intno = 0x10;
-  if( sys_int86(&r86) != OK ) {
-    printf("\tvg_exit(): sys_int86() failed \n");
-    return 1;
-  }
-  tickdelay(micros_to_ticks(delay*(1000000)));
+
+  if(video_set_graphics(mode) != 0) {return 1;}
+
+  sleep(delay);
+
   vg_exit();
   
 
@@ -54,35 +51,297 @@ int(video_test_init)(uint16_t mode, uint8_t delay) {
 
 int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
                           uint16_t width, uint16_t height, uint32_t color) {
-  /* To be completed */
-  printf("%s(0x%03X, %u, %u, %u, %u, 0x%08x): under construction\n",
-         __func__, mode, x, y, width, height, color);
+                            
+  video_set_graphics(mode);
 
-  return 1;
+  vg_draw_rectangle(x,y,width,height,color);
+  
+  extern uint8_t scode;
+  extern int flag;
+  uint8_t array[2];
+  int ipc_status;
+  message msg;
+  int r;
+  bool twoBytes = false;
+  uint8_t bit_no;
+  kb_subscribe(&bit_no);
+  uint32_t irq_set = BIT(bit_no);
+  while(scode != ESCSCAN) { /* You may want to use a different condition */
+        /* Get a request message. */
+        if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+          printf("driver_receive failed with: %d", r);
+          continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+              case HARDWARE: /* hardware interrupt notification */
+                
+                if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
+                  kbc_ih();
+                  if(flag == 0) {
+                    if(twoBytes) {
+                      twoBytes = false;
+                      array[1] = scode;
+                      kbd_print_scancode(!(scode & BIT(7)),2,array);
+                    }
+                    else {
+                      array[0] = scode;
+                      if(scode == DEFSCAN) {
+                        twoBytes = true;
+                      }
+                      else {
+                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                      }
+                    }
+                  }
+                }
+                break;
+              default:
+                break; /* no other notifications expected: do nothi*/
+            }
+        }
+  }
+  kb_unsubscribe();
+  vg_exit();
+
+  return 0;
 }
 
 int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, uint8_t step) {
-  /* To be completed */
-  printf("%s(0x%03x, %u, 0x%08x, %d): under construction\n", __func__,
-         mode, no_rectangles, first, step);
 
-  return 1;
+  if(video_set_graphics(mode) != 0) {return 1;}
+  if(vg_draw_matrix(mode,no_rectangles,first,step) != 0) {return 1;}
+  extern uint8_t scode;
+  extern int flag;
+  uint8_t array[2];
+  int ipc_status;
+  message msg;
+  int r;
+  bool twoBytes = false;
+  uint8_t bit_no;
+  kb_subscribe(&bit_no);
+  uint32_t irq_set = BIT(bit_no);
+  while(scode != ESCSCAN) { /* You may want to use a different condition */
+        /* Get a request message. */
+        if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+          printf("driver_receive failed with: %d", r);
+          continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+              case HARDWARE: /* hardware interrupt notification */
+                
+                if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
+                  kbc_ih();
+                  if(flag == 0) {
+                    if(twoBytes) {
+                      twoBytes = false;
+                      array[1] = scode;
+                      kbd_print_scancode(!(scode & BIT(7)),2,array);
+                    }
+                    else {
+                      array[0] = scode;
+                      if(scode == DEFSCAN) {
+                        twoBytes = true;
+                      }
+                      else {
+                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                      }
+                    }
+                  }
+                }
+                break;
+              default:
+                break; /* no other notifications expected: do nothi*/
+            }
+        }
+  }
+  kb_unsubscribe();
+  vg_exit();
+
+  return 0;
 }
 
 int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
-  /* To be completed */
-  printf("%s(%8p, %u, %u): under construction\n", __func__, xpm, x, y);
 
-  return 1;
+
+  if(video_set_graphics(0x105) != 0) {return 1;}
+
+  xpm_image_t img;
+  uint8_t *map;
+  map = xpm_load(xpm,XPM_INDEXED,&img);
+  
+  if(draw_pix_map(x,y,map,img) != 0) {return 1;}
+  
+
+  extern uint8_t scode;
+  extern int flag;
+  uint8_t array[2];
+  int ipc_status;
+  message msg;
+  int r;
+  bool twoBytes = false;
+  uint8_t bit_no;
+  kb_subscribe(&bit_no);
+  uint32_t irq_set = BIT(bit_no);
+  while(scode != ESCSCAN) { /* You may want to use a different condition */
+        printf("boas");
+        /* Get a request message. */
+        if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+          printf("driver_receive failed with: %d", r);
+          continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+              case HARDWARE: /* hardware interrupt notification */
+                
+                if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
+                  kbc_ih();
+                  if(flag == 0) {
+                    if(twoBytes) {
+                      twoBytes = false;
+                      array[1] = scode;
+                      kbd_print_scancode(!(scode & BIT(7)),2,array);
+                    }
+                    else {
+                      array[0] = scode;
+                      if(scode == DEFSCAN) {
+                        twoBytes = true;
+                      }
+                      else {
+                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                      }
+                    }
+                  }
+                }
+                break;
+              default:
+                break; /* no other notifications expected: do nothi*/
+            }
+        }
+  }
+  kb_unsubscribe();
+  vg_exit();
+  return 0;
 }
 
 int(video_test_move)(xpm_map_t xpm, uint16_t xi, uint16_t yi, uint16_t xf, uint16_t yf,
                      int16_t speed, uint8_t fr_rate) {
-  /* To be completed */
-  printf("%s(%8p, %u, %u, %u, %u, %d, %u): under construction\n",
-         __func__, xpm, xi, yi, xf, yf, speed, fr_rate);
 
-  return 1;
+  if(video_set_graphics(0x105) != 0) {return 1;}
+
+  xpm_image_t img;
+  uint8_t *map;
+  map = xpm_load(xpm,XPM_INDEXED,&img);
+  draw_pix_map(xi,yi,map,img);
+
+  extern int counter;
+  extern uint8_t scode;
+  extern int flag;
+  uint8_t array[2];
+  int ipc_status;
+  message msg;
+  int r;
+  bool twoBytes = false;
+  uint8_t bit_no, bit_no_timer;
+  timer_subscribe_int(&bit_no_timer);
+  kb_subscribe(&bit_no);
+  uint32_t irq_set = BIT(bit_no);
+  uint32_t irq_set_timer = BIT(bit_no_timer);
+  uint16_t interruptPerFrame = sys_hz() / fr_rate;
+  uint16_t numFrames = 0;
+
+
+  while(scode != ESCSCAN) { /* You may want to use a different condition */
+        /* Get a request message. */
+        if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
+          printf("driver_receive failed with: %d", r);
+          continue;
+        }
+        if (is_ipc_notify(ipc_status)) { /* received notification */
+            switch (_ENDPOINT_P(msg.m_source)) {
+              case HARDWARE: /* hardware interrupt notification */
+                
+                if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
+                  kbc_ih();
+                  if(flag == 0) {
+                    if(twoBytes) {
+                      twoBytes = false;
+                      array[1] = scode;
+                      kbd_print_scancode(!(scode & BIT(7)),2,array);
+                    }
+                    else {
+                      array[0] = scode;
+                      if(scode == DEFSCAN) {
+                        twoBytes = true;
+                      }
+                      else {
+                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                      }
+                    }
+                  }
+                }
+
+                if(msg.m_notify.interrupts & irq_set_timer) {
+                  timer_int_handler();
+                  if(counter % interruptPerFrame == 0 && ((xi != xf) || (yi != yf))) { // if se mova
+                    if(speed > 0) {
+                      clear_pix_map(xi,yi,img);
+                      if(yi == yf) {
+                        if(xi + speed > xf) {
+                          xi = xf;
+                        }
+                        else {
+                          xi += speed;
+                        }
+                      }
+                      else if(xi == xf) {
+                        if(yi + speed > yf) {
+                          yi = yf;
+                        }
+                        else {
+                          yi += speed;
+                        }
+                      }
+                      draw_pix_map(xi,yi,map,img);
+                    }
+                    else {
+                      if(counter % interruptPerFrame == 0) {
+                        numFrames++;
+                      }
+                      if(numFrames % (speed * -1) == 0) {
+                        clear_pix_map(xi,yi,img);
+                        if(yi == yf) {
+                          if(xi + 1 > xf) {
+                            xi = xf;
+                          }
+                          else {
+                            xi++;
+                          }
+                        }
+                        else if(xi == xf) {
+                          if(yi + 1 > yf) {
+                            yi = yf;
+                          }
+                          else {
+                            yi++;
+                          }
+                        }
+                        draw_pix_map(xi,yi,map,img);
+                      }
+                    }
+                  }
+                }
+                break;
+              default:
+                break; /* no other notifications expected: do nothi*/
+            }
+        }
+  }
+  timer_unsubscribe_int();
+  kb_unsubscribe();
+  vg_exit();
+  return 0;
 }
 
 int(video_test_controller)() {

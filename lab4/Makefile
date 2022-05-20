@@ -1,8 +1,8 @@
 # name of the program (Minix service)
-PROG=lab5
+PROG=lab4
 
 # source code files to be compiled
-SRCS = lab5.c graphics.c keyboard.c timer.c utils.c
+SRCS = lab4.c mouse.c
 
 # additional compilation flags
 # "-Wall -Wextra -Werror -I . -std=c11 -Wno-unused-parameter" are already set
