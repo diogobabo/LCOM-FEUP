@@ -122,8 +122,10 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
       if((j + y) > v_res) {
         return 1;
       }
-      memcpy()
-      vg_draw_pixel(x+i,y+j,*(map + i + j*img.width));
+      uint32_t color;
+      uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
+      memcpy(&color, pos, bytes_per_pixel);
+      vg_draw_pixel(x+i,y+j, color);
     }
   }
   return 0;
