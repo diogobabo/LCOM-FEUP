@@ -6,7 +6,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "graphics.h"
+<<<<<<< HEAD
 #include "vbeMacros.h"
+=======
+#include "VBE.h"
+>>>>>>> 2fa7011b4ac85f5e3707976ab28565dff66e8386
 #include "i8042.h"
 #include "keyboard.h"
 

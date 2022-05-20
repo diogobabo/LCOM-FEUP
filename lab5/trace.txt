@@ -1,0 +1,3160 @@
+@lcflib.a:2019, lcf_start
+  video_test_move(xpm, xi, yi, xf, yf, speed, fps)
+> video_test_move(0x81e1980, 20, 20, 40, 20, -1, 60)
+  @graphics.c:12, video_set_graphics
+    vbe_get_mode_info(mode, &info)
+  > vbe_get_mode_info(0x105, addr: 0x824af00)
+  < vbe_get_mode_info(0x105, addr: 0x824af00 [0xe0000000, 1024x768, Indexed (8 BPP) <768 KiB>]) -> (ret: 0)
+  @graphics.c:32, video_set_graphics
+    sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)
+  > sys_privctl(SELF, SYS_PRIV_ADD_MEM, addr: 0xeffff528 [0xe0000000 - 0xe00c0000 <768 KiB>])
+  < sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr) -> (ret: 0)
+  @graphics.c:38, video_set_graphics
+    vm_map_phys(SELF, (void *)mr.mr_base, vram_size)
+  < vm_map_phys(SELF, addr: 0xe0000000, 768 KiB) -> (ret: 0xef93b000)
+  @graphics.c:52, video_set_graphics
+    sys_int86(&r86)
+  > sys_int86(addr: 0xeffff500 [AX: 4f02, BX: 4105, CX: 0000, DX: 0000, ES: 0000, DI: 0000])
+  < sys_int86(addr: 0xeffff500 [AX: 004f, BX: 4105, CX: 0000, DX: 0000, ES: 0000, DI: 0000]) -> (ret: 0)
+  @lab5.c:235, video_test_move
+    xpm_load(xpm, XPM_INDEXED, &img)
+  > xpm_load(addr: 0x81e1980, XPM_INDEXED, addr: 0xeffff608)
+  < xpm_load(addr: 0x81e1980, XPM_INDEXED, addr: 0xeffff608 [64x32 : 2048 bytes]) -> (ret: 0x8251000)
+  @lab5.c:247, video_test_move
+    timer_subscribe_int(&bit_no_timer)
+  > timer_subscribe_int(addr: 0xeffff5be [30])
+    @timer.c:48, timer_subscribe_int
+      sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id)
+    > sys_irqsetpolicy(0, 1, addr: 0x822e4bc [2])
+    < sys_irqsetpolicy(0, 1, addr: 0x822e4bc [10]) -> (ret: 0)
+  < timer_subscribe_int(addr: 0xeffff5be [2]) -> (ret: 0)
+  @keyboard.c:28, kb_subscribe
+    sys_irqsetpolicy(IRQ_KB, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id_kb)
+  > sys_irqsetpolicy(1, 3, addr: 0x822e4b8 [4])
+  < sys_irqsetpolicy(1, 3, addr: 0x822e4b8 [11]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(20, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(20, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(20, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000010100]>)
+  @lab5.c:266, video_test_move
+    kbc_ih()
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x64, addr: 0xeffff4a4)
+    < sys_inb(0x64, addr: 0xeffff4a4 [0x1d = 0b00011101])
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x60, addr: 0xeffff4a8)
+    < sys_inb(0x60, addr: 0xeffff4a8 [0x9c = 0b10011100])
+  @lab5.c:279, video_test_move
+    kbd_print_scancode(!(scode & BIT(7)), 1, array)
+    "Breakcode: 0x9c"
+  < kbd_print_scancode(false, 1, addr: 0xeffff606 [0x9c]) -> (ret: 0)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(21, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(21, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(21, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(22, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(22, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(22, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(23, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(23, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(23, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(24, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(24, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(24, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(25, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(25, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(25, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(26, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(26, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(26, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(27, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(27, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(27, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(28, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(28, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(28, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(29, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(29, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(29, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(30, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(30, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(30, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(31, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(31, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(31, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(32, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(32, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(32, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(33, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(33, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(33, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(34, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(34, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(34, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(35, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(35, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(35, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(36, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(36, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(36, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(37, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(37, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(37, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(38, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(38, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(38, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @graphics.c:135, clear_pix_map
+    vg_draw_rectangle(x, y, img.width, img.height, 0x00000000)
+  > vg_draw_rectangle(39, 20, 64, 32, 0x00000000 [0])
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 20, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 21, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 22, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 23, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 24, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 25, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 26, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 27, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 28, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 29, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 30, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 31, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 32, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 33, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 34, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 35, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 36, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 37, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 38, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 39, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 40, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 41, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 42, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 43, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 44, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 45, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 46, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 47, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 48, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 49, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 50, 64, 0x00000000 [0]) -> (ret: 0)
+    @graphics.c:81, vg_draw_rectangle
+      vg_draw_hline(x, y + i, width, color)
+    < vg_draw_hline(39, 51, 64, 0x00000000 [0]) -> (ret: 0)
+  < vg_draw_rectangle(39, 20, 64, 32, 0x00000000 [0]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000010000]>)
+  @lab5.c:266, video_test_move
+    kbc_ih()
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x64, addr: 0xeffff4a4)
+    < sys_inb(0x64, addr: 0xeffff4a4 [0x1d = 0b00011101])
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x60, addr: 0xeffff4a8)
+    < sys_inb(0x60, addr: 0xeffff4a8 [0x01 = 0b00000001])
+  @lab5.c:279, video_test_move
+    kbd_print_scancode(!(scode & BIT(7)), 1, array)
+    "Makecode: 0x01"
+  < kbd_print_scancode(true, 1, addr: 0xeffff606 [0x01]) -> (ret: 0)
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000000100]>)
+  @lab5.c:286, video_test_move
+    timer_int_handler()
+  @lab5.c:257, video_test_move
+    driver_receive(ANY, &msg, &ipc_status)
+  > driver_receive(ANY, addr: 0xeffff5c0, addr: 0xeffff600)
+  < driver_receive(<[HARDWARE: 0b0000000000000000000000000000000000000000000000000000000000010000]>)
+  @lab5.c:266, video_test_move
+    kbc_ih()
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x64, addr: 0xeffff4a4)
+    < sys_inb(0x64, addr: 0xeffff4a4 [0x1d = 0b00011101])
+    @keyboard.c:40, utils_sys_inb
+      sys_inb(port, &temp)
+    > sys_inb(0x60, addr: 0xeffff4a8)
+    < sys_inb(0x60, addr: 0xeffff4a8 [0x81 = 0b10000001])
+  @lab5.c:279, video_test_move
+    kbd_print_scancode(!(scode & BIT(7)), 1, array)
+    "Breakcode: 0x81"
+  < kbd_print_scancode(false, 1, addr: 0xeffff606 [0x81]) -> (ret: 0)
+  @lab5.c:341, video_test_move
+    timer_unsubscribe_int()
+    @timer.c:53, timer_unsubscribe_int
+      sys_irqrmpolicy(&hook_id)
+    > sys_irqrmpolicy(addr: 0x822e4bc [10])
+    < sys_irqrmpolicy(addr: 0x822e4bc [10]) -> (ret: 0)
+  @keyboard.c:34, kb_unsubscribe
+    sys_irqrmpolicy(&hook_id_kb)
+  > sys_irqrmpolicy(addr: 0x822e4b8 [11])
+  < sys_irqrmpolicy(addr: 0x822e4b8 [11]) -> (ret: 0)
+  @lab5.c:343, video_test_move
+    vg_exit()
+  < vg_exit() -> (ret: 0)
+< video_test_move(0x81e1980, 20, 20, 40, 20, -1, 60) -> (ret: 0)
