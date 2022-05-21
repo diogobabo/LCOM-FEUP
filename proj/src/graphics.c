@@ -74,9 +74,6 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
 int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
   for(unsigned int i=0; i < len; i++)
     {
-      if(x + i >= h_res) {
-        break;
-      }
       vg_draw_pixel(x+i, y, color);
     }
   return 0;
@@ -86,9 +83,6 @@ int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
 
   for(unsigned int i=0; i < height; i++)
     {
-      if(y + i >= v_res) {
-        break;
-      }
       vg_draw_hline(x,y+ i, width, color);
     }
   return 0;
