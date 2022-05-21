@@ -31,24 +31,17 @@ int main(int argc, char *argv[]) {
 
 int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   uint8_t st;
-  int error1,error2;
-  error1 = timer_get_conf(timer,&st);
-  if(error1 != 0 ){
-    return 1;
-  }
-  error2 = timer_display_conf(timer,st,field);
-  if(error2 != 0 ){
-    return 1;
-  }
+  if(timer_get_conf(timer,&st) != 0) {return 1;};
+
+  if(timer_display_conf(timer,st,field) != 0) {return 1;}
 
   return 0;
 }
 
 int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
-  int error;
-  error = timer_set_frequency(timer,freq);
+  if(timer_set_frequency(timer,freq) != 0) {return 1;};
 
-  return error;
+  return 0;
 }
 
 int(timer_test_int)(uint8_t time) {
@@ -57,7 +50,7 @@ int(timer_test_int)(uint8_t time) {
   message msg;
   int r;
   uint8_t bit_no;
-  timer_subscribe_int(&bit_no);
+  if(timer_subscribe_int(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while( time>0 ) { /* You may want to use a different condition */
         /* Get a request message. */
@@ -83,6 +76,7 @@ int(timer_test_int)(uint8_t time) {
             }
         }
   }
-  timer_unsubscribe_int();
+  if(timer_unsubscribe_int() != 0) {return 1;}
+
   return 0;
 }

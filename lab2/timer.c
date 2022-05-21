@@ -14,9 +14,8 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   }
 
   uint8_t st;
-  int error = timer_get_conf(timer,&st);
-  if(error != 0) {
-    printf("ERROR GETTING CONFIG!");
+  if(timer_get_conf(timer,&st) != 0) {
+    printf("Error getting config\n");
     return 1;
   }
 
@@ -36,24 +35,35 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   uint16_t timer_freq = TIMER_FREQ / freq; // dividir a freq default pela rate HZ;
   
   uint8_t msb,lsb;
-  util_get_LSB(timer_freq,&lsb);
-  util_get_MSB(timer_freq,&msb);
+  if(util_get_LSB(timer_freq,&lsb) != 0) {
+    printf("Error getting LSB\n");
+    return 1;
+  }
+
+  if(util_get_MSB(timer_freq,&msb) != 0) {
+    printf("Error getting MSB\n");
+    return 1;
+  }
 
   // envia a control word para o reg controlo e dps mete a frequencia nos timers
   return sys_outb(TIMER_CTRL,st)||sys_outb(TIMER_0+timer,lsb)||sys_outb(TIMER_0+timer,msb);
 }
 
 int (timer_subscribe_int)(uint8_t *bit_no) {
-    /* To be implemented by the students */
-    *bit_no = hook_id;
-    sys_irqsetpolicy(0,IRQ_REENABLE,&hook_id);
-    //printf("%s is not yet implemented!\n", __func__);
+  *bit_no = hook_id;
+  if(sys_irqsetpolicy(0,IRQ_REENABLE,&hook_id) != 0) {
+    printf("Error subscribe timer\n");
+    return 1;
+  }
 
   return 0;
 }
 
 int (timer_unsubscribe_int)() {
-  sys_irqrmpolicy(&hook_id);
+  if(sys_irqrmpolicy(&hook_id) != 0) {
+    printf("Error unsubscribe timer\n");
+    return 1;
+  }
   return 0;
 }
 
@@ -63,17 +73,16 @@ void (timer_int_handler)() {
 
 int (timer_get_conf)(uint8_t timer, uint8_t *st) {
   uint8_t readBCMD = (TIMER_RB_CMD | TIMER_RB_SEL(timer)|TIMER_RB_COUNT_);
-  int sout,sin;
-  sout = sys_outb(TIMER_CTRL,(u32_t)readBCMD);
-  if(sout != 0) {
-    printf("SYS OUTB NOT WORKING");
+  if(sys_outb(TIMER_CTRL,(u32_t)readBCMD) != 0) {
+    printf("Error sending control word\n");
     return 1;
   }
-  sin = util_sys_inb(TIMER_0+timer,st);
-  if(sin != 0) {
-    printf("SYS INB NOT WORKING");
+
+  if(util_sys_inb(TIMER_0+timer,st) != 0) {
+    printf("Error reading from timer port\n");
     return 1;
   }
+
   return 0;
 }
 enum timer_init init_mode_func(uint8_t *st){ // funcao feita para saber o mode de inicialização
@@ -126,16 +135,11 @@ int (timer_display_conf)(uint8_t timer, uint8_t st,
   else if(field == tsf_base){
     test.bcd = ((st & BIT(0)) == 1);
   }
-
-  int flag;
-  flag = timer_print_config(timer,field,test);
-
-  if(flag !=0){
+  
+  if(timer_print_config(timer,field,test) != 0) {
     printf("timer_print_config failed \n");
     return 1;
   }
-
-  //printf("%s is not yet implemented!\n", __func__);
 
   return 0;
 }

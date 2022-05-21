@@ -12,6 +12,7 @@ void (kbc_ih)	() {
   }
   if((status & OBF_AUX) != 0x01) {
     flag = 1;
+    printf("OBF Not Full\n");
     return;
   }
   if(utils_sys_inb(OUT_BUF,&scode) != 0) {
@@ -19,19 +20,26 @@ void (kbc_ih)	() {
   }
   if((status & ERROR_PARITY_TIMEOUT) != 0) {
     flag = 1;
+    printf("Parity / Timeout Error\n");
   }
 
 }
 
 int (kb_subscribe)(uint8_t *bit_no) {
   *bit_no = hook_id_kb;
-  if(sys_irqsetpolicy(IRQ_KB,IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id_kb) != 0) {return 1;}
+  if(sys_irqsetpolicy(IRQ_KB,IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id_kb) != 0) {
+    printf("Error Subscribe Keyboard\n");
+    return 1;
+  }
   return 0;
 }
 
 
 int (kb_unsubscribe)() {
-  if(sys_irqrmpolicy(&hook_id_kb) != 0) {return 1;}
+  if(sys_irqrmpolicy(&hook_id_kb) != 0) {
+    printf("Error Unsubscribe Keyboard\n");
+    return 1;
+  }
   return 0;
 }
 
