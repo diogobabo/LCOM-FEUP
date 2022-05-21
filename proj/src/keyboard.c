@@ -47,7 +47,7 @@ int (kb_unsubscribe)() {
 void (enable_interrupts)() {
   uint8_t kbc;
   sys_outb(STAT_REG,0x20);
-  utils_sys_inb(OUT_BUF,&kbc);
+  util_sys_inb(OUT_BUF,&kbc);
   kbc |= BIT(0);
   sys_outb(STAT_REG, 0x60);
   sys_outb(OUT_BUF,kbc);
