@@ -91,7 +91,7 @@ int(kbd_test_poll)() {
   extern uint8_t status;
   extern uint8_t scode;
   uint8_t arr[2];
-  extern int counter_kb;
+  extern int counterK;
   while(scode != ESCSCAN) {
     kbc_ih();
     if (flag == 0){
