@@ -58,6 +58,9 @@ int (video_set_graphics)(uint16_t mode){
 }
 
 int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
+  if(x >= h_res || y >= v_res || x < 0 || y < 0) {
+    return 1;
+  }
   uint8_t* pix;
   pix = (uint8_t* ) video_mem + (bytes_per_pixel * h_res * y + x * bytes_per_pixel);
   for(unsigned int i = 0; i < bytes_per_pixel; i++) {
@@ -69,17 +72,19 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
 }
 
 int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
-  for(unsigned int i = 0; i < len; i++) {
-    vg_draw_pixel(x + i,y,color);
-  }
+  for(unsigned int i=0; i < len; i++)
+    {
+      vg_draw_pixel(x+i, y, color);
+    }
   return 0;
 }
 
 int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
 
-  for(unsigned int i = 0; i < height; i++) {
-    vg_draw_hline(x,y + i,width,color);
-  }
+  for(unsigned int i=0; i < height; i++)
+    {
+      vg_draw_hline(x,y+ i, width, color);
+    }
   return 0;
 }
 
@@ -120,7 +125,7 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
     }
     for(unsigned int j = 0; j < img.height; j++) {
       if((j + y) > v_res) {
-        return 1;
+        continue;
       }
       uint32_t color;
       uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
