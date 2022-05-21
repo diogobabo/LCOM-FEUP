@@ -7,7 +7,7 @@ uint8_t scode = 0x00;
 void (kbc_ih)	() {
   uint8_t status;
   flag = 0;
-  if(utils_sys_inb(STAT_REG,&status) != 0) {
+  if(util_sys_inb(STAT_REG,&status) != 0) {
     flag = 1;
   }
   if((status & OBF_AUX) != 0x01) {
@@ -15,7 +15,7 @@ void (kbc_ih)	() {
     printf("OBF Not Full\n");
     return;
   }
-  if(utils_sys_inb(OUT_BUF,&scode) != 0) {
+  if(util_sys_inb(OUT_BUF,&scode) != 0) {
     flag = 1;
   }
   if((status & ERROR_PARITY_TIMEOUT) != 0) {
@@ -43,14 +43,6 @@ int (kb_unsubscribe)() {
   return 0;
 }
 
-int (utils_sys_inb)(int port, uint8_t *val) {
-  uint32_t temp = 0;
-  if(sys_inb(port,&temp) != 0) {return 1;}
-  temp &= 0x000000FF;
-  *val = (uint8_t) temp;
-  counterK++;
-  return 0;
-}
 
 void (enable_interrupts)() {
   uint8_t kbc;

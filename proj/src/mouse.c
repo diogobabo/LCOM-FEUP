@@ -1,27 +1,27 @@
 #include "mouse.h"
 
 int hook_id_m = 6;
-int flag = 0;
+int flag_m = 0;
 uint8_t byte;
 uint8_t scancode;
 
 void (mouse_ih)() {
   uint8_t st;
-  flag = 0;
-  if(utils_sys_inb(STAT_REG,&st) != 0) {
-    flag = 1;
+  flag_m = 0;
+  if(util_sys_inb(STAT_REG,&st) != 0) {
+    flag_m = 1;
   }
   if((st & KBC_OBF) == 0) {
     printf("OBF not full");
-    flag = 1;
+    flag_m = 1;
     return;
   } 
-  if(utils_sys_inb(OUT_BUF, &scancode) != 0) {
-    flag = 1;
+  if(util_sys_inb(OUT_BUF, &scancode) != 0) {
+    flag_m = 1;
   }
   if((st & ERROR_PARITY_TIMEOUT) != 0) {
     printf("Error Parity / Timeout");
-    flag = 1;
+    flag_m = 1;
   }
 }
 
@@ -42,14 +42,6 @@ int (mouse_unsubscribe_int)() {
   return 0;
 }
 
-
-int (utils_sys_inb)(int port, uint8_t *val) {
-  uint32_t temp = 0;
-  if(sys_inb(port,&temp) != 0) {return 1;}
-  temp &= 0xFF;
-  *val = (uint8_t) temp;
-  return 0;
-}
 
 void (mouse_set_packet)(struct packet* pacote) {
 
@@ -80,7 +72,7 @@ void (mouse_set_packet)(struct packet* pacote) {
 
 int (check_ibf_full)() {
   uint8_t st;
-  if(utils_sys_inb(STAT_REG, &st) != 0) {return 1;}
+  if(util_sys_inb(STAT_REG, &st) != 0) {return 1;}
   if((st & IBF_BIT) != 0) {
     printf("IBF Full");
     return 1;
