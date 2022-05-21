@@ -1,20 +1,10 @@
-#ifndef __KEYBOARD_H
-#define __KEYBOARD_H
-
 #include <lcom/lcf.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "i8042.h"
 
-void (kbc_ih)();
-
-int (util_sys_inb)(int port, uint8_t *value);
-
-int (keyboard_subscribe_int)(uint8_t *bit_no);
-
-int (keyboard_unsubscribe_int)();
-
-void (kbc_ph)();
-
-void(enable_interrupts)();
-
-#endif
+void (kbc_ih)	();
+int (kb_subscribe)(uint8_t *bit_no);
+int (kb_unsubscribe)();
+int (utils_sys_inb)(int port, uint8_t *val);
+void (enable_interrupts)();

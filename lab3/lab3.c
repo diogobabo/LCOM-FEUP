@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "keyboard.h"
-#include "kbd.h"
+#include "i8042.h"
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -40,7 +40,7 @@ int(kbd_test_scan)() {
   int r;
   uint8_t bit_no;
   uint8_t arr[2];
-  keyboard_subscribe_int(&bit_no);
+  if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while( scode != ESCSCAN ) { /* You may want to use a different condition */
         /* Get a request message. */
@@ -80,7 +80,7 @@ int(kbd_test_scan)() {
             }
         }
   }
-  keyboard_unsubscribe_int();
+  if(kb_unsubscribe() != 0) {return 1;}
 
   return 0;
 }
@@ -93,7 +93,7 @@ int(kbd_test_poll)() {
   uint8_t arr[2];
   extern int counter_kb;
   while(scode != ESCSCAN) {
-    kbc_ph();
+    kbc_ih();
     if (flag == 0){
       if(twoBytes) {
         bool make = scode & BIT(7);/* cheking break code or make code*/
@@ -135,8 +135,8 @@ int(kbd_test_timed_scan)(uint8_t n) {
   uint8_t bit_no;
   uint8_t bit_no_timer;
   uint8_t arr[2];
-  timer_subscribe_int(&bit_no_timer);
-  keyboard_subscribe_int(&bit_no);
+  if(timer_subscribe_int(&bit_no_timer) != 0) {return 1;};
+  if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no); // mask kb
   uint32_t irq_set_timer = BIT(bit_no_timer); // mask timer
   while( scode != ESCSCAN && n > 0) { /* You may want to use a different condition */
@@ -188,8 +188,8 @@ int(kbd_test_timed_scan)(uint8_t n) {
             }
         }
   }
-  timer_unsubscribe_int();
-  keyboard_unsubscribe_int();
+  if(timer_unsubscribe_int() != 0) {return 1;}
+  if(kb_unsubscribe() != 0) {return 1;}
 
   return 0;
 }

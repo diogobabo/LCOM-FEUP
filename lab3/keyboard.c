@@ -1,85 +1,54 @@
-#include <lcom/lcf.h>
 #include "keyboard.h"
-
-#include "kbd.h"
-#include <stdint.h>
-
-
-uint8_t status = 0;
-uint8_t scode = 0;
-static int hook_id = 3;
+int counterK = 0;
 int flag = 0;
-int counter_kb = 0;
+int hook_id_kb = 4;
+uint8_t scode = 0x00;
 
-int (util_sys_inb)(int port, uint8_t *value) {
-  u32_t val = 0;
+void (kbc_ih)	() {
+  uint8_t status;
+  flag = 0;
+  if(utils_sys_inb(STAT_REG,&status) != 0) {
+    flag = 1;
+  }
+  if((status & OBF_AUX) != 0x01) {
+    flag = 1;
+    return;
+  }
+  if(utils_sys_inb(OUT_BUF,&scode) != 0) {
+    flag = 1;
+  }
+  if((status & ERROR_PARITY_TIMEOUT) != 0) {
+    flag = 1;
+  }
 
-  int in;
-
-  in = sys_inb(port,&val);
-
-  *value = (uint8_t)val;
-  counter_kb++;
-  return in;
 }
- void (kbc_ih)(){
-   
-   int error1,error = util_sys_inb(STAT_REG,&status);
-   error1 = util_sys_inb(OUT_BUF,&scode);
-   if(error != 0 || error1 != 0){
-     printf("error reading status");
-     return;
-   }
-   if((status & (ERROR_PARITY | ERROR_TIMEOUT)) != 0){
-     printf("error in kdb");
-     flag =1;
-     return;
-   }
- }
-  void (kbc_ph)(){
-   
-   int error1, error = util_sys_inb(STAT_REG,&status);
-   if(error != 0){
-     printf("error reading status");
-     flag = 1;
-     return;
-   }
-   if((status & (ERROR_PARITY | ERROR_TIMEOUT)) != 0){
-     printf("error in kdb");
-     flag =1;
-     return;
-   }
-   //uint8_t temp = status & (KBC_OBF | KBC_AUX);
-   if(!(status & KBC_OBF) || (status & KBC_AUX)){
-     flag =1;
-     return;
-   }
-   error1 = util_sys_inb(OUT_BUF,&scode);
-   if( error1 != 0){
-     flag =1;
-     printf("error reading status");
-     return;
-   }
-   flag = 0;
- }
 
- int (keyboard_subscribe_int)(uint8_t *bit_no){
-    *bit_no = hook_id;
-    sys_irqsetpolicy(1,IRQ_REENABLE |IRQ_EXCLUSIVE,&hook_id);
+int (kb_subscribe)(uint8_t *bit_no) {
+  *bit_no = hook_id_kb;
+  if(sys_irqsetpolicy(IRQ_KB,IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id_kb) != 0) {return 1;}
   return 0;
-  }
-  int (keyboard_unsubscribe_int)(){
-  sys_irqrmpolicy(&hook_id);
+}
+
+
+int (kb_unsubscribe)() {
+  if(sys_irqrmpolicy(&hook_id_kb) != 0) {return 1;}
   return 0;
-  }
+}
 
-  void (enable_interrupts)() {
-    uint8_t kbc;
-    sys_outb(STAT_REG, CMD1);
-    util_sys_inb(OUT_BUF, &kbc);
+int (utils_sys_inb)(int port, uint8_t *val) {
+  uint32_t temp = 0;
+  if(sys_inb(port,&temp) != 0) {return 1;}
+  temp &= 0x000000FF;
+  *val = (uint8_t) temp;
+  counterK++;
+  return 0;
+}
 
-    kbc |= INT;
-
-    sys_outb(STAT_REG, CMD2);
-    sys_outb(OUT_BUF, kbc);
-  }
+void (enable_interrupts)() {
+  uint8_t kbc;
+  sys_outb(STAT_REG,0x20);
+  utils_sys_inb(OUT_BUF,&kbc);
+  kbc |= BIT(0);
+  sys_outb(STAT_REG, 0x60);
+  sys_outb(OUT_BUF,kbc);
+}
