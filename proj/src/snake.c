@@ -5,7 +5,11 @@ uint8_t bit_kb;
 uint8_t bit_m;
 
 void playSnakeLoop() {
+  extern uint8_t scode;
+  extern int flag;
   bool end = true;
+  uint8_t array[2];
+  int idx = 0;
   extern int counter;
   int ipc_status;
   message msg;
@@ -51,9 +55,21 @@ void playSnakeLoop() {
 
                 /* Keyboard Interrupts */
                 if(msg.m_notify.interrupts & mask_kb) {
+                  kbc_ih();
+                  if(flag == 0) {
+                    if(idx == 0) {
+                      array[idx] = scode;
+                      if(scode == DEFSCAN) {
+                        idx = 1;
+                      }
+                    }
+                    else {
+                      array[idx] = scode;
+                      idx = 0;
+                    }
+                  }
                   vg_draw_rectangle(20,20,50,50,0xff);
                 }
-
                 /* Mouse Interrupts */
                 if (msg.m_notify.interrupts & mask_mouse) {
                   vg_draw_rectangle(40,40,50,50,0xff0);
