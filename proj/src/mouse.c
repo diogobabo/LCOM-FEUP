@@ -96,7 +96,7 @@ int (send_mouse_cmd)(uint8_t cmd) {
     if(sys_outb(WRITE_PORT, cmd) != 0) {
       return 1;
     }
-    if(utils_sys_inb(OUT_BUF, &st) != 0) {
+    if(util_sys_inb(OUT_BUF, &st) != 0) {
       return 1;
     }
     if(st == ACK) {
