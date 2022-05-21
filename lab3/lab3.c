@@ -119,7 +119,7 @@ int(kbd_test_poll)() {
     } 
   }
   enable_interrupts();
-  kbd_print_no_sysinb(counter_kb);
+  kbd_print_no_sysinb(counterK);
   return 0;
 }
 
