@@ -1,6 +1,6 @@
 #include "mouse.h"
 
-int hook_id = 2;
+int hook_id_m = 6;
 int flag = 0;
 uint8_t byte;
 uint8_t scancode;
@@ -11,27 +11,34 @@ void (mouse_ih)() {
   if(utils_sys_inb(STAT_REG,&st) != 0) {
     flag = 1;
   }
-/*   if((st & KBC_OBF) == 0) {
+  if((st & KBC_OBF) == 0) {
+    printf("OBF not full");
     flag = 1;
     return;
-  } */
+  } 
   if(utils_sys_inb(OUT_BUF, &scancode) != 0) {
     flag = 1;
   }
   if((st & ERROR_PARITY_TIMEOUT) != 0) {
+    printf("Error Parity / Timeout");
     flag = 1;
   }
 }
 
 int (mouse_subscribe_int)(uint8_t *bit_no) {
-  *bit_no = hook_id;
-  sys_irqsetpolicy(IRQ_MOUSE,(IRQ_REENABLE | IRQ_EXCLUSIVE) ,&hook_id);
+  *bit_no = hook_id_m;
+  if(sys_irqsetpolicy(IRQ_MOUSE,(IRQ_REENABLE | IRQ_EXCLUSIVE) ,&hook_id_m) != 0) {
+    printf("Error mouse subscribe");
+    return 1;
+  }
   return 0;
 }
 
 int (mouse_unsubscribe_int)() {
-  uint8_t stat,temp;
-  sys_irqrmpolicy(&hook_id);
+  if(sys_irqrmpolicy(&hook_id_m) != 0) {
+    printf("Error mouse unsubscribe");
+    return 1;
+  }
   return 0;
 }
 
@@ -75,6 +82,7 @@ int (check_ibf_full)() {
   uint8_t st;
   if(utils_sys_inb(STAT_REG, &st) != 0) {return 1;}
   if((st & IBF_BIT) != 0) {
+    printf("IBF Full");
     return 1;
   }
   return 0;
@@ -113,15 +121,6 @@ int (send_mouse_cmd)(uint8_t cmd) {
 }
 
 int (mouse_disable_data_reporting)() {
-  int num = 0;
-  while(num < 3) {
-    if(send_mouse_cmd(DISABLE_DATA) != 0) {
-      num++;
-    }
-    else {
-      return 0;
-    }
-  }
-  return 1;
+  if(send_mouse_cmd(DISABLE_DATA) != 0) {return 1;}
+  return 0;
 }
-

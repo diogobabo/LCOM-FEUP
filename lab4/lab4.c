@@ -92,9 +92,74 @@ int (mouse_test_packet)(uint32_t cnt) {
 }
   
 int (mouse_test_async)(uint8_t idle_time) {
-    /* To be completed */
-    printf("%s(%u): under construction\n", __func__, idle_time);
-    return 1;
+  extern uint8_t scancode;
+  struct packet pack;
+  extern int counter;
+  int ipc_status,r;
+  message msg;
+  bool byteTwo = false;
+  bool byteThree = false;
+  extern int flag;
+  uint8_t systemHZ = sys_hz();
+  uint8_t saveTime = idle_time;
+  uint8_t bit_no, bit_no_timer;
+
+  if (mouse_enable_data_reporting() != 0) {return 1;}
+  if (mouse_subscribe_int(&bit_no)!=0) {return 1;}
+  if (timer_subscribe_int(&bit_no_timer) != 0) {return 1;}
+
+  uint32_t irq_set = BIT(bit_no);
+  uint32_t irq_set_timer = BIT(bit_no_timer);
+
+  while(idle_time > 0){
+      if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) { 
+        printf("driver_receive failed with: %d", r);
+        continue;
+      }
+      if (is_ipc_notify(ipc_status)) {
+        switch (_ENDPOINT_P(msg.m_source)) {
+          case HARDWARE: 
+            if (msg.m_notify.interrupts & irq_set) {
+              mouse_ih();
+              if(flag == 0) {
+                if (!byteTwo && !byteThree && (scancode & BIT(3))){
+                  pack.bytes[0] = scancode;
+                  byteTwo = true;
+                }
+                else if (byteTwo && (!byteThree)) {
+                  byteTwo = false;
+                  byteThree = true;
+                  pack.bytes[1] = scancode;
+                }
+                else if (byteThree && (!byteTwo)) {
+                  pack.bytes[2] = scancode;
+                  byteThree = false;
+                  mouse_set_packet(&pack);
+                  mouse_print_packet(&pack);
+                }
+                counter = 0;
+                idle_time = saveTime;
+              }
+            }
+            if (msg.m_notify.interrupts & irq_set_timer) {
+              timer_int_handler();
+              if(counter % systemHZ == 0) {
+                idle_time--;
+              }
+            }
+            break;
+          default:
+            break; 
+        }
+      }
+  }
+
+  if (mouse_unsubscribe_int()!=0) {return 1;}
+  if (timer_unsubscribe_int() != 0) {return 1;}
+  if (mouse_disable_data_reporting() != 0) {return 1;}
+  
+  
+  return 0;
 }
 
 int (mouse_test_gesture)(uint8_t x_len, uint8_t tolerance) {
