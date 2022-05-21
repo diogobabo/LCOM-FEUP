@@ -19,7 +19,6 @@ void playSnakeLoop() {
 
   xpm_image_t img;
   uint8_t *map;
-  xpm_map_t play_xpm;
   map = xpm_load(play_xpm,XPM_INDEXED,&img);
 
   if(video_set_graphics(0x115) != 0) {
