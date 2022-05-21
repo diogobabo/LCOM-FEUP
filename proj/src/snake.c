@@ -19,8 +19,8 @@ void playSnakeLoop() {
 
   xpm_image_t img;
   uint8_t *map;
-  xpm_map_t xpm_play;
-  map = xpm_load(xpm_play,XPM_INDEXED,&img);
+  xpm_map_t play_xpm;
+  map = xpm_load(play_xpm,XPM_INDEXED,&img);
 
   if(video_set_graphics(0x115) != 0) {
     printf("Error mapping mem");
