@@ -8,7 +8,7 @@ Makefile:15: *** missing separator.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May 21 15:51:37 2022
+# Make data base, printed on Sat May 21 16:59:30 2022
 
 # Variables
 
@@ -81,7 +81,7 @@ CURDIR := /home/babo/Downloads/MINIX-LCOM/shared/g04/proj/src
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # makefile (from 'Makefile', line 4)
@@ -233,7 +233,7 @@ LC_PAPER = pt_PT.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # makefile (from 'Makefile', line 8)
-CFLAGS = -pedantic -DPROJ
+CFLAGS = -pedantic -D __LCOM_OPTIMIZED__
 # environment
 COLORTERM = truecolor
 # environment
@@ -293,7 +293,6 @@ LC_IDENTIFICATION = pt_PT.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
- 
 # Load=140/1024=14%, Rehash=0, Collisions=12/156=8%
 
 # Pattern-specific Variable Values
@@ -302,9 +301,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66306, inode 22548262): 21 files, no impossibilities.
+# . (device 66306, inode 22548262): 30 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 30 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -339,12 +338,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 26 / storage = 236 B / avg = 9 B
-# current buf: size = 8162 B / used = 236 B / count = 26 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 307 B / avg = 8 B
+# current buf: size = 8162 B / used = 307 B / count = 35 / avg = 8 B
 
-# strcache performance: lookups = 30 / hit rate = 13%
+# strcache performance: lookups = 39 / hit rate = 10%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=0/30=0%
-# Finished Make data base on Sat May 21 15:51:37 2022
+# Load=35/8192=0%, Rehash=0, Collisions=0/39=0%
+# Finished Make data base on Sat May 21 16:59:30 2022
 
  

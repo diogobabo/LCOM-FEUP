@@ -19,7 +19,7 @@ void playSnakeLoop() {
 
   xpm_image_t img;
   uint8_t *map;
-  map = xpm_load(play_xpm,XPM_INDEXED,&img);
+  map = xpm_load(play_xpm,XPM_8_8_8,&img);
 
   if(video_set_graphics(0x115) != 0) {
     printf("Error mapping mem");
@@ -58,7 +58,7 @@ void playSnakeLoop() {
                 /* Keyboard Interrupts */
                 if(msg.m_notify.interrupts & mask_kb) {
                   kbc_ih();
-                  draw_pix_map(20,20,map,img);
+                  vg_draw_rectangle(500,500,350,350,0xff);
                 }
                 /* Mouse Interrupts */
                 if (msg.m_notify.interrupts & mask_mouse) {

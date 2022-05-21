@@ -69,17 +69,21 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
 }
 
 int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
-  for(unsigned int i = 0; i < len; i++) {
-    vg_draw_pixel(x + i,y,color);
-  }
+  for(unsigned i=x; i < (len+x); i++)
+    {
+      if(i >= h_res) break;
+      vg_draw_pixel(i, y, color);
+    }
   return 0;
 }
 
 int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
 
-  for(unsigned int i = 0; i < height; i++) {
-    vg_draw_hline(x,y + i,width,color);
-  }
+  for(unsigned i=y; i < (height+y); i++)
+    {
+      if(i >= v_res) break;
+      vg_draw_hline(x, i, width, color);
+    }
   return 0;
 }
 
@@ -120,7 +124,7 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
     }
     for(unsigned int j = 0; j < img.height; j++) {
       if((j + y) > v_res) {
-        return 1;
+        continue;
       }
       uint32_t color;
       uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
