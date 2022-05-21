@@ -184,7 +184,6 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
   if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while(scode != ESCSCAN) { /* You may want to use a different condition */
-        printf("boas");
         /* Get a request message. */
         if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
           printf("driver_receive failed with: %d", r);
