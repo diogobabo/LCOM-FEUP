@@ -58,6 +58,9 @@ int (video_set_graphics)(uint16_t mode){
 }
 
 int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
+  if(x >= h_res || y >= v_res || x < 0 || y < 0) {
+    return 1;
+  }
   uint8_t* pix;
   pix = (uint8_t* ) video_mem + (bytes_per_pixel * h_res * y + x * bytes_per_pixel);
   for(unsigned int i = 0; i < bytes_per_pixel; i++) {
@@ -69,20 +72,24 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
 }
 
 int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
-  for(unsigned i=x; i < (len+x); i++)
+  for(unsigned int i=0; i < len; i++)
     {
-      if(i >= h_res) break;
-      vg_draw_pixel(i, y, color);
+      if(x + i >= h_res) {
+        break;
+      }
+      vg_draw_pixel(x+i, y, color);
     }
   return 0;
 }
 
 int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
 
-  for(unsigned i=y; i < (height+y); i++)
+  for(unsigned int i=0; i < height; i++)
     {
-      if(i >= v_res) break;
-      vg_draw_hline(x, i, width, color);
+      if(y + i >= v_res) {
+        break;
+      }
+      vg_draw_hline(x,y+ i, width, color);
     }
   return 0;
 }
