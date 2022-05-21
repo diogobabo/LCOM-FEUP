@@ -52,9 +52,9 @@ int(video_test_init)(uint16_t mode, uint8_t delay) {
 int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
                           uint16_t width, uint16_t height, uint32_t color) {
                             
-  video_set_graphics(mode);
+  if(video_set_graphics(mode) != 0) {return 1;};
 
-  vg_draw_rectangle(x,y,width,height,color);
+  if(vg_draw_rectangle(x,y,width,height,color) != 0) {return 1;}
   
   extern uint8_t scode;
   extern int flag;
@@ -62,9 +62,9 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
   int ipc_status;
   message msg;
   int r;
-  bool twoBytes = false;
+  int idx = 0;
   uint8_t bit_no;
-  kb_subscribe(&bit_no);
+  if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while(scode != ESCSCAN) { /* You may want to use a different condition */
         /* Get a request message. */
@@ -79,19 +79,19 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
                 if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
                   kbc_ih();
                   if(flag == 0) {
-                    if(twoBytes) {
-                      twoBytes = false;
-                      array[1] = scode;
-                      kbd_print_scancode(!(scode & BIT(7)),2,array);
-                    }
-                    else {
-                      array[0] = scode;
+                    if(idx == 0) {
+                      array[idx] = scode;
                       if(scode == DEFSCAN) {
-                        twoBytes = true;
+                        idx = 1;
                       }
                       else {
-                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                        kbd_print_scancode(!(scode & BIT(7)),(idx + 1),array);
                       }
+                    }
+                    else {
+                      array[idx] = scode;
+                      idx = 0;
+                      kbd_print_scancode(!(scode & BIT(7)),(idx + 2),array);
                     }
                   }
                 }
@@ -101,9 +101,8 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y,
             }
         }
   }
-  kb_unsubscribe();
-  vg_exit();
-
+  if(kb_unsubscribe() != 0) {return 1;}
+  if(vg_exit() != 0) {return 1;}
   return 0;
 }
 
@@ -117,9 +116,9 @@ int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, ui
   int ipc_status;
   message msg;
   int r;
-  bool twoBytes = false;
+  int idx = 0;
   uint8_t bit_no;
-  kb_subscribe(&bit_no);
+  if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while(scode != ESCSCAN) { /* You may want to use a different condition */
         /* Get a request message. */
@@ -134,19 +133,19 @@ int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, ui
                 if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
                   kbc_ih();
                   if(flag == 0) {
-                    if(twoBytes) {
-                      twoBytes = false;
-                      array[1] = scode;
-                      kbd_print_scancode(!(scode & BIT(7)),2,array);
-                    }
-                    else {
-                      array[0] = scode;
+                    if(idx == 0) {
+                      array[idx] = scode;
                       if(scode == DEFSCAN) {
-                        twoBytes = true;
+                        idx = 1;
                       }
                       else {
-                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                        kbd_print_scancode(!(scode & BIT(7)),(idx + 1),array);
                       }
+                    }
+                    else {
+                      array[idx] = scode;
+                      idx = 0;
+                      kbd_print_scancode(!(scode & BIT(7)),(idx + 2),array);
                     }
                   }
                 }
@@ -156,8 +155,8 @@ int(video_test_pattern)(uint16_t mode, uint8_t no_rectangles, uint32_t first, ui
             }
         }
   }
-  kb_unsubscribe();
-  vg_exit();
+  if(kb_unsubscribe() != 0) {return 1;}
+  if(vg_exit() != 0) {return 1;}
 
   return 0;
 }
@@ -180,9 +179,9 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
   int ipc_status;
   message msg;
   int r;
-  bool twoBytes = false;
+  int idx = 0;
   uint8_t bit_no;
-  kb_subscribe(&bit_no);
+  if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while(scode != ESCSCAN) { /* You may want to use a different condition */
         printf("boas");
@@ -198,19 +197,19 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
                 if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
                   kbc_ih();
                   if(flag == 0) {
-                    if(twoBytes) {
-                      twoBytes = false;
-                      array[1] = scode;
-                      kbd_print_scancode(!(scode & BIT(7)),2,array);
-                    }
-                    else {
-                      array[0] = scode;
+                    if(idx == 0) {
+                      array[idx] = scode;
                       if(scode == DEFSCAN) {
-                        twoBytes = true;
+                        idx = 1;
                       }
                       else {
-                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                        kbd_print_scancode(!(scode & BIT(7)),(idx + 1),array);
                       }
+                    }
+                    else {
+                      array[idx] = scode;
+                      idx = 0;
+                      kbd_print_scancode(!(scode & BIT(7)),(idx + 2),array);
                     }
                   }
                 }
@@ -220,8 +219,9 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
             }
         }
   }
-  kb_unsubscribe();
-  vg_exit();
+  if(kb_unsubscribe() != 0) {return 1;}
+  if(vg_exit() != 0) {return 1;}
+
   return 0;
 }
 
@@ -242,7 +242,7 @@ int(video_test_move)(xpm_map_t xpm, uint16_t xi, uint16_t yi, uint16_t xf, uint1
   int ipc_status;
   message msg;
   int r;
-  bool twoBytes = false;
+  int idx = 0;
   uint8_t bit_no, bit_no_timer;
   timer_subscribe_int(&bit_no_timer);
   kb_subscribe(&bit_no);
@@ -265,19 +265,19 @@ int(video_test_move)(xpm_map_t xpm, uint16_t xi, uint16_t yi, uint16_t xf, uint1
                 if (msg.m_notify.interrupts & irq_set) { /* subscri ... process it */
                   kbc_ih();
                   if(flag == 0) {
-                    if(twoBytes) {
-                      twoBytes = false;
-                      array[1] = scode;
-                      kbd_print_scancode(!(scode & BIT(7)),2,array);
-                    }
-                    else {
-                      array[0] = scode;
+                    if(idx == 0) {
+                      array[idx] = scode;
                       if(scode == DEFSCAN) {
-                        twoBytes = true;
+                        idx = 1;
                       }
                       else {
-                        kbd_print_scancode(!(scode & BIT(7)),1,array);
+                        kbd_print_scancode(!(scode & BIT(7)),(idx + 1),array);
                       }
+                    }
+                    else {
+                      array[idx] = scode;
+                      idx = 0;
+                      kbd_print_scancode(!(scode & BIT(7)),(idx + 2),array);
                     }
                   }
                 }
@@ -338,9 +338,10 @@ int(video_test_move)(xpm_map_t xpm, uint16_t xi, uint16_t yi, uint16_t xf, uint1
             }
         }
   }
-  timer_unsubscribe_int();
-  kb_unsubscribe();
-  vg_exit();
+  if(timer_unsubscribe_int() != 0) {return 1;}
+  if(kb_unsubscribe() != 0) {return 1;}
+  if(vg_exit() != 0) {return 1;}
+
   return 0;
 }
 

@@ -132,6 +132,6 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
 }
 
 int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img) {
-  vg_draw_rectangle(x,y,img.width,img.height,0x00000000);
+  vg_draw_rectangle(x,y,img.width,img.height,0);
   return 0;
 }
