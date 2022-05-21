@@ -39,7 +39,7 @@ int(kbd_test_scan)() {
   message msg;
   int r;
   uint8_t bit_no;
-  uint8_t arr[2];
+  uint8_t array[2];
   if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no);
   while( scode != ESCSCAN ) { /* You may want to use a different condition */
@@ -87,7 +87,7 @@ int(kbd_test_poll)() {
   int idx = 0;
   extern uint8_t status;
   extern uint8_t scode;
-  uint8_t arr[2];
+  uint8_t array[2];
   extern int counterK;
   while(scode != ESCSCAN) {
     kbc_ih();
@@ -124,7 +124,7 @@ int(kbd_test_timed_scan)(uint8_t n) {
   int r;
   uint8_t bit_no;
   uint8_t bit_no_timer;
-  uint8_t arr[2];
+  uint8_t array[2];
   if(timer_subscribe_int(&bit_no_timer) != 0) {return 1;};
   if(kb_subscribe(&bit_no) != 0) {return 1;}
   uint32_t irq_set = BIT(bit_no); // mask kb
