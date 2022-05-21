@@ -8,8 +8,6 @@ void playSnakeLoop() {
   extern uint8_t scode;
   extern int flag;
   bool end = true;
-  uint8_t array[2];
-  int idx = 0;
   extern int counter;
   int ipc_status;
   message msg;
