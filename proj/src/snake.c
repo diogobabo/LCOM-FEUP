@@ -17,11 +17,9 @@ void playSnakeLoop() {
   uint32_t mask_mouse = BIT(bit_m);
   int time = 0;
 
-  xpm_image_t img;
-  uint8_t *map;
-  map = xpm_load(play_xpm,XPM_8_8_8,&img);
+  
 
-  if(video_set_graphics(0x115) != 0) {
+  if(video_set_graphics(0x14C) != 0) {
     printf("Error mapping mem");
     return;
   }
@@ -46,7 +44,6 @@ void playSnakeLoop() {
         if (is_ipc_notify(ipc_status)) { 
             switch (_ENDPOINT_P(msg.m_source)) {
               case HARDWARE: 
-                
                 /* Timer Interrupts */
                 if (msg.m_notify.interrupts & mask_timer) { 
                   timer_int_handler();
@@ -54,17 +51,14 @@ void playSnakeLoop() {
                     time++;
                   }
                 }
-
                 /* Keyboard Interrupts */
                 if(msg.m_notify.interrupts & mask_kb) {
                   kbc_ih();
-                  vg_draw_rectangle(500,500,350,350,0xff);
                 }
                 /* Mouse Interrupts */
                 if (msg.m_notify.interrupts & mask_mouse) {
                   mouse_ih();
                 }
-
                 if(time == 10) {
                   end = false;
                 }

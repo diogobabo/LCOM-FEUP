@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "system_error": "c",
+        "map": "c",
+        "__tree": "c"
+    }
+}

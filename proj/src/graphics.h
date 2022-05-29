@@ -2,7 +2,9 @@
 #define _LCOM_GRAPHICS_H_
 
 #include <lcom/lcf.h>
-#include "xpms/play.xpm"
+#include "xpms/start.xpm"
+#include "xpms/rules.xpm"
+#include "xpms/exit.xpm"
 #include "vbeMacros.h"
 
 int (video_set_graphics)(uint16_t mode);
