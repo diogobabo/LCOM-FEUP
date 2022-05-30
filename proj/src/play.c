@@ -17,5 +17,8 @@ void MenuStarter(){
 }
 
 void InterruptHandlerTimer(){
+  //game logic here
 
+  //print game state here
+  draw_objects(snake);
 }

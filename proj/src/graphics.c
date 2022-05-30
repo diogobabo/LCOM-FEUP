@@ -140,3 +140,12 @@ int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img) {
   vg_draw_rectangle(x,y,img.width,img.height,0);
   return 0;
 }
+
+int (draw_objects)(struct SnakeBody snake) {
+  //to be completed
+  return 0;
+}
+int (clear_objects)() {
+  //to be completed
+  return 0;
+}

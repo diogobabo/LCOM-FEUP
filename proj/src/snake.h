@@ -6,8 +6,8 @@
 #include <stdint.h>
 #include "keyboard.h"
 #include "mouse.h"
-#include "graphics.h"
 #include "play.h"
+#include "graphics.h"
 
 enum DEVICE{
   KBC,
