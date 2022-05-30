@@ -1,5 +1,5 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-Makefile:15: *** missing separator.  Stop.
+Makefile:16: *** missing separator.  Stop.
 
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
@@ -8,7 +8,7 @@ Makefile:15: *** missing separator.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 30 12:28:26 2022
+# Make data base, printed on Fri May 27 16:34:44 2022
 
 # Variables
 
@@ -27,7 +27,7 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-24688feb-df7f-49db-98fb-989e1562734d.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-6aa5e3e8-bf34-41a1-8a43-7dbd381bd9b1.sock
 # environment
 LC_NAME = pt_PT.UTF-8
 # environment
@@ -51,7 +51,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
 # environment
-PWD = /home/babo/Downloads/MINIX-LCOM/shared/g04/proj/src
+PWD = /home/babo/Downloads/MINIX-LCOM/shared/g04/lab4
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -67,7 +67,7 @@ VSCODE_CODE_CACHE_PATH = /home/babo/.config/Code/CachedData/c3511e6c69bb39013c4a
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.ANN4M1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.QAN5M1
 # default
 .LOADED := 
 # default
@@ -75,15 +75,15 @@ XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.ANN4M1
 # makefile
 MAKEFLAGS = pqrR
 # makefile
-CURDIR := /home/babo/Downloads/MINIX-LCOM/shared/g04/proj/src
+CURDIR := /home/babo/Downloads/MINIX-LCOM/shared/g04/lab4
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
-# makefile (from 'Makefile', line 4)
-SRCS = proj.c timer.c utils.c keyboard.c graphics.c mouse.c play.c snake.c
+# makefile (from 'Makefile', line 5)
+SRCS = lab4.c mouse.c timer.c utils.c
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -98,7 +98,7 @@ WAYLAND_DISPLAY = wayland-0
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
-# makefile (from 'Makefile', line 11)
+# makefile (from 'Makefile', line 12)
 DPADD = ${LIBLCF}
 # environment
 XDG_SESSION_DESKTOP = ubuntu
@@ -111,7 +111,7 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 4593
+VSCODE_PID = 4326
 # environment
 SDKMAN_DIR = /home/babo/.sdkman
 # environment
@@ -121,7 +121,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/babo-14ALC05:@/tmp/.ICE-unix/2079,unix/babo-14ALC05:/tmp/.ICE-unix/2079
+SESSION_MANAGER = local/babo-14ALC05:@/tmp/.ICE-unix/2096,unix/babo-14ALC05:/tmp/.ICE-unix/2096
 # automatic
 *F = $(notdir $*)
 # environment
@@ -175,7 +175,7 @@ SNAP = /snap/code/97
 # environment
 GRADLE_HOME = /home/babo/.sdkman/candidates/gradle/current
 # environment
-INVOCATION_ID = dc5896f3de654d0d842c3e4ae2c31793
+INVOCATION_ID = 0a2394fba61d44ba8cff53d488cfd50a
 # environment
 SNAP_REVISION = 97
 # environment
@@ -195,7 +195,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # makefile (from 'Makefile', line 2)
-PROG = proj
+PROG = lab4
 # environment
 LS_COLORS = 
 # automatic
@@ -215,7 +215,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 2126
+SYSTEMD_EXEC_PID = 2133
 # environment
 DISPLAY = :0
 # environment
@@ -231,31 +231,30 @@ SNAP_DATA = /var/snap/code/97
 # environment
 SNAP_CONTEXT = Pza2_x-52BspaoOpzgOfI36udiCmQXn38LrLGzVJ1HNc8UU-FwXg
 # environment
-MANAGERPID = 1883
+MANAGERPID = 1905
 # environment
 LC_MEASUREMENT = pt_PT.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4544
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4281
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
 LC_PAPER = pt_PT.UTF-8
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
-# makefile (from 'Makefile', line 8)
-CFLAGS = -pedantic -D __LCOM_OPTIMIZED__
+# makefile (from 'Makefile', line 9)
+CFLAGS = -pedantic -DLAB3
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/babo/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
 LC_CTYPE = pt_PT.UTF-8
 # environment
-JOURNAL_STREAM = 8:39057
+JOURNAL_STREAM = 8:39975
 # environment
 XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
- 
 SDKMAN_CANDIDATES_API = https://api.sdkman.io/2
 # environment
 HOME = /home/babo
@@ -291,7 +290,7 @@ SNAP_COMMON = /var/snap/code/common
 SNAP_USER_DATA = /home/babo/snap/code/97
 # environment
 XDG_MENU_PREFIX = gnome-
-# makefile (from 'Makefile', line 12)
+# makefile (from 'Makefile', line 13)
 LDADD = -llcf
 # environment
 GDMSESSION = ubuntu
@@ -300,6 +299,7 @@ LC_IDENTIFICATION = pt_PT.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
+ 
 # Load=143/1024=14%, Rehash=0, Collisions=8/159=5%
 
 # Pattern-specific Variable Values
@@ -308,9 +308,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66306, inode 22548262): 32 files, no impossibilities.
+# . (device 66306, inode 22548214): 20 files, no impossibilities.
 
-# 32 files, no impossibilities in 1 directories.
+# 20 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -345,12 +345,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 37 / storage = 321 B / avg = 8 B
-# current buf: size = 8162 B / used = 321 B / count = 37 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 212 B / avg = 8 B
+# current buf: size = 8162 B / used = 212 B / count = 25 / avg = 8 B
 
-# strcache performance: lookups = 41 / hit rate = 9%
+# strcache performance: lookups = 29 / hit rate = 13%
 # hash-table stats:
-# Load=37/8192=0%, Rehash=0, Collisions=0/41=0%
-# Finished Make data base on Mon May 30 12:28:26 2022
+# Load=25/8192=0%, Rehash=0, Collisions=0/29=0%
+# Finished Make data base on Fri May 27 16:34:44 2022
 
  

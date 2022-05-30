@@ -1,5 +1,7 @@
 #include "snake.h"
 
+static enum STATE GameState;
+
 uint8_t bit_timer;
 uint8_t bit_kb;
 uint8_t bit_m;
@@ -7,7 +9,6 @@ uint8_t bit_m;
 void playSnakeLoop() {
   extern uint8_t scode;
   extern int flag;
-  bool end = true;
   extern int counter;
   int ipc_status;
   message msg;
@@ -33,10 +34,10 @@ void playSnakeLoop() {
     printf("Error changing freq");
     return;
   }
+  GameState = PLAY_SOLO;
+  MenuStarter();
 
-
-
-  while(end) { 
+  while(GameState != EXIT) { 
         if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
           printf("driver_receive failed with: %d", r);
           continue;
@@ -47,20 +48,23 @@ void playSnakeLoop() {
                 /* Timer Interrupts */
                 if (msg.m_notify.interrupts & mask_timer) { 
                   timer_int_handler();
+                  InterruptRouter(TIMER);
                   if(counter % 60 == 0) {
                     time++;
                   }
                 }
                 /* Keyboard Interrupts */
                 if(msg.m_notify.interrupts & mask_kb) {
-                  kbc_ih();
+                  kbc_ih(); 
+                  InterruptRouter(KBC);
                 }
                 /* Mouse Interrupts */
                 if (msg.m_notify.interrupts & mask_mouse) {
                   mouse_ih();
+                  InterruptRouter(MOUSE);
                 }
                 if(time == 10) {
-                  end = false;
+                  GameState = EXIT;
                 }
                 break;
               default:
@@ -78,4 +82,50 @@ void playSnakeLoop() {
     printf("Error Disabling Data");
     return;
   }
+}
+
+void InterruptRouter(enum DEVICE device){
+  switch (GameState){
+    case MENU:
+      MenuIH(device);
+      break;
+    case PAUSE:
+      PauseIH(device);
+      break;
+    case PLAY_SOLO:
+      PlaySoloIH(device);
+      break;
+    case PLAY_MULTIPLAYER:
+      PlayMultiplayerIH(device);
+      break;
+    case DEAD:
+      DeadIH(device);
+      break;
+    case EXIT:
+      break;
+  }
+}
+
+void MenuIH(enum DEVICE device){
+  return;
+}
+void PauseIH(enum DEVICE device){
+  return;
+}
+void PlaySoloIH(enum DEVICE device){
+  switch (device) {
+    case TIMER:
+      InterruptHandlerTimer();
+      break;
+    case KBC:
+      break;
+    default:
+      break;
+  }
+}
+void PlayMultiplayerIH(enum DEVICE device){
+  return;
+}
+void DeadIH(enum DEVICE device){
+  return;
 }
