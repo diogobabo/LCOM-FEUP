@@ -1,5 +1,5 @@
 /* XPM */
-static xpm_row_t const play_car[] = {
+static xpm_row_t const play_menu[] = {
 /* columns rows colors chars-per-pixel */
 "1152 864 240 2 ",
 "   c #1C1C1C",
