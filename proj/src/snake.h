@@ -1,36 +1,52 @@
-#ifndef _SNAKE_H
-#define _SNAKE_H
+#ifndef _PLAY_H
+#define _PLAY_H
 
 #include <lcom/lcf.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "keyboard.h"
-#include "mouse.h"
-#include "play.h"
-#include "graphics.h"
+#include "devices/graphics.h"
+#include "xpms/play.xpm"
+#include "xpms/snake.xpm"
 
-enum DEVICE{
-  KBC,
-  TIMER,
-  MOUSE,
-  RTC,
-  SERIAL_PORT,
-};
-enum STATE{
-  PAUSE,
-  MENU,
-  PLAY_SOLO,
-  PLAY_MULTIPLAYER,
-  DEAD,
-  EXIT,
+enum SnakeBodyType{
+  HEAD,
+  BODY,
+  TAIL
 };
 
-void playSnakeLoop();
-void InterruptRouter(enum DEVICE device);
-void MenuIH(enum DEVICE device);
-void PauseIH(enum DEVICE device);
-void PlaySoloIH(enum DEVICE device);
-void PlayMultiplayerIH(enum DEVICE device);
-void DeadIH(enum DEVICE device);
+enum Movement{
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
+};
+
+typedef struct Snake
+{
+  int topLeftPixelPosY;
+
+  int topLeftPixelPosX;
+
+  int snakeRectanglePixelSize;
+
+  int snakeSize;
+
+  struct Snake* nextBody;
+
+  enum SnakeBodyType bodyType;
+
+}Snake;
+
+void InterruptHandlerTimer();
+
+void MenuStarter();
+
+void drawSnake();
+
+void drawMenu();
+
+void moveSnake();
+
+void InterruptHandlerKBC(enum Movement mov);
 
 #endif

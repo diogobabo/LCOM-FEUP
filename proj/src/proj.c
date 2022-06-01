@@ -1,10 +1,10 @@
 #include <lcom/lcf.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "keyboard.h"
-#include "mouse.h"
-#include "graphics.h"
-#include "snake.h"
+#include "devices/keyboard.h"
+#include "devices/mouse.h"
+#include "devices/graphics.h"
+#include "game.h"
 
 
 int main(int argc, char *argv[]) {
@@ -48,7 +48,7 @@ int(proj_main_loop)(int argc, char* argv[]){
     return 1;
   }
 
-  playSnakeLoop();
+  gameLoop();
 
 
   if(timer_unsubscribe_int() != 0) {

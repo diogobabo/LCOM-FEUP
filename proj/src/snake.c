@@ -1,131 +1,126 @@
 #include "snake.h"
 
-static enum STATE GameState;
+static enum Movement MovGeneral;
+static double velocity;
+static Snake snake;
 
-uint8_t bit_timer;
-uint8_t bit_kb;
-uint8_t bit_m;
+void MenuStarter(){
+  MovGeneral = DOWN;
+  snake.topLeftPixelPosY = 20;
+  snake.topLeftPixelPosX = 20;
+  snake.snakeRectanglePixelSize = 50; 
+  snake.snakeSize = 1;
+  snake.bodyType = HEAD;
+  snake.nextBody = NULL;
+  velocity = 1;
+}
 
-void playSnakeLoop() {
-  extern uint8_t scode;
-  extern int flag;
-  extern int counter;
-  int ipc_status;
-  message msg;
-  int r;
-  uint32_t mask_timer = BIT(bit_timer);
-  uint32_t mask_kb = BIT(bit_kb);
-  uint32_t mask_mouse = BIT(bit_m);
-  int time = 0;
+void InterruptHandlerTimer(){
+  moveSnake();
+  drawSnake();
+}
 
+void drawMenu() {
+  uint8_t *map;
+  xpm_image_t img;
+  map = xpm_load(play_car,XPM_8_8_8_8,&img);
+  draw_pix_map(0,0,map,img);
+}
+
+
+void drawSnake() {
+  uint8_t *map;
+  xpm_image_t img;
+
+  switch (MovGeneral)
+  {
+  case UP:
+    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
+    break;
   
+  case DOWN:
+    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
+    break;
 
-  if(video_set_graphics(0x14C) != 0) {
-    printf("Error mapping mem");
-    return;
+  case LEFT:
+    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
+    break;
+    
+  case RIGHT:
+    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
+    break;    
+
+  default:
+    break;
   }
 
-  if (mouse_enable_data_reporting() != 0) {
-    printf("Error enabling mouse data");
-    return;
-  }
-
-  if(timer_set_frequency(0, 60) != 0) {
-    printf("Error changing freq");
-    return;
-  }
-  GameState = PLAY_SOLO;
-  MenuStarter();
-
-  while(GameState != EXIT) { 
-        if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
-          printf("driver_receive failed with: %d", r);
-          continue;
-        }
-        if (is_ipc_notify(ipc_status)) { 
-            switch (_ENDPOINT_P(msg.m_source)) {
-              case HARDWARE: 
-                /* Timer Interrupts */
-                if (msg.m_notify.interrupts & mask_timer) { 
-                  timer_int_handler();
-                  InterruptRouter(TIMER);
-                  if(counter % 60 == 0) {
-                    time++;
-                  }
-                }
-                /* Keyboard Interrupts */
-                if(msg.m_notify.interrupts & mask_kb) {
-                  kbc_ih(); 
-                  InterruptRouter(KBC);
-                }
-                /* Mouse Interrupts */
-                if (msg.m_notify.interrupts & mask_mouse) {
-                  mouse_ih();
-                  InterruptRouter(MOUSE);
-                }
-                if(time == 10) {
-                  GameState = EXIT;
-                }
-                break;
-              default:
-                break; 
-            }
-        }
-  }
-
-  if(vg_exit() != 0) {
-    printf("Error going back to text mode");
-    return;
-  }
-
-  if (mouse_disable_data_reporting() != 0) {
-    printf("Error Disabling Data");
-    return;
-  }
-}
-
-void InterruptRouter(enum DEVICE device){
-  switch (GameState){
-    case MENU:
-      MenuIH(device);
-      break;
-    case PAUSE:
-      PauseIH(device);
-      break;
-    case PLAY_SOLO:
-      PlaySoloIH(device);
-      break;
-    case PLAY_MULTIPLAYER:
-      PlayMultiplayerIH(device);
-      break;
-    case DEAD:
-      DeadIH(device);
-      break;
-    case EXIT:
-      break;
-  }
-}
-
-void MenuIH(enum DEVICE device){
+  draw_pix_map(snake.topLeftPixelPosX,snake.topLeftPixelPosY,map,img);
   return;
-}
-void PauseIH(enum DEVICE device){
-  return;
-}
-void PlaySoloIH(enum DEVICE device){
-  switch (device) {
-    case TIMER:
-      InterruptHandlerTimer();
-      break;
-    case KBC:
-      break;
-    default:
-      break;
+  if(snake.nextBody == NULL){
+    return;
   }
+
+  Snake *nextSnake = snake.nextBody;
+
+  while (1)
+  {
+    draw_pix_map(nextSnake->topLeftPixelPosX,nextSnake->topLeftPixelPosY,map,img);
+
+    if(nextSnake->nextBody == NULL){
+      break;
+    }
+    nextSnake = nextSnake->nextBody;
+  }
+
+
 }
-void PlayMultiplayerIH(enum DEVICE device){
+
+void moveSnake() {
+  
+  switch (MovGeneral)
+  {
+  case UP:
+    snake.topLeftPixelPosY -= velocity;
+    break;
+  
+  case DOWN:
+    snake.topLeftPixelPosY += velocity;
+    break;
+
+  case LEFT:
+    snake.topLeftPixelPosX -= velocity;
+    break;
+    
+  case RIGHT:
+    snake.topLeftPixelPosX += velocity;
+    break;    
+
+  default:
+    break;
+  }
   return;
+  if(snake.nextBody == NULL){
+      return;
+  }
+
+  Snake *nextSnake = snake.nextBody;
+  Snake *lastSnake = &snake;
+
+  while (1)
+  {
+    nextSnake->topLeftPixelPosX = lastSnake->topLeftPixelPosX;
+    nextSnake->topLeftPixelPosY = lastSnake->topLeftPixelPosY;
+
+    lastSnake = nextSnake;
+
+    if(nextSnake->nextBody == NULL){
+      break;
+    }
+    nextSnake = nextSnake->nextBody;
+  }
+
 }
-void DeadIH(enum DEVICE device){
-  return;
+
+void InterruptHandlerKBC(enum Movement mov){
+  MovGeneral = mov;
 }

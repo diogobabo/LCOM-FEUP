@@ -12,6 +12,8 @@
     "graphics.h": "c",
     "snake.h": "c",
     "keyboard.h": "c",
-    "play.h": "c"
+    "play.h": "c",
+    "game.h": "c"
   },
+  "C_Cpp.errorSquiggles": "Disabled",
 }

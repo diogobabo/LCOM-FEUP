@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-Makefile:15: *** missing separator.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ Makefile:15: *** missing separator.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 30 12:28:26 2022
+# Make data base, printed on Wed Jun  1 16:10:11 2022
 
 # Variables
 
@@ -27,7 +25,7 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-24688feb-df7f-49db-98fb-989e1562734d.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-fa04d22c-48f5-4e9f-b9db-a06b64f0e7fc.sock
 # environment
 LC_NAME = pt_PT.UTF-8
 # environment
@@ -67,7 +65,7 @@ VSCODE_CODE_CACHE_PATH = /home/babo/.config/Code/CachedData/c3511e6c69bb39013c4a
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.ANN4M1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.RK30M1
 # default
 .LOADED := 
 # default
@@ -111,7 +109,7 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 4593
+VSCODE_PID = 4834
 # environment
 SDKMAN_DIR = /home/babo/.sdkman
 # environment
@@ -121,7 +119,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/babo-14ALC05:@/tmp/.ICE-unix/2079,unix/babo-14ALC05:/tmp/.ICE-unix/2079
+SESSION_MANAGER = local/babo-14ALC05:@/tmp/.ICE-unix/2054,unix/babo-14ALC05:/tmp/.ICE-unix/2054
 # automatic
 *F = $(notdir $*)
 # environment
@@ -175,7 +173,7 @@ SNAP = /snap/code/97
 # environment
 GRADLE_HOME = /home/babo/.sdkman/candidates/gradle/current
 # environment
-INVOCATION_ID = dc5896f3de654d0d842c3e4ae2c31793
+INVOCATION_ID = 525d62d49ecd480089751a6ab87202a0
 # environment
 SNAP_REVISION = 97
 # environment
@@ -215,7 +213,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 2126
+SYSTEMD_EXEC_PID = 2098
 # environment
 DISPLAY = :0
 # environment
@@ -231,11 +229,11 @@ SNAP_DATA = /var/snap/code/97
 # environment
 SNAP_CONTEXT = Pza2_x-52BspaoOpzgOfI36udiCmQXn38LrLGzVJ1HNc8UU-FwXg
 # environment
-MANAGERPID = 1883
+MANAGERPID = 1865
 # environment
 LC_MEASUREMENT = pt_PT.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4544
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4790
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
@@ -249,13 +247,12 @@ GDK_PIXBUF_MODULE_FILE = /home/babo/snap/code/common/.cache/gdk-pixbuf-loaders.c
 # environment
 LC_CTYPE = pt_PT.UTF-8
 # environment
-JOURNAL_STREAM = 8:39057
+JOURNAL_STREAM = 8:37120
 # environment
 XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
- 
 SDKMAN_CANDIDATES_API = https://api.sdkman.io/2
 # environment
 HOME = /home/babo
@@ -280,6 +277,9 @@ SNAP_VERSION = c3511e6c
 # default
 SUFFIXES := 
 # environment
+ 
+Makefile:15: *** missing separator.  Stop.
+
 VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
@@ -308,9 +308,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66306, inode 22548262): 32 files, no impossibilities.
+# . (device 66306, inode 22548262): 34 files, no impossibilities.
 
-# 32 files, no impossibilities in 1 directories.
+# 34 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -345,12 +345,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 37 / storage = 321 B / avg = 8 B
-# current buf: size = 8162 B / used = 321 B / count = 37 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 39 / storage = 333 B / avg = 8 B
+# current buf: size = 8162 B / used = 333 B / count = 39 / avg = 8 B
 
-# strcache performance: lookups = 41 / hit rate = 9%
+# strcache performance: lookups = 43 / hit rate = 9%
 # hash-table stats:
-# Load=37/8192=0%, Rehash=0, Collisions=0/41=0%
-# Finished Make data base on Mon May 30 12:28:26 2022
+# Load=39/8192=0%, Rehash=0, Collisions=0/43=0%
+# Finished Make data base on Wed Jun  1 16:10:11 2022
 
  

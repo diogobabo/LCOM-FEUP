@@ -2,6 +2,7 @@
 #include <math.h>
 
 static char *video_mem;		/* Process (virtual) address to which VRAM is mapped */
+static char *buffer;		/* buffer (virtual) address to which a buffer is mapped */
 static unsigned h_res;	        /* Horizontal resolution in pixels */
 static unsigned v_res;	        /* Vertical resolution in pixels */
 static unsigned int bytes_per_pixel; /* Number of VRAM bytes per pixel */
@@ -40,6 +41,11 @@ int (video_set_graphics)(uint16_t mode){
   if(video_mem == MAP_FAILED) {
    panic("couldn't map video memory");
   }
+  buffer = malloc(vram_size);
+
+  if(buffer == MAP_FAILED) {
+   panic("couldn't map buffer memory");
+  }
 
   reg86_t r86;
   memset(&r86, 0, sizeof(r86));
@@ -62,7 +68,7 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
     return 1;
   }
   uint8_t* pix;
-  pix = (uint8_t* ) video_mem + (bytes_per_pixel * h_res * y + x * bytes_per_pixel);
+  pix = (uint8_t* ) buffer + (bytes_per_pixel * h_res * y + x * bytes_per_pixel);
   for(unsigned int i = 0; i < bytes_per_pixel; i++) {
     uint8_t colorTemp = color & 0x000000FF; // 1 byte de cada vez
     *(i + pix) = colorTemp;
@@ -120,13 +126,7 @@ int(vg_draw_matrix)(uint16_t mode, uint8_t no_rectangles, uint32_t first, uint8_
 
 int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
   for(unsigned int i = 0; i < img.width; i++) {
-    if((x + i) > h_res) {
-      return 1;
-    }
     for(unsigned int j = 0; j < img.height; j++) {
-      if((j + y) > v_res) {
-        continue;
-      }
       uint32_t color;
       uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
       memcpy(&color, pos, bytes_per_pixel);
@@ -141,11 +141,7 @@ int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img) {
   return 0;
 }
 
-int (draw_objects)(struct SnakeBody snake) {
-  //to be completed
-  return 0;
-}
-int (clear_objects)() {
-  //to be completed
-  return 0;
+void switchBuffer(){
+  memcpy(video_mem,buffer,h_res*v_res*bytes_per_pixel);
+  vg_draw_rectangle(0,0,h_res,v_res,0);
 }
