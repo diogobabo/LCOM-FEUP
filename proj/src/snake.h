@@ -7,11 +7,13 @@
 #include "devices/graphics.h"
 #include "xpms/play.xpm"
 #include "xpms/snake.xpm"
+#include "xpms/wall.xpm"
 
 enum SnakeBodyType{
   HEAD,
   BODY,
-  TAIL
+  TAIL,
+  NULLBODY
 };
 
 enum Movement{
@@ -21,7 +23,29 @@ enum Movement{
   RIGHT
 };
 
-typedef struct Snake
+enum ObjectType{
+  FRUIT,
+  BLOCK
+};
+
+typedef struct Object_t
+{
+  int topLeftPixelPosY;
+
+  int topLeftPixelPosX;
+
+  int RectanglePixelSize;
+
+  enum ObjectType type;
+
+}Object;
+
+typedef struct ObjectList_t {
+    Object Object_entry;
+    struct ObjectList_t *Object_next;
+}ObjectList;
+
+typedef struct Snake_t
 {
   int topLeftPixelPosY;
 
@@ -31,7 +55,7 @@ typedef struct Snake
 
   int snakeSize;
 
-  struct Snake* nextBody;
+  struct Snake_t* nextBody;
 
   enum SnakeBodyType bodyType;
 
@@ -48,5 +72,11 @@ void drawMenu();
 void moveSnake();
 
 void InterruptHandlerKBC(enum Movement mov);
+
+void drawObjects();
+
+int CheckColisions();
+
+int CheckSingleColision(int rect1topLx,int rect1topLy,int rect1BotRx,int rect1BotRy,int rect2topLx,int rect2topLy,int rect2BotRx,int rect2BotRy);//1 if true 0 if false
 
 #endif
