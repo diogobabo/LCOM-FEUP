@@ -6,9 +6,9 @@ uint8_t bit_kb;
 uint8_t bit_m;
 extern uint8_t scode;
 extern int flag;
+extern int counter;
 
 void gameLoop() {
-  extern int counter;
   int ipc_status;
   message msg;
   int r;

@@ -5,6 +5,7 @@ static double velocity;
 static Snake snake;
 static ObjectList listObjects;
 static Object fruit;
+extern int counter;
 
 void MenuStarter(){
   MovGeneral = DOWN;
@@ -29,7 +30,7 @@ void MenuStarter(){
 
   snake.nextBody = s;
 
-  velocity = 1;
+  velocity = 48;
   fruit.RectanglePixelSize = 48;
   fruit.topLeftPixelPosX = 200;
   fruit.topLeftPixelPosY = 200;
@@ -38,7 +39,9 @@ void MenuStarter(){
 }
 
 void InterruptHandlerTimer(){
-  moveSnake();
+  if(counter % 48 == 0) {
+    moveSnake();
+  }
   drawSnake();
   drawObjects();
 }
@@ -109,30 +112,25 @@ void drawObjects() {
 }
 
 void moveSnake() {
-  
+
+  snake.lastX = snake.topLeftPixelPosX;
+  snake.lastY = snake.topLeftPixelPosY;
+
   switch (MovGeneral)
   {
   case UP:
-    snake.lastX = snake.topLeftPixelPosX;
-    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosY -= velocity;
     break;
   
   case DOWN:
-    snake.lastX = snake.topLeftPixelPosX;
-    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosY += velocity;
     break;
 
   case LEFT:
-    snake.lastX = snake.topLeftPixelPosX;
-    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosX -= velocity;
     break;
     
   case RIGHT:
-    snake.lastX = snake.topLeftPixelPosX;
-    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosX += velocity;
     break;    
 
@@ -144,14 +142,10 @@ void moveSnake() {
       return;
   }
 
-  int flag = CheckColisions();
-
   Snake *nextSnake = snake.nextBody;
   Snake *lastSnake = &snake;
 
-  if(flag == 1){
-    flag++;
-  }
+
 /*vejam este loop para mudar as cenas da cobra*/
   while (1)
   {
@@ -169,6 +163,11 @@ void moveSnake() {
     nextSnake = nextSnake->nextBody;
   }
 
+  int flag = CheckColisions();
+
+  if(flag == 1){
+      flag++;
+    }
 }
 
 int CheckColisions(){
@@ -182,18 +181,12 @@ int CheckColisions(){
 }
 
 int CheckSingleColision(Snake *snake,Object *object){
-  /*vcs sao uns burros*/
   if (snake->topLeftPixelPosX < object->topLeftPixelPosX + object->RectanglePixelSize && 
   snake->topLeftPixelPosX + snake->snakeRectanglePixelSize > object->topLeftPixelPosX && 
   snake->topLeftPixelPosY < object->topLeftPixelPosY + object->RectanglePixelSize && 
   snake->topLeftPixelPosY + snake->snakeRectanglePixelSize > object->topLeftPixelPosY){
     return 1;
   }
-  /*
-  if (rect1topLx < rect2BotRx && rect1BotRx > rect2topLx && rect1topLy < rect2BotRy && rect1BotRy > rect2topLy){
-    return 1;
-  }
-  */
   return 0;
 }
 
