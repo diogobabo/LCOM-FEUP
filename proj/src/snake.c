@@ -10,6 +10,8 @@ void MenuStarter(){
   MovGeneral = DOWN;
   snake.topLeftPixelPosY = 60;
   snake.topLeftPixelPosX = 20;
+  snake.lastX = snake.topLeftPixelPosX;
+  snake.lastY = snake.topLeftPixelPosY;
   snake.snakeRectanglePixelSize = 48; 
   snake.snakeSize = 1;
   snake.bodyType = HEAD;
@@ -18,17 +20,19 @@ void MenuStarter(){
 
   s->topLeftPixelPosY = 12;
   s->topLeftPixelPosX = 20;
+  s->lastX = s->topLeftPixelPosX;
+  s->lastY = s->topLeftPixelPosY;
   s->snakeRectanglePixelSize = 48; 
   s->snakeSize = 1;
-  s->bodyType = NULLBODY;
+  s->bodyType = BODY;
   s->nextBody = NULL;
 
   snake.nextBody = s;
 
   velocity = 1;
   fruit.RectanglePixelSize = 48;
-  fruit.topLeftPixelPosX = 140;
-  fruit.topLeftPixelPosY = 140;
+  fruit.topLeftPixelPosX = 200;
+  fruit.topLeftPixelPosY = 200;
   fruit.type = FRUIT;
   listObjects.Object_entry = fruit;
 }
@@ -87,9 +91,10 @@ void drawSnake() {
 
   while (1)
   {
+
     draw_pix_map(nextSnake->topLeftPixelPosX,nextSnake->topLeftPixelPosY,map,img);
 
-    if(nextSnake->nextBody == NULL){
+    if(nextSnake->nextBody == NULL || nextSnake->nextBody->bodyType == NULLBODY){
       break;
     }
     nextSnake = nextSnake->nextBody;
@@ -108,18 +113,26 @@ void moveSnake() {
   switch (MovGeneral)
   {
   case UP:
+    snake.lastX = snake.topLeftPixelPosX;
+    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosY -= velocity;
     break;
   
   case DOWN:
+    snake.lastX = snake.topLeftPixelPosX;
+    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosY += velocity;
     break;
 
   case LEFT:
+    snake.lastX = snake.topLeftPixelPosX;
+    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosX -= velocity;
     break;
     
   case RIGHT:
+    snake.lastX = snake.topLeftPixelPosX;
+    snake.lastY = snake.topLeftPixelPosY;
     snake.topLeftPixelPosX += velocity;
     break;    
 
@@ -136,25 +149,17 @@ void moveSnake() {
   Snake *nextSnake = snake.nextBody;
   Snake *lastSnake = &snake;
 
+  if(flag == 1){
+    flag++;
+  }
+/*vejam este loop para mudar as cenas da cobra*/
   while (1)
   {
-    if(flag == 1){
-      
-      if(nextSnake->bodyType == NULLBODY){
-      Snake *s = malloc(sizeof(Snake));
+    nextSnake->lastX = nextSnake->topLeftPixelPosX;
+    nextSnake->lastY = nextSnake->topLeftPixelPosY;
 
-      s->topLeftPixelPosY = 12;
-      s->topLeftPixelPosX = 20;
-      s->snakeRectanglePixelSize = 48; 
-      s->snakeSize = 1;
-      s->bodyType = BODY;
-      s->nextBody = NULL;
-
-    }
-    }
-    
-    nextSnake->topLeftPixelPosX = lastSnake->topLeftPixelPosX;
-    nextSnake->topLeftPixelPosY = lastSnake->topLeftPixelPosY;
+    nextSnake->topLeftPixelPosX = lastSnake->lastX;
+    nextSnake->topLeftPixelPosY = lastSnake->lastY;
 
     lastSnake = nextSnake;
 
@@ -168,7 +173,7 @@ void moveSnake() {
 
 int CheckColisions(){
   //fruit colision
-  if(CheckSingleColision(snake.topLeftPixelPosX,snake.topLeftPixelPosY,snake.topLeftPixelPosX + snake.snakeRectanglePixelSize,snake.topLeftPixelPosY + snake.snakeRectanglePixelSize,fruit.topLeftPixelPosX,fruit.topLeftPixelPosY,fruit.topLeftPixelPosX + fruit.RectanglePixelSize,fruit.topLeftPixelPosY + fruit.RectanglePixelSize)==1){
+  if(CheckSingleColision(&snake,&fruit)==1){
       return 1;//1 is only fruit colision
   }
   return 0;
@@ -176,10 +181,19 @@ int CheckColisions(){
   //other colision
 }
 
-int CheckSingleColision(int rect1topLx,int rect1topLy,int rect1BotRx,int rect1BotRy,int rect2topLx,int rect2topLy,int rect2BotRx,int rect2BotRy){
+int CheckSingleColision(Snake *snake,Object *object){
+  /*vcs sao uns burros*/
+  if (snake->topLeftPixelPosX < object->topLeftPixelPosX + object->RectanglePixelSize && 
+  snake->topLeftPixelPosX + snake->snakeRectanglePixelSize > object->topLeftPixelPosX && 
+  snake->topLeftPixelPosY < object->topLeftPixelPosY + object->RectanglePixelSize && 
+  snake->topLeftPixelPosY + snake->snakeRectanglePixelSize > object->topLeftPixelPosY){
+    return 1;
+  }
+  /*
   if (rect1topLx < rect2BotRx && rect1BotRx > rect2topLx && rect1topLy < rect2BotRy && rect1BotRy > rect2topLy){
     return 1;
   }
+  */
   return 0;
 }
 

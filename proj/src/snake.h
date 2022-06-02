@@ -51,6 +51,10 @@ typedef struct Snake_t
 
   int topLeftPixelPosX;
 
+  int lastY;
+
+  int lastX;
+
   int snakeRectanglePixelSize;
 
   int snakeSize;
@@ -77,6 +81,6 @@ void drawObjects();
 
 int CheckColisions();
 
-int CheckSingleColision(int rect1topLx,int rect1topLy,int rect1BotRx,int rect1BotRy,int rect2topLx,int rect2topLy,int rect2BotRx,int rect2BotRy);//1 if true 0 if false
+int CheckSingleColision(Snake *snake,Object *object);//1 if true 0 if false
 
 #endif
