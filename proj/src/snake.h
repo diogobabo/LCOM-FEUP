@@ -5,10 +5,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "devices/graphics.h"
-#include "xpms/play.xpm"
 #include "xpms/snake.xpm"
 #include "xpms/wall.xpm"
 
+#define PIXELOFFSET 48
+#define SNAKEMAXSIZE 864
 enum SnakeBodyType{
   HEAD,
   BODY,
@@ -47,31 +48,23 @@ typedef struct ObjectList_t {
 
 typedef struct Snake_t
 {
-  int topLeftPixelPosY;
+  int y;
 
-  int topLeftPixelPosX;
+  int x;
 
   int lastY;
 
   int lastX;
 
-  int snakeRectanglePixelSize;
-
-  int snakeSize;
-
-  struct Snake_t* nextBody;
-
   enum SnakeBodyType bodyType;
 
-}Snake;
+}SnakeBody;
 
 void InterruptHandlerTimer();
 
 void MenuStarter();
 
 void drawSnake();
-
-void drawMenu();
 
 void moveSnake();
 
@@ -81,6 +74,8 @@ void drawObjects();
 
 int CheckColisions();
 
-int CheckSingleColision(Snake *snake,Object *object);//1 if true 0 if false
+int CheckSingleColision(SnakeBody *snake,Object *object);//1 if true 0 if false
+
+void updateMov();
 
 #endif

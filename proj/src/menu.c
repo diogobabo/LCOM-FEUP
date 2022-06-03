@@ -1,39 +1,64 @@
-#include <stdbool.h>
 #include "menu.h"
-#include "graphics.h"
+
+int option = 0;
+
+extern enum STATE GameState;
+
+// loads xpm
+extern uint8_t *menuPlay;
+extern xpm_image_t imgMenuPlay;
+
+extern uint8_t *menuExit;
+extern xpm_image_t imgMenuExit;
 
 
-int drawMenu() {
-    uint8_t *map;
-    uint8_t *map2;
-    xpm_image_t img;
-    xpm_image_t img2;
-    map = xpm_load(menu_xpm,XPM_8_8_8_8,&img);
-    map2 = xpm_load(menu2_xpm,XPM_8_8_8_8,&img2);
 
-    draw_pix_map(0,0,map,img);
+void MenuTimerHandler() {
+  drawMenu(option);
 }
 
-int selectMenu(uint8_t scode) {
-    bool play;
-
-    if(scode == ARROW_UP) {
-        play = true;
-        draw_pix_map(0,0,map,img);
+void MenuHandlerKBC(enum KEY k) {
+  switch (k)
+  {
+  case DOWN1:
+    if(option == 1) {
+      option = 1;
     }
-
-    if (scode == ARROW_DOWN) {
-        play = false;
-        draw_pix_map(0,0,map2,img2);
+    else {
+      option++;
     }
-
-    if (scode == ENTER) {
-        if(play) {
-            // enter the game
-        }
-        else {
-            // end the application
-        }
+    break;
+  
+  case UP1:
+    if(option == 0) {
+      option = 0;
     }
+    else {
+      option--;
+    }
+    break;
+  
+  case ENTER1:
+    if(option == 0) {
+      GameState = PLAY_SOLO;
+    }
+    else if(option == 1) {
+      GameState = EXIT;
+    }
+  default:
+    break;
+  }
+}
 
+void drawMenu(int opt) {
+  switch (opt)
+  {
+  case 0:
+    draw_pix_map(0,0,menuPlay,imgMenuPlay);
+    break;
+  
+  case 1:
+    draw_pix_map(0,0,menuExit,imgMenuExit);
+    break;
+  }
 }

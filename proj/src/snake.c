@@ -1,36 +1,38 @@
 #include "snake.h"
 
 static enum Movement MovGeneral;
+static enum Movement MovAux;
 static double velocity;
-static Snake snake;
+static SnakeBody snake[SNAKEMAXSIZE];
 static ObjectList listObjects;
 static Object fruit;
 extern int counter;
 
+// loads xpm
+extern uint8_t *snakeM;
+extern xpm_image_t imgSnake;
+
+
+extern uint8_t *wall;
+extern xpm_image_t imgWall;
+
 void MenuStarter(){
+  for(int x = 0; x< SNAKEMAXSIZE ; x++){
+    snake[x].bodyType = NULLBODY;
+    snake[x].lastX = 0;
+    snake[x].lastY = 0;
+    snake[x].x = 0;
+    snake[x].y = 0;
+  }
+
   MovGeneral = DOWN;
-  snake.topLeftPixelPosY = 60;
-  snake.topLeftPixelPosX = 20;
-  snake.lastX = snake.topLeftPixelPosX;
-  snake.lastY = snake.topLeftPixelPosY;
-  snake.snakeRectanglePixelSize = 48; 
-  snake.snakeSize = 1;
-  snake.bodyType = HEAD;
+  snake[0].y = 2;
+  snake[0].x = 1;
+  snake[0].lastX = snake[0].x;
+  snake[0].lastY = snake[0].y;
+  snake[0].bodyType = HEAD;
 
-  Snake *s = malloc(sizeof(Snake));
-
-  s->topLeftPixelPosY = 12;
-  s->topLeftPixelPosX = 20;
-  s->lastX = s->topLeftPixelPosX;
-  s->lastY = s->topLeftPixelPosY;
-  s->snakeRectanglePixelSize = 48; 
-  s->snakeSize = 1;
-  s->bodyType = BODY;
-  s->nextBody = NULL;
-
-  snake.nextBody = s;
-
-  velocity = 48;
+  velocity = 1;
   fruit.RectanglePixelSize = 48;
   fruit.topLeftPixelPosX = 200;
   fruit.topLeftPixelPosY = 200;
@@ -39,129 +41,74 @@ void MenuStarter(){
 }
 
 void InterruptHandlerTimer(){
-  if(counter % 48 == 0) {
+  updateMov();
+  if(counter % 48 == 0){
     moveSnake();
   }
+  
   drawSnake();
   drawObjects();
 }
 
-void drawMenu() {
-  uint8_t *map;
-  xpm_image_t img;
-  map = xpm_load(play_car,XPM_8_8_8_8,&img);
-  draw_pix_map(0,0,map,img);
-}
-
-
 void drawSnake() {
-  uint8_t *map;
-  xpm_image_t img;
-
   switch (MovGeneral)
   {
   case UP:
-    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
     break;
   
   case DOWN:
-    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
     break;
 
   case LEFT:
-    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
     break;
     
   case RIGHT:
-    map = xpm_load(snake_play,XPM_8_8_8_8,&img);
+
     break;    
 
   default:
     break;
   }
 
-  draw_pix_map(snake.topLeftPixelPosX,snake.topLeftPixelPosY,map,img);
+  draw_pix_map(snake[0].x * PIXELOFFSET,snake[0].y * PIXELOFFSET,snakeM,imgSnake);
 
-  if(snake.nextBody == NULL){
-    return;
-  }
-
-  Snake *nextSnake = snake.nextBody;
-
-  if(nextSnake->bodyType == NULLBODY){
-    return;
-  }
-
-  while (1)
-  {
-
-    draw_pix_map(nextSnake->topLeftPixelPosX,nextSnake->topLeftPixelPosY,map,img);
-
-    if(nextSnake->nextBody == NULL || nextSnake->nextBody->bodyType == NULLBODY){
-      break;
-    }
-    nextSnake = nextSnake->nextBody;
-  }
 }
 
 void drawObjects() {
   uint8_t *map;
   xpm_image_t img;
   map = xpm_load(wall_xpm,XPM_8_8_8_8,&img);
-  draw_pix_map(fruit.topLeftPixelPosX,fruit.topLeftPixelPosY,map,img);
+  draw_pix_map(fruit.topLeftPixelPosX,fruit.topLeftPixelPosY,wall,imgWall);
 }
 
 void moveSnake() {
 
-  snake.lastX = snake.topLeftPixelPosX;
-  snake.lastY = snake.topLeftPixelPosY;
+  snake[0].lastX = snake[0].x;
+  snake[0].lastY = snake[0].y;
 
   switch (MovGeneral)
   {
   case UP:
-    snake.topLeftPixelPosY -= velocity;
+    snake[0].y -= velocity;
     break;
   
   case DOWN:
-    snake.topLeftPixelPosY += velocity;
+    snake[0].y += velocity;
     break;
 
   case LEFT:
-    snake.topLeftPixelPosX -= velocity;
+    snake[0].x -= velocity;
     break;
     
   case RIGHT:
-    snake.topLeftPixelPosX += velocity;
+    snake[0].x += velocity;
     break;    
 
   default:
     break;
   }
 
-  if(snake.nextBody == NULL){
-      return;
-  }
-
-  Snake *nextSnake = snake.nextBody;
-  Snake *lastSnake = &snake;
-
-
-/*vejam este loop para mudar as cenas da cobra*/
-  while (1)
-  {
-    nextSnake->lastX = nextSnake->topLeftPixelPosX;
-    nextSnake->lastY = nextSnake->topLeftPixelPosY;
-
-    nextSnake->topLeftPixelPosX = lastSnake->lastX;
-    nextSnake->topLeftPixelPosY = lastSnake->lastY;
-
-    lastSnake = nextSnake;
-
-    if(nextSnake->nextBody == NULL){
-      break;
-    }
-    nextSnake = nextSnake->nextBody;
-  }
+  
 
   int flag = CheckColisions();
 
@@ -172,7 +119,7 @@ void moveSnake() {
 
 int CheckColisions(){
   //fruit colision
-  if(CheckSingleColision(&snake,&fruit)==1){
+  if(CheckSingleColision(&snake[0],&fruit)==1){
       return 1;//1 is only fruit colision
   }
   return 0;
@@ -180,16 +127,20 @@ int CheckColisions(){
   //other colision
 }
 
-int CheckSingleColision(Snake *snake,Object *object){
-  if (snake->topLeftPixelPosX < object->topLeftPixelPosX + object->RectanglePixelSize && 
-  snake->topLeftPixelPosX + snake->snakeRectanglePixelSize > object->topLeftPixelPosX && 
-  snake->topLeftPixelPosY < object->topLeftPixelPosY + object->RectanglePixelSize && 
-  snake->topLeftPixelPosY + snake->snakeRectanglePixelSize > object->topLeftPixelPosY){
+int CheckSingleColision(SnakeBody *snake,Object *object){
+  if (snake->x < object->topLeftPixelPosX + object->RectanglePixelSize && 
+  snake->x > object->topLeftPixelPosX && 
+  snake->y < object->topLeftPixelPosY + object->RectanglePixelSize && 
+  snake->y  > object->topLeftPixelPosY){
     return 1;
   }
   return 0;
 }
 
 void InterruptHandlerKBC(enum Movement mov){
-  MovGeneral = mov;
+  MovAux = mov;
+}
+
+void updateMov(){
+  MovGeneral = MovAux;
 }

@@ -1,12 +1,27 @@
 #include "game.h"
 
-static enum STATE GameState;
+enum STATE GameState;
 uint8_t bit_timer;
 uint8_t bit_kb;
 uint8_t bit_m;
 extern uint8_t scode;
 extern int flag;
+enum KEY key;
 extern int counter;
+
+// loads xpm
+uint8_t *menuPlay;
+xpm_image_t imgMenuPlay;
+
+uint8_t *menuExit;
+xpm_image_t imgMenuExit;
+
+uint8_t *snakeM;
+xpm_image_t imgSnake;
+
+
+uint8_t *wall;
+xpm_image_t imgWall;
 
 void gameLoop() {
   int ipc_status;
@@ -19,25 +34,11 @@ void gameLoop() {
   uint32_t mask_mouse = BIT(bit_m);
   int time = 0;
 
-
-  if(video_set_graphics(0x14C) != 0) {
-    printf("Error mapping mem");
-    return;
-  }
-
-  if (mouse_enable_data_reporting() != 0) {
-    printf("Error enabling mouse data");
-    return;
-  }
-
-  if(timer_set_frequency(0, 60) != 0) {
-    printf("Error changing freq");
-    return;
-  }
-  GameState = PLAY_SOLO;
+  loadAll();
+  GameState = MENU;
   MenuStarter();
 
-  while(GameState != EXIT) { 
+  while(scode != ESCSCAN) { 
         if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
           printf("driver_receive failed with: %d", r);
           continue;
@@ -80,24 +81,11 @@ void gameLoop() {
                   mouse_ih();
                   InterruptRouter(MOUSE);
                 }
-                if(time == 10) {
-                  GameState = EXIT;
-                }
                 break;
               default:
                 break; 
             }
         }
-  }
-
-  if(vg_exit() != 0) {
-    printf("Error going back to text mode");
-    return;
-  }
-
-  if (mouse_disable_data_reporting() != 0) {
-    printf("Error Disabling Data");
-    return;
   }
 }
 
@@ -128,9 +116,14 @@ void MenuIH(enum DEVICE device){
   switch (device)
   {
   case KBC:
-    
+    updateKBC();
+    MenuHandlerKBC(key);
     break;
   
+  case TIMER:
+    MenuTimerHandler();
+    break;
+
   default:
     break;
   }
@@ -159,24 +152,78 @@ void DeadIH(enum DEVICE device){
 }
 
 void changePosition() {
+    switch (scode)
+    {
+    case 0x50:
+      InterruptHandlerKBC(DOWN);
+      break;
+    
+    case 0x48:
+      InterruptHandlerKBC(UP);
+      break;
+
+    case 0x4B:
+      InterruptHandlerKBC(LEFT);
+      break;
+
+    case 0x4D:
+      InterruptHandlerKBC(RIGHT);
+      break;    
+    default:
+      break;
+    }
+}
+
+void updateKBC(){
   switch (scode)
   {
-  case 0x50:
-    InterruptHandlerKBC(DOWN);
+  case 0x50: //ARROW DOWN
+    key = DOWN1;
     break;
   
-  case 0x48:
-    InterruptHandlerKBC(UP);
+  case 0x48: //ARROW UP
+    key = UP1;
     break;
 
-  case 0x4B:
-    InterruptHandlerKBC(LEFT);
+  case 0x4B: //ARROW LEFT
+    key = LEFT1;
     break;
 
-  case 0x4D:
-    InterruptHandlerKBC(RIGHT);
-    break;    
+  case 0x4D: //ARROW RIGHT
+    key = RIGHT1;
+    break;
+
+  case 0x11: //W
+    key = UP1;
+    break;
+
+  case 0x1F: //S
+    key = DOWN1;
+    break;
+
+  case 0x1E: //A
+    key = LEFT1;
+    break;
+
+  case 0X20: //D
+    key = RIGHT1;
+    break;
+
+  case 0x1C: //ENTER
+    key = ENTER1;
+    break;
+  case 0x01: //ESC
+    key = ESC1;
+    break;
+
   default:
     break;
   }
+}
+
+void loadAll() {
+  menuPlay = xpm_load(play_menu,XPM_8_8_8_8,&imgMenuPlay);
+  menuExit = xpm_load(exit_menu,XPM_8_8_8_8,&imgMenuExit);
+  snakeM = xpm_load(snake_play,XPM_8_8_8_8,&imgSnake);
+  wall = xpm_load(wall_xpm,XPM_8_8_8_8,&imgWall);
 }

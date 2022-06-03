@@ -4,10 +4,12 @@
 #include <lcom/lcf.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "keyboard.h"
+#include <xpms/playMenu.xpm>
+#include "kbcKeys.h"
+#include <xpms/exitMenu.xpm>
+#include "devices/graphics.h"
 
-#define ARROW_UP 0x49
-#define ARROW_DOWN 0x50
-#define ENTER 0x1C
-
+void MenuTimerHandler();
+void MenuHandlerKBC(enum KEY k);
+void drawMenu(int opt);
 #endif

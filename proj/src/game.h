@@ -7,23 +7,20 @@
 #include "devices/keyboard.h"
 #include "devices/mouse.h"
 #include "snake.h"
+#include "menu.h"
+#include "kbcKeys.h"
 #include "devices/graphics.h"
+
 
 enum DEVICE{
   KBC,
   TIMER,
   MOUSE,
   RTC,
-  SERIAL_PORT,
+  SERIAL_PORT
 };
-enum STATE{
-  PAUSE,
-  MENU,
-  PLAY_SOLO,
-  PLAY_MULTIPLAYER,
-  DEAD,
-  EXIT,
-};
+
+
 
 void gameLoop();
 void InterruptRouter(enum DEVICE device);
@@ -33,5 +30,7 @@ void PlaySoloIH(enum DEVICE device);
 void PlayMultiplayerIH(enum DEVICE device);
 void DeadIH(enum DEVICE device);
 void changePosition();
+void updateKBC();
+void loadAll();
 
 #endif
