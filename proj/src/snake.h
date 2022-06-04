@@ -46,9 +46,11 @@ typedef struct Snake_t
 
   int x;
 
-  int lastY;
+  int bodySize;
 
-  int lastX;
+  int bodyX[1000];
+
+  int bodyY[1000];
 
   enum SnakeBodyType bodyType;
 

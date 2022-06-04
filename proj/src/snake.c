@@ -3,7 +3,7 @@
 static enum KEY MovGeneral;
 static enum KEY MovAux;
 static double velocity;
-static SnakeBody snake[SNAKEMAXSIZE];
+static SnakeBody snake;
 static ObjectList listObjects;
 static Object fruit;
 extern enum STATE GameState;
@@ -18,22 +18,13 @@ extern uint8_t *wall;
 extern xpm_image_t imgWall;
 
 void MenuStarter(){
-  for(int x = 0; x< SNAKEMAXSIZE ; x++){
-    snake[x].bodyType = NULLBODY;
-    snake[x].lastX = 0;
-    snake[x].lastY = 0;
-    snake[x].x = 0;
-    snake[x].y = 0;
-  }
 
   MovGeneral = DOWN;
-  snake[0].y = 2;
-  snake[0].x = 1;
-  snake[0].lastX = snake[0].x;
-  snake[0].lastY = snake[0].y;
-  snake[0].bodyType = HEAD;
-
-  velocity = 1;
+  snake.y = 40;
+  snake.bodySize = 5;
+  snake.x = 40;
+  snake.bodyType = HEAD;
+  velocity = 48;
   fruit.RectanglePixelSize = 48;
   fruit.topLeftPixelPosX = 200;
   fruit.topLeftPixelPosY = 200;
@@ -71,7 +62,11 @@ void drawSnake() {
     break;
   }
 
-  draw_pix_map(snake[0].x * PIXELOFFSET,snake[0].y * PIXELOFFSET,snakeM,imgSnake);
+  draw_pix_map(snake.x ,snake.y,snakeM,imgSnake);
+
+  for(int i = 0; i < snake.bodySize; i++) {
+    draw_pix_map(snake.bodyX[i],snake.bodyY[i],snakeM,imgSnake);
+  }
 
 }
 
@@ -84,25 +79,23 @@ void drawObjects() {
 
 void moveSnake() {
 
-  snake[0].lastX = snake[0].x;
-  snake[0].lastY = snake[0].y;
 
   switch (MovGeneral)
   {
   case UP:
-    snake[0].y -= velocity;
+    snake.y -= velocity;
     break;
   
   case DOWN:
-    snake[0].y += velocity;
+    snake.y += velocity;
     break;
 
   case LEFT:
-    snake[0].x -= velocity;
+    snake.x -= velocity;
     break;
     
   case RIGHT:
-    snake[0].x += velocity;
+    snake.x += velocity;
     break;    
 
   default:
@@ -116,11 +109,20 @@ void moveSnake() {
   if(flag == 1){
       flag++;
     }
+
+    snake.bodyX[0] = snake.x;
+    snake.bodyY[0] = snake.y;
+    for (int i = snake.bodySize; i > 0; i--)
+    {
+      snake.bodyX[i] = snake.bodyX[i - 1];
+      snake.bodyY[i] = snake.bodyY[i - 1];
+    }
 }
 
 int CheckColisions(){
   //fruit colision
-  if(CheckSingleColision(&snake[0],&fruit)==1){
+  if(CheckSingleColision(&snake,&fruit)==1){
+      snake.bodySize++;
       return 1;//1 is only fruit colision
   }
   return 0;
