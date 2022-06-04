@@ -38,9 +38,9 @@ int (mouse_test_packet)(uint32_t cnt) {
   struct packet pack;
   int ipc_status,r;
   message msg;
-  bool byteTwo = false;
-  bool byteThree = false;
+  int numPacket = 0;
   extern int flag;
+  extern int flag_m;
   uint8_t bit_no;
 
   if (mouse_enable_data_reporting() != 0) {return 1;}
@@ -58,20 +58,19 @@ int (mouse_test_packet)(uint32_t cnt) {
           case HARDWARE: 
             if (msg.m_notify.interrupts & irq_set) {
               mouse_ih();
-              if(flag == 0) {
-                if (!byteTwo && !byteThree && (scancode & BIT(3))){
+              if(flag_m == 0) {
+                if (numPacket == 0 && (scancode & BIT(3))){
                   pack.bytes[0] = scancode;
-                  byteTwo = true;
+                  numPacket++;
                 }
-                else if (byteTwo && (!byteThree)) {
-                  byteTwo = false;
-                  byteThree = true;
+                else if (numPacket == 1) {
                   pack.bytes[1] = scancode;
+                  numPacket++;
                 }
-                else if (byteThree && (!byteTwo)) {
+                else if (numPacket == 2) {
                   pack.bytes[2] = scancode;
-                  byteThree = false;
                   cnt--;
+                  numPacket = 0;
                   mouse_set_packet(&pack);
                   mouse_print_packet(&pack);
                 }

@@ -8,6 +8,7 @@
 #include "devices/mouse.h"
 #include "snake.h"
 #include "menu.h"
+#include "pause.h"
 #include "kbcKeys.h"
 #include "devices/graphics.h"
 

@@ -7,6 +7,7 @@
 #include "devices/graphics.h"
 #include "xpms/snake.xpm"
 #include "xpms/wall.xpm"
+#include "kbcKeys.h"
 
 #define PIXELOFFSET 48
 #define SNAKEMAXSIZE 864
@@ -15,13 +16,6 @@ enum SnakeBodyType{
   BODY,
   TAIL,
   NULLBODY
-};
-
-enum Movement{
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
 };
 
 enum ObjectType{
@@ -68,7 +62,7 @@ void drawSnake();
 
 void moveSnake();
 
-void InterruptHandlerKBC(enum Movement mov);
+void InterruptHandlerKBC(enum KEY k);
 
 void drawObjects();
 

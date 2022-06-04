@@ -23,7 +23,7 @@ int (video_set_graphics)(uint16_t mode){
   // igualar às valores da struct
   vram_base = info.PhysBasePtr;
   bits_per_pixel = info.BitsPerPixel;
-  bytes_per_pixel = ceil(info.BitsPerPixel / 8);
+  bytes_per_pixel = ceil(info.BitsPerPixel / 8.0);
   vram_size = h_res * v_res * bytes_per_pixel;
 
 
@@ -130,7 +130,7 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
       uint32_t color;
       uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
       memcpy(&color, pos, bytes_per_pixel);
-      vg_draw_pixel(x+i,y+j, color);
+     if (color != xpm_transparency_color(img.type)) vg_draw_pixel(x + i, y + j, color);
     }
   }
   return 0;

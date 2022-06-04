@@ -3,6 +3,7 @@
 int option = 0;
 
 extern enum STATE GameState;
+extern mouseInfo mouse;
 
 // loads xpm
 extern uint8_t *menuPlay;
@@ -11,8 +12,14 @@ extern xpm_image_t imgMenuPlay;
 extern uint8_t *menuExit;
 extern xpm_image_t imgMenuExit;
 
+extern uint8_t *cursor;
+extern xpm_image_t imgCursor;
 
-
+void MenuMouseHandler() {
+  drawCursor();
+}
+void drawCursor() {
+}
 void MenuTimerHandler() {
   drawMenu(option);
 }
@@ -20,7 +27,7 @@ void MenuTimerHandler() {
 void MenuHandlerKBC(enum KEY k) {
   switch (k)
   {
-  case DOWN1:
+  case DOWN:
     if(option == 1) {
       option = 1;
     }
@@ -29,7 +36,7 @@ void MenuHandlerKBC(enum KEY k) {
     }
     break;
   
-  case UP1:
+  case UP:
     if(option == 0) {
       option = 0;
     }
@@ -38,7 +45,7 @@ void MenuHandlerKBC(enum KEY k) {
     }
     break;
   
-  case ENTER1:
+  case ENTER:
     if(option == 0) {
       GameState = PLAY_SOLO;
     }
@@ -61,4 +68,5 @@ void drawMenu(int opt) {
     draw_pix_map(0,0,menuExit,imgMenuExit);
     break;
   }
+  draw_pix_map(mouse.delta_x,mouse.delta_y,cursor,imgCursor);
 }

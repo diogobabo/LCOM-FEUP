@@ -1,11 +1,12 @@
 #include "snake.h"
 
-static enum Movement MovGeneral;
-static enum Movement MovAux;
+static enum KEY MovGeneral;
+static enum KEY MovAux;
 static double velocity;
 static SnakeBody snake[SNAKEMAXSIZE];
 static ObjectList listObjects;
 static Object fruit;
+extern enum STATE GameState;
 extern int counter;
 
 // loads xpm
@@ -137,8 +138,15 @@ int CheckSingleColision(SnakeBody *snake,Object *object){
   return 0;
 }
 
-void InterruptHandlerKBC(enum Movement mov){
-  MovAux = mov;
+void InterruptHandlerKBC(enum KEY k){
+  if(k == ENTER) {
+    return;
+  }
+  if(k == ESC) {
+    GameState = PAUSE;
+    return;
+  }
+  MovAux = k;
 }
 
 void updateMov(){

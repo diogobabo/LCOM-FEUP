@@ -2,12 +2,12 @@
 #define _KBC_KEYS_H
 
 enum KEY{
-  UP1,
-  DOWN1,
-  LEFT1,
-  RIGHT1,
-  ENTER1,
-  ESC1,
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT,
+  ENTER,
+  ESC,
 };
 
 enum STATE{
@@ -18,5 +18,12 @@ enum STATE{
   DEAD,
   EXIT
 };
+
+typedef struct mouseInfo_t
+{
+  bool rb, mb, lb; 
+  int16_t delta_x;  
+  int16_t delta_y;
+} mouseInfo;
 
 #endif
