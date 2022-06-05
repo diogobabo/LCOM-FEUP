@@ -5,12 +5,19 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "devices/graphics.h"
-#include "xpms/snake.xpm"
+#include "xpms/up.xpm"
+#include "xpms/left.xpm"
+#include "xpms/down.xpm"
+#include "xpms/right.xpm"
 #include "xpms/wall.xpm"
+#include "xpms/bgGame.xpm"
+#include "xpms/fruit.xpm"
+#include "xpms/bodySnake.xpm"
 #include "kbcKeys.h"
 
 #define PIXELOFFSET 48
 #define SNAKEMAXSIZE 864
+
 enum SnakeBodyType{
   HEAD,
   BODY,
@@ -67,6 +74,8 @@ void moveSnake();
 void InterruptHandlerKBC(enum KEY k);
 
 void drawObjects();
+
+void drawBG();
 
 int CheckColisions();
 

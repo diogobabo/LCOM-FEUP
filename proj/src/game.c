@@ -20,12 +20,26 @@ xpm_image_t imgMenuPlay;
 uint8_t *menuExit;
 xpm_image_t imgMenuExit;
 
-uint8_t *snakeM;
-xpm_image_t imgSnake;
+uint8_t *snakeDown;
+xpm_image_t imgSnakeDown;
+
+uint8_t *snakeUp;
+xpm_image_t imgSnakeUp;
 
 
-uint8_t *wall;
-xpm_image_t imgWall;
+uint8_t *snakeLeft;
+xpm_image_t imgSnakeLeft;
+
+
+uint8_t *snakeRight;
+xpm_image_t imgSnakeRight;
+
+uint8_t *snakeTail;
+xpm_image_t imgSnakeTail;
+
+
+uint8_t *fruitI;
+xpm_image_t imgFruit;
 
 uint8_t *cursor;
 xpm_image_t imgCursor;
@@ -35,6 +49,11 @@ xpm_image_t imgResume;
 
 uint8_t *pauseExit;
 xpm_image_t imgPauseExit;
+
+
+uint8_t *gameBG;
+xpm_image_t imgGameBG;
+
 
 
 /* Actual Functions */
@@ -257,9 +276,14 @@ void updateKBC(){
 void loadAll() {
   menuPlay = xpm_load(play_menu,XPM_8_8_8_8,&imgMenuPlay);
   menuExit = xpm_load(exit_menu,XPM_8_8_8_8,&imgMenuExit);
-  snakeM = xpm_load(snake_play,XPM_8_8_8_8,&imgSnake);
-  wall = xpm_load(wall_xpm,XPM_8_8_8_8,&imgWall);
+  snakeUp = xpm_load(snake_up,XPM_8_8_8_8,&imgSnakeUp);
+  snakeDown = xpm_load(snake_down,XPM_8_8_8_8,&imgSnakeDown);
+  snakeLeft = xpm_load(snake_left,XPM_8_8_8_8,&imgSnakeLeft);
+  snakeTail = xpm_load(body_snake,XPM_8_8_8_8,&imgSnakeTail);
+  snakeRight = xpm_load(snake_right,XPM_8_8_8_8,&imgSnakeRight);
+  fruitI = xpm_load(game_fruit,XPM_8_8_8_8,&imgFruit);
   cursor = xpm_load(mouse_cursor,XPM_8_8_8_8,&imgCursor);
   pauseExit = xpm_load(exit_pause,XPM_8_8_8_8,&imgPauseExit);
   resume = xpm_load(resume_game,XPM_8_8_8_8,&imgResume);
+  gameBG = xpm_load(game_bg,XPM_8_8_8_8,&imgGameBG);
 }
