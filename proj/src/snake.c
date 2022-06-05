@@ -81,7 +81,7 @@ void InterruptHandlerTimer(){
   CheckColisions();
   updateMov();
   spawnFruits();
-  if(counter % 48 == 0){
+  if(counter % 4 == 0){
    moveSnake();
   }
   drawSnake();
@@ -206,5 +206,19 @@ void InterruptHandlerKBC(enum KEY k){
 }
 
 void updateMov(){
-  MovGeneral = MovAux;
+  if(MovGeneral == LEFT && MovAux == RIGHT) {
+    return;
+  }
+  else if(MovGeneral == RIGHT && MovAux == LEFT) {
+    return;
+  }
+  else if(MovGeneral == UP && MovAux == DOWN) {
+    return;
+  }
+  else if(MovGeneral == DOWN && MovAux == UP) {
+    return;
+  }
+  else {
+    MovGeneral = MovAux;
+  }
 }
