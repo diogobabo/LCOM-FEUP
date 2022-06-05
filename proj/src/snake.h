@@ -32,20 +32,16 @@ enum ObjectType{
 
 typedef struct Object_t
 {
-  int topLeftPixelPosY;
+  int x;
 
-  int topLeftPixelPosX;
-
-  int RectanglePixelSize;
+  int y;
 
   enum ObjectType type;
 
+  bool active;
+
 }Object;
 
-typedef struct ObjectList_t {
-    Object Object_entry;
-    struct ObjectList_t *Object_next;
-}ObjectList;
 
 typedef struct Snake_t
 {
@@ -66,6 +62,8 @@ typedef struct Snake_t
 void InterruptHandlerTimer();
 
 void MenuStarter();
+
+void spawnFruits();
 
 void drawSnake();
 
