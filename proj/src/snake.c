@@ -176,6 +176,10 @@ int CheckColisions(){
       snake.bodySize++;
       return 0;
     }
+    else if(snake.x <= PIXELOFFSET - 1 || snake.x >= (23 * PIXELOFFSET) || snake.y <= PIXELOFFSET - 1 || snake.y >= ((17 * PIXELOFFSET) - 1)) {
+      GameState = EXIT;
+      return 0;
+    }
   }
   return 0;
 }
