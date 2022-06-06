@@ -8,6 +8,7 @@ extern enum STATE GameState;
 extern int counter;
 static Object array[1000];
 static int numObjects = 0;
+static int fruitEaten = 1;
 
 // loads xpm
 extern uint8_t *snakeUp;
@@ -65,7 +66,7 @@ void spawnFruits() {
     canSpawn = false;
   }
 
-  if(canSpawn && (counter % 240 == 0)) {
+  if(canSpawn && fruitEaten) {
     Object obj;
     obj.x = x;
     obj.y = y;
@@ -73,6 +74,7 @@ void spawnFruits() {
     obj.active = true;
     array[numObjects] = obj;
     numObjects++;
+    fruitEaten = 0;
   }
 }
 
@@ -80,9 +82,11 @@ void InterruptHandlerTimer(){
   drawBG();
   CheckColisions();
   spawnFruits();
-  if(counter % 4 == 0){
-  updateMov();
-   moveSnake();
+  if ((snake.x % 48 == 0) && (snake.y % 48 == 0)) {
+    updateMov();
+  }
+  if(counter % 8 == 0){
+    moveSnake();
   }
   drawSnake();
   drawObjects();
@@ -168,6 +172,7 @@ int CheckColisions(){
   for(int i = 0; i < numObjects; i++) {
     if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == FRUIT)) {
       array[i].active = false;
+      fruitEaten = 1;
       snake.bodySize++;
       return 0;
     }
