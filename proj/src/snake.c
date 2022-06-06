@@ -37,7 +37,7 @@ void MenuStarter(){
 
   MovGeneral = DOWN;
   snake.y = 96;
-  snake.bodySize = 4;
+  snake.bodySize = 0;
   snake.x = 96;
   snake.bodyType = HEAD;
   velocity = 48;
@@ -114,7 +114,7 @@ void drawSnake() {
 
 
   for(int i = 0; i < snake.bodySize; i++) {
-    draw_pix_map(snake.bodyX[i],snake.bodyY[i],snakeTail,imgSnakeTail);
+    draw_pix_map(snake.bodyX[i] * PIXELOFFSET,snake.bodyY[i] *PIXELOFFSET,snakeTail,imgSnakeTail);
   }
 }
 
@@ -131,6 +131,13 @@ void drawBG() {
 }
 
 void moveSnake() {
+  for (int i = snake.bodySize; i > 0; i--)
+  {
+    snake.bodyX[i] = snake.bodyX[i - 1];
+    snake.bodyY[i] = snake.bodyY[i - 1];
+  }
+  snake.bodyX[0] = snake.x / PIXELOFFSET;
+  snake.bodyY[0] = snake.y / PIXELOFFSET;
 
 
   switch (MovGeneral)
@@ -155,25 +162,17 @@ void moveSnake() {
     break;
   }
 
-  snake.bodyX[0] = snake.x;
-  snake.bodyY[0] = snake.y;
-  for (int i = snake.bodySize; i > 0; i--)
-  {
-    snake.bodyX[i] = snake.bodyX[i - 1];
-    snake.bodyY[i] = snake.bodyY[i - 1];
-  }
 }
 
 int CheckColisions(){
   for(int i = 0; i < numObjects; i++) {
-    if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type = FRUIT)) {
+    if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == FRUIT)) {
       array[i].active = false;
       snake.bodySize++;
       return 0;
     }
-    else if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type = BLOCK)) {
-      array[i].active = false;
-      snake.bodySize++;
+    else if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == BLOCK)) {
+      GameState = EXIT;
       return 0;
     }
     else if(snake.x <= PIXELOFFSET - 1 || snake.x >= (23 * PIXELOFFSET) || snake.y <= PIXELOFFSET - 1 || snake.y >= ((17 * PIXELOFFSET) - 1)) {
@@ -184,15 +183,6 @@ int CheckColisions(){
   return 0;
 }
 
-/* int CheckSingleColision(SnakeBody *snake,Object *object){
-  if (snake->x < object->topLeftPixelPosX + object->RectanglePixelSize && 
-  snake->x > object->topLeftPixelPosX && 
-  snake->y < object->topLeftPixelPosY + object->RectanglePixelSize && 
-  snake->y  > object->topLeftPixelPosY){
-    return 1;
-  }
-  return 0;
-}*/
 
 void InterruptHandlerKBC(enum KEY k){
   if(k == ENTER) {
