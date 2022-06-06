@@ -13,7 +13,8 @@
     "snake.h": "c",
     "keyboard.h": "c",
     "play.h": "c",
-    "game.h": "c"
+    "game.h": "c",
+    "pause.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled",
 }

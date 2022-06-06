@@ -4,7 +4,7 @@ PROG=proj
 .PATH: ${.CURDIR}/devices
 
 # source code files to be compiled
-SRCS = proj.c timer.c utils.c keyboard.c graphics.c mouse.c snake.c game.c
+SRCS = proj.c timer.c utils.c keyboard.c graphics.c mouse.c snake.c game.c menu.c pause.c
 
 # additional compilation flags
 # "-Wall -Wextra -Werror -I . -std=c11 -Wno-unused-parameter" are already set

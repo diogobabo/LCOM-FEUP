@@ -36,6 +36,16 @@ int(proj_main_loop)(int argc, char* argv[]){
   extern uint8_t bit_kb;
   extern uint8_t bit_m;
 
+  if(video_set_graphics(0x14C) != 0) {
+    printf("Error mapping mem");
+    return 1;
+  }
+
+  if (mouse_enable_data_reporting() != 0) {
+    printf("Error enabling mouse data");
+    return 1;
+  }
+
   if(timer_subscribe_int(&bit_timer) != 0) {
     return 1;
   }
@@ -60,6 +70,16 @@ int(proj_main_loop)(int argc, char* argv[]){
   }
 
   if(mouse_unsubscribe_int() != 0) {
+    return 1;
+  }
+
+  if(vg_exit() != 0) {
+    printf("Error going back to text mode");
+    return 1;
+  }
+
+  if (mouse_disable_data_reporting() != 0) {
+    printf("Error Disabling Data");
     return 1;
   }
 

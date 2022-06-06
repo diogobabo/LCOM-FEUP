@@ -5,48 +5,80 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "devices/graphics.h"
-#include "xpms/play.xpm"
-#include "xpms/snake.xpm"
+#include "xpms/up.xpm"
+#include "xpms/left.xpm"
+#include "xpms/down.xpm"
+#include "xpms/right.xpm"
+#include "xpms/wall.xpm"
+#include "xpms/bgGame.xpm"
+#include "xpms/fruit.xpm"
+#include "xpms/bodySnake.xpm"
+#include "kbcKeys.h"
+
+#define PIXELOFFSET 48
+#define SNAKEMAXSIZE 864
 
 enum SnakeBodyType{
   HEAD,
   BODY,
-  TAIL
+  TAIL,
+  NULLBODY
 };
 
-enum Movement{
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT
+enum ObjectType{
+  FRUIT,
+  BLOCK
 };
 
-typedef struct Snake
+typedef struct Object_t
 {
-  int topLeftPixelPosY;
+  int x;
 
-  int topLeftPixelPosX;
+  int y;
 
-  int snakeRectanglePixelSize;
+  enum ObjectType type;
 
-  int snakeSize;
+  bool active;
 
-  struct Snake* nextBody;
+}Object;
+
+
+typedef struct Snake_t
+{
+  int y;
+
+  int x;
+
+  int bodySize;
+
+  int bodyX[1000];
+
+  int bodyY[1000];
 
   enum SnakeBodyType bodyType;
 
-}Snake;
+}SnakeBody;
 
 void InterruptHandlerTimer();
 
 void MenuStarter();
 
-void drawSnake();
+void spawnFruits();
 
-void drawMenu();
+void drawSnake();
 
 void moveSnake();
 
-void InterruptHandlerKBC(enum Movement mov);
+void InterruptHandlerKBC(enum KEY k);
+
+void drawObjects();
+
+void drawBG();
+
+int CheckColisions();
+
+int CheckSingleColision(SnakeBody *snake,Object *object);//1 if true 0 if false
+
+void updateMov();
 
 #endif
