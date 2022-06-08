@@ -73,10 +73,7 @@ int(proj_main_loop)(int argc, char* argv[]){
     return 1;
   }
 
-  if(vg_exit() != 0) {
-    printf("Error going back to text mode");
-    return 1;
-  }
+  exit_graphics();
 
   if (mouse_disable_data_reporting() != 0) {
     printf("Error Disabling Data");

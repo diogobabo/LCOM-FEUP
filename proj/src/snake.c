@@ -6,7 +6,7 @@ static double velocity;
 static SnakeBody snake;
 extern enum STATE GameState;
 extern int counter;
-static Object array[5000];
+static Object array[1000];
 static int numObjects = 0;
 static int fruitEaten = 1;
 static int cleanMouseX = 0;

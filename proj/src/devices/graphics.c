@@ -155,3 +155,8 @@ void cleanBG(unsigned int x, unsigned int y, int width, int height, xpm_image_t 
     }
   }
 }
+
+void exit_graphics() {
+  vg_exit();
+  free(buffer);
+}

@@ -11,5 +11,5 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img);
 int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img);
 void switchBuffer();
 void cleanBG(unsigned int x, unsigned int y, int width, int height, xpm_image_t img, uint8_t* map);
-
+void exit_graphics();
 #endif

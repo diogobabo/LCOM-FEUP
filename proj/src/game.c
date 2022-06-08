@@ -228,6 +228,7 @@ void PlaySoloIH(enum DEVICE device){
       break;
     case MOUSE:
       InterruptHandlerMouse();
+      break;
     default:
       break;
   }
