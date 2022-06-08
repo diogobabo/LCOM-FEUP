@@ -104,6 +104,9 @@ void gameLoop() {
                     firstTimeMenu = false;
                     switchBuffer();
                   }
+                  if(GameState == PAUSE) {
+                    firstTimeGame = true;
+                  }
                   timer_int_handler();
                   switchBuffer();
                   InterruptRouter(TIMER);
