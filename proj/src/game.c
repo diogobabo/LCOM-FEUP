@@ -12,6 +12,7 @@ enum KEY key;
 struct packet pack;
 extern int counter;
 mouseInfo mouse;
+extern int option;
 
 // loads xpm
 uint8_t *menuPlay;
@@ -64,6 +65,8 @@ void gameLoop() {
   int r;
   int idx = 0;
   int numPacket = 0;
+  bool firstTimeMenu = true;
+  bool firstTimeGame = true;
   uint8_t array[2];
   mouse.delta_x = 576;
   mouse.delta_y = 432;
@@ -86,6 +89,16 @@ void gameLoop() {
               case HARDWARE: 
                 /* Timer Interrupts */
                 if (msg.m_notify.interrupts & mask_timer) { 
+                  if(firstTimeGame && GameState == PLAY_SOLO) {
+                    drawBG();
+                    firstTimeGame = false;
+                    switchBuffer();
+                  }
+                  else if(firstTimeMenu && GameState == MENU) {
+                    drawMenu(option);
+                    firstTimeMenu = false;
+                    switchBuffer();
+                  }
                   timer_int_handler();
                   switchBuffer();
                   InterruptRouter(TIMER);
@@ -132,6 +145,9 @@ void gameLoop() {
                       mouse_set_packet(&pack);
                       mouse.delta_x += pack.delta_x;
                       mouse.delta_y -= pack.delta_y;
+                      mouse.lb = pack.lb;
+                      mouse.rb = pack.rb;
+                      mouse.mb = pack.mb;
                     }
                   }
                   InterruptRouter(MOUSE);
@@ -210,6 +226,8 @@ void PlaySoloIH(enum DEVICE device){
     case KBC:
       changePosition();
       break;
+    case MOUSE:
+      InterruptHandlerMouse();
     default:
       break;
   }
@@ -267,7 +285,7 @@ void updateKBC(){
   case 0x01: //ESC
     key = ESC;
     break;
-
+    
   default:
     break;
   }

@@ -81,4 +81,10 @@ int CheckSingleColision(SnakeBody *snake,Object *object);//1 if true 0 if false
 
 void updateMov();
 
+void cleanAllBG();
+
+void InterruptHandlerMouse();
+
+bool checkFruit(int x, int y);
+
 #endif

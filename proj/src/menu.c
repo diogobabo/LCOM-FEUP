@@ -21,7 +21,6 @@ void MenuMouseHandler() {
 void drawCursor() {
 }
 void MenuTimerHandler() {
-  drawMenu(option);
 }
 
 void MenuHandlerKBC(enum KEY k) {

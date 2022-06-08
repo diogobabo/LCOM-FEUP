@@ -143,5 +143,15 @@ int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img) {
 
 void switchBuffer(){
   memcpy(video_mem,buffer,h_res*v_res*bytes_per_pixel);
-  vg_draw_rectangle(0,0,h_res,v_res,0);
+}
+
+void cleanBG(unsigned int x, unsigned int y, int width, int height, xpm_image_t img, uint8_t* map) {
+   for(unsigned int i = x; i < width + x; i++) {
+    for(unsigned int j = y; j < height + y; j++) {
+      uint32_t color;
+      uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
+      memcpy(&color, pos, bytes_per_pixel);
+     if (color != xpm_transparency_color(img.type)) vg_draw_pixel(i,j, color);
+    }
+  }
 }

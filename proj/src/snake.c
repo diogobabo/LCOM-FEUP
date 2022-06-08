@@ -6,9 +6,12 @@ static double velocity;
 static SnakeBody snake;
 extern enum STATE GameState;
 extern int counter;
-static Object array[1000];
+static Object array[5000];
 static int numObjects = 0;
 static int fruitEaten = 1;
+static int cleanMouseX = 0;
+static int cleanMouseY = 0;
+static int numFruits = 0;
 
 // loads xpm
 extern uint8_t *snakeUp;
@@ -32,6 +35,11 @@ extern xpm_image_t imgGameBG;
 
 extern uint8_t *snakeTail;
 extern xpm_image_t imgSnakeTail;
+
+extern mouseInfo mouse;
+
+extern uint8_t *cursor;
+extern xpm_image_t imgCursor;
 
 
 void MenuStarter(){
@@ -64,9 +72,9 @@ void spawnFruits() {
 
   if(x == snake.x && y == snake.y) {
     canSpawn = false;
-  }
+  } 
 
-  if(canSpawn && fruitEaten) {
+  if(canSpawn && fruitEaten && (!numFruits)) {
     Object obj;
     obj.x = x;
     obj.y = y;
@@ -74,20 +82,19 @@ void spawnFruits() {
     obj.active = true;
     array[numObjects] = obj;
     numObjects++;
+    numFruits++;
     fruitEaten = 0;
   }
 }
 
 void InterruptHandlerTimer(){
-  drawBG();
-  CheckColisions();
+  cleanAllBG();
   spawnFruits();
-  if ((snake.x % 48 == 0) && (snake.y % 48 == 0)) {
-    updateMov();
-  }
+  updateMov();
   if(counter % 8 == 0){
     moveSnake();
   }
+  CheckColisions();
   drawSnake();
   drawObjects();
 }
@@ -128,6 +135,10 @@ void drawObjects() {
       draw_pix_map(array[i].x * PIXELOFFSET,array[i].y  * PIXELOFFSET,fruitI,imgFruit);
     }
   }
+  cleanMouseX = mouse.delta_x;
+  cleanMouseY = mouse.delta_y;
+  draw_pix_map(mouse.delta_x,mouse.delta_y,cursor,imgCursor);
+
 }
 
 void drawBG() {
@@ -165,7 +176,6 @@ void moveSnake() {
   default:
     break;
   }
-
 }
 
 int CheckColisions(){
@@ -173,6 +183,7 @@ int CheckColisions(){
     if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == FRUIT)) {
       array[i].active = false;
       fruitEaten = 1;
+      numFruits--;
       snake.bodySize++;
       return 0;
     }
@@ -222,4 +233,38 @@ void updateMov(){
   else {
     MovGeneral = MovAux;
   }
+}
+
+void cleanAllBG() {
+  for(int i = 0; i < snake.bodySize; i++) {
+    cleanBG(snake.bodyX[i] * PIXELOFFSET,snake.bodyY[i] * PIXELOFFSET,PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
+  }
+  cleanBG(snake.x ,snake.y,PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
+  cleanBG(cleanMouseX,cleanMouseY,imgCursor.width,imgCursor.height,imgGameBG,gameBG);
+}
+
+void InterruptHandlerMouse() {
+  if(mouse.lb) {
+    mouse.lb = false;
+    if(checkFruit(mouse.delta_x / PIXELOFFSET,mouse.delta_y / PIXELOFFSET)) {
+      return;
+    }
+    Object obj;
+    obj.x = mouse.delta_x / PIXELOFFSET;
+    obj.y = mouse.delta_y / PIXELOFFSET;
+    obj.type = FRUIT;
+    obj.active = true;
+    array[numObjects] = obj;
+    numObjects++;
+    numFruits++;
+  }
+}
+
+bool checkFruit(int x, int y) {
+  for(int i = 0; i < numObjects; i++) {
+    if(array[i].x == x && array[i].y && array[i].active == true && array[i].type == FRUIT) {
+      return true;
+    }
+  }
+  return false;
 }
