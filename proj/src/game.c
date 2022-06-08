@@ -21,6 +21,9 @@ xpm_image_t imgMenuPlay;
 uint8_t *menuExit;
 xpm_image_t imgMenuExit;
 
+uint8_t *menu;
+xpm_image_t imgMenu;
+
 uint8_t *snakeDown;
 xpm_image_t imgSnakeDown;
 
@@ -55,6 +58,8 @@ xpm_image_t imgPauseExit;
 uint8_t *gameBG;
 xpm_image_t imgGameBG;
 
+uint8_t *brickD;
+xpm_image_t imgBrick;
 
 
 /* Actual Functions */
@@ -95,7 +100,7 @@ void gameLoop() {
                     switchBuffer();
                   }
                   else if(firstTimeMenu && GameState == MENU) {
-                    drawMenu(option);
+                    drawDefMenu();
                     firstTimeMenu = false;
                     switchBuffer();
                   }
@@ -187,8 +192,6 @@ void MenuIH(enum DEVICE device){
   switch (device)
   {
   case KBC:
-    updateKBC();
-    MenuHandlerKBC(key);
     break;
   
   case TIMER:
@@ -196,6 +199,7 @@ void MenuIH(enum DEVICE device){
     break;
 
   case MOUSE:
+    MenuMouseHandler();
     break;
   default:
     break;
@@ -295,6 +299,7 @@ void updateKBC(){
 void loadAll() {
   menuPlay = xpm_load(play_menu,XPM_8_8_8_8,&imgMenuPlay);
   menuExit = xpm_load(exit_menu,XPM_8_8_8_8,&imgMenuExit);
+  menu = xpm_load(first_menu,XPM_8_8_8_8,&imgMenu);
   snakeUp = xpm_load(snake_up,XPM_8_8_8_8,&imgSnakeUp);
   snakeDown = xpm_load(snake_down,XPM_8_8_8_8,&imgSnakeDown);
   snakeLeft = xpm_load(snake_left,XPM_8_8_8_8,&imgSnakeLeft);
@@ -305,4 +310,5 @@ void loadAll() {
   pauseExit = xpm_load(exit_pause,XPM_8_8_8_8,&imgPauseExit);
   resume = xpm_load(resume_game,XPM_8_8_8_8,&imgResume);
   gameBG = xpm_load(game_bg,XPM_8_8_8_8,&imgGameBG);
+  brickD = xpm_load(brick,XPM_8_8_8_8,&imgBrick);
 }

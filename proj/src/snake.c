@@ -6,7 +6,7 @@ static double velocity;
 static SnakeBody snake;
 extern enum STATE GameState;
 extern int counter;
-static Object array[1000];
+static Object array[5000];
 static int numObjects = 0;
 static int fruitEaten = 1;
 static int cleanMouseX = 0;
@@ -244,6 +244,18 @@ void cleanAllBG() {
 }
 
 void InterruptHandlerMouse() {
+  if(mouse.delta_x >= 1152 - PIXELOFFSET) {
+    mouse.delta_x = 1152 - PIXELOFFSET - 1;
+  }
+  else if(mouse.delta_x < PIXELOFFSET) {
+    mouse.delta_x = PIXELOFFSET;
+  }
+  if(mouse.delta_y >= 864 - PIXELOFFSET) {
+    mouse.delta_y = 863 - PIXELOFFSET;
+  }
+  else if(mouse.delta_y < PIXELOFFSET) {
+    mouse.delta_y = PIXELOFFSET;
+  }
   if(mouse.lb) {
     mouse.lb = false;
     if(checkFruit(mouse.delta_x / PIXELOFFSET,mouse.delta_y / PIXELOFFSET)) {
@@ -263,6 +275,11 @@ void InterruptHandlerMouse() {
 bool checkFruit(int x, int y) {
   for(int i = 0; i < numObjects; i++) {
     if(array[i].x == x && array[i].y == y && array[i].active == true && array[i].type == FRUIT) {
+      return true;
+    }
+  }
+  for(int i = 0; i < snake.bodySize; i++) {
+    if(snake.bodyX[i] == x && snake.bodyY[i] == y) {
       return true;
     }
   }

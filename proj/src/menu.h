@@ -4,15 +4,19 @@
 #include <lcom/lcf.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <xpms/playMenu.xpm>
+#include <xpms/playPart.xpm>
+#include <xpms/exitPart.xpm>
+#include <xpms/brick.xpm>
 #include "kbcKeys.h"
-#include <xpms/exitMenu.xpm>
+#include <xpms/menu.xpm>
 #include <xpms/mouseCursor.xpm>
 #include "devices/graphics.h"
 
 void MenuMouseHandler();
 void MenuTimerHandler();
-void MenuHandlerKBC(enum KEY k);
-void drawMenu(int opt);
+void drawMenu();
 void drawCursor();
+void drawDefMenu();
+void cleanMenuBG();
+void changeState();
 #endif
