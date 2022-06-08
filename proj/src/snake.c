@@ -262,7 +262,7 @@ void InterruptHandlerMouse() {
 
 bool checkFruit(int x, int y) {
   for(int i = 0; i < numObjects; i++) {
-    if(array[i].x == x && array[i].y && array[i].active == true && array[i].type == FRUIT) {
+    if(array[i].x == x && array[i].y == y && array[i].active == true && array[i].type == FRUIT) {
       return true;
     }
   }
