@@ -14,6 +14,13 @@ static int cleanMouseY = 0;
 static int numFruits = 0;
 static enum KEY dirs[1000];
 
+static int vx = 0;
+static int vy = 0;
+static int AuxVx = 0;
+static int AuxVy = 0;
+static bool firstIter = true;
+
+
 // loads xpm
 extern uint8_t *snakeUp;
 extern xpm_image_t imgSnakeUp;
@@ -47,10 +54,10 @@ void MenuStarter(){
 
   MovGeneral = DOWN;
   snake.y = 96;
-  snake.bodySize = 0;
+  snake.bodySize = 1;
   snake.x = 96;
   snake.bodyType = HEAD;
-  velocity = 4;
+  velocity = 1;
 }
 
 void spawnFruits() {
@@ -149,70 +156,85 @@ void drawBG() {
 }
 
 void moveSnake() {
-  int vx = 0;
-  int vy = 0;
+  dirs[0] = MovGeneral;
 
-
-  switch (MovGeneral)
+  switch (dirs[0])
   {
-    case UP:
-      vy = 48 - velocity;
-      vx = 0;
-      break;
-    
-    case DOWN:
-      vy = -48 + velocity;
-      vx = 0;
-      break;
-
-    case LEFT:
-      vx = 48 - velocity;
-      vy = 0;
-      break;
+      case UP:
+        AuxVy = 48 - velocity;
+        AuxVx = 0;
+        break;
       
-    case RIGHT:
-      vx = -48 + velocity;
-      vy = 0;
-      break;    
+      case DOWN:
+        AuxVy =  -48 + velocity;
+        AuxVx = 0;
+        break;
 
-    default:
-      break;
+      case LEFT:
+        AuxVx =  48 - velocity;
+        AuxVy = 0;
+        break;
+        
+      case RIGHT:
+        AuxVx = -48 + velocity;
+        AuxVy = 0;
+        break;    
+
+      default:
+        break;
   }
 
-  dirs[0] = MovGeneral;
+  if(firstIter) {
+    vx = AuxVx;
+    vy = AuxVy;
+    firstIter = false;
+  }
+
+
+  if(snake.x % 48 == 0 && snake.y % 48 == 0) {
+    vx = AuxVx;
+    vy = AuxVy;
+  }
   snake.bodyX[0] = snake.x + vx;
   snake.bodyY[0] = snake.y + vy;
 
-  for (int i = snake.bodySize; i > 0; i--)
-  {
-  switch (dirs[i])
-    {
-    case UP:
-      vy = 48 - velocity;
-      vx = 0;
-      break;
-    
-    case DOWN:
-      vy = -48 + velocity;
-      vx = 0;
-      break;
+  //if(snake.x % 48 == 0 && snake.y % 48 == 0) {
+    for (int i = snake.bodySize; i > 0; i--)
+      {
+        switch (dirs[i])
+        {
+          case UP:
+            AuxVy = 48 - velocity;
+            AuxVx = 0;
+            break;
+          
+          case DOWN:
+            AuxVy = -48 + velocity;
+            AuxVx = 0;
+            break;
 
-    case LEFT:
-      vx = 48 - velocity;
-      vy = 0;
-      break;
+          case LEFT:
+            AuxVx = 48 - velocity;
+            AuxVy = 0;
+            break;
+            
+          case RIGHT:
+            AuxVx = -48 + velocity;
+            AuxVy = 0;
+            break;    
+
+          default:
+            break;
+        }
       
-    case RIGHT:
-      vx = -48 + velocity;
-      vy = 0;
-      break;    
+  //}
 
-    default:
-      break;
-  }
-    snake.bodyX[i] = snake.bodyX[i - 1] + vx;
-    snake.bodyY[i] = snake.bodyY[i - 1] + vy;
-  }
+  //for (int i = snake.bodySize; i > 0; i--)
+  //{
+    snake.bodyX[i] = snake.bodyX[i - 1] + AuxVx;
+    snake.bodyY[i] = snake.bodyY[i - 1] + AuxVy;
+  //}
+      }
 
   switch (MovGeneral)
   {
@@ -297,6 +319,7 @@ void updateMov(){
     {
       dirs[i] = dirs[i-1];
     }
+    
 }
 
 void cleanAllBG() {
