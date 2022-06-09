@@ -12,6 +12,7 @@ static int fruitEaten = 1;
 static int cleanMouseX = 0;
 static int cleanMouseY = 0;
 static int numFruits = 0;
+static enum KEY dirs[1000];
 
 // loads xpm
 extern uint8_t *snakeUp;
@@ -49,7 +50,7 @@ void MenuStarter(){
   snake.bodySize = 0;
   snake.x = 96;
   snake.bodyType = HEAD;
-  velocity = 48;
+  velocity = 4;
 }
 
 void spawnFruits() {
@@ -90,9 +91,11 @@ void spawnFruits() {
 void InterruptHandlerTimer(){
   cleanAllBG();
   spawnFruits();
-  updateMov();
-  if(counter % 8 == 0){
+  if(counter % 1 == 0){
     moveSnake();
+  }
+  if(snake.x % 48 == 0 && snake.y % 48 == 0) {
+    updateMov();
   }
   CheckColisions();
   drawSnake();
@@ -125,7 +128,7 @@ void drawSnake() {
 
 
   for(int i = 0; i < snake.bodySize; i++) {
-    draw_pix_map(snake.bodyX[i] * PIXELOFFSET,snake.bodyY[i] *PIXELOFFSET,snakeTail,imgSnakeTail);
+    draw_pix_map(snake.bodyX[i],snake.bodyY[i],snakeTail,imgSnakeTail);
   }
 }
 
@@ -146,14 +149,70 @@ void drawBG() {
 }
 
 void moveSnake() {
+  int vx = 0;
+  int vy = 0;
+
+
+  switch (MovGeneral)
+  {
+    case UP:
+      vy = 48 - velocity;
+      vx = 0;
+      break;
+    
+    case DOWN:
+      vy = -48 + velocity;
+      vx = 0;
+      break;
+
+    case LEFT:
+      vx = 48 - velocity;
+      vy = 0;
+      break;
+      
+    case RIGHT:
+      vx = -48 + velocity;
+      vy = 0;
+      break;    
+
+    default:
+      break;
+  }
+
+  dirs[0] = MovGeneral;
+  snake.bodyX[0] = snake.x + vx;
+  snake.bodyY[0] = snake.y + vy;
+
   for (int i = snake.bodySize; i > 0; i--)
   {
-    snake.bodyX[i] = snake.bodyX[i - 1];
-    snake.bodyY[i] = snake.bodyY[i - 1];
-  }
-  snake.bodyX[0] = snake.x / PIXELOFFSET;
-  snake.bodyY[0] = snake.y / PIXELOFFSET;
+  switch (dirs[i])
+    {
+    case UP:
+      vy = 48 - velocity;
+      vx = 0;
+      break;
+    
+    case DOWN:
+      vy = -48 + velocity;
+      vx = 0;
+      break;
 
+    case LEFT:
+      vx = 48 - velocity;
+      vy = 0;
+      break;
+      
+    case RIGHT:
+      vx = -48 + velocity;
+      vy = 0;
+      break;    
+
+    default:
+      break;
+  }
+    snake.bodyX[i] = snake.bodyX[i - 1] + vx;
+    snake.bodyY[i] = snake.bodyY[i - 1] + vy;
+  }
 
   switch (MovGeneral)
   {
@@ -197,7 +256,7 @@ int CheckColisions(){
       return 0;
     }
   for(int i = 0; i < snake.bodySize; i++) {
-    if((snake.x == snake.bodyX[i] * PIXELOFFSET) && (snake.y == snake.bodyY[i] * PIXELOFFSET)) {
+    if((snake.x == snake.bodyX[i]) && (snake.y == snake.bodyY[i])) {
       GameState = EXIT;
       return 0;
     }
@@ -233,11 +292,16 @@ void updateMov(){
   else {
     MovGeneral = MovAux;
   }
+
+  for (int i = snake.bodySize; i > 0; i--)
+    {
+      dirs[i] = dirs[i-1];
+    }
 }
 
 void cleanAllBG() {
   for(int i = 0; i < snake.bodySize; i++) {
-    cleanBG(snake.bodyX[i] * PIXELOFFSET,snake.bodyY[i] * PIXELOFFSET,PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
+    cleanBG(snake.bodyX[i],snake.bodyY[i],PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
   }
   cleanBG(snake.x ,snake.y,PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
   cleanBG(cleanMouseX,cleanMouseY,imgCursor.width,imgCursor.height,imgGameBG,gameBG);
