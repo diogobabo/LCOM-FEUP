@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <xpms/playPart.xpm>
 #include <xpms/exitPart.xpm>
-#include <xpms/brick.xpm>
 #include "kbcKeys.h"
 #include <xpms/menu.xpm>
 #include <xpms/mouseCursor.xpm>

@@ -1,5 +1,5 @@
 /* XPM */
-static xpm_row_t const broken[] = {
+static xpm_row_t const broken_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "48 48 91 1 ",
 "  c #33170F",

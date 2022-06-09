@@ -7,6 +7,8 @@
 #include "devices/graphics.h"
 #include "xpms/up.xpm"
 #include "xpms/left.xpm"
+#include <xpms/brick.xpm>
+#include <xpms/broken.xpm>
 #include "xpms/down.xpm"
 #include "xpms/right.xpm"
 #include "xpms/wall.xpm"
@@ -27,7 +29,8 @@ enum SnakeBodyType{
 
 enum ObjectType{
   FRUIT,
-  BLOCK
+  BLOCK,
+  BROKEN,
 };
 
 typedef struct Object_t
@@ -86,5 +89,11 @@ void cleanAllBG();
 void InterruptHandlerMouse();
 
 bool checkFruit(int x, int y);
+
+void initBlock(int x, int y);
+
+void startBlocks();
+
+int findIdxBlock(int x, int y);
 
 #endif

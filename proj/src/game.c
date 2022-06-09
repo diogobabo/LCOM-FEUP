@@ -61,6 +61,9 @@ xpm_image_t imgGameBG;
 uint8_t *brickD;
 xpm_image_t imgBrick;
 
+uint8_t *broken;
+xpm_image_t imgBroken;
+
 
 /* Actual Functions */
 
@@ -314,4 +317,5 @@ void loadAll() {
   resume = xpm_load(resume_game,XPM_8_8_8_8,&imgResume);
   gameBG = xpm_load(game_bg,XPM_8_8_8_8,&imgGameBG);
   brickD = xpm_load(brick,XPM_8_8_8_8,&imgBrick);
+  broken = xpm_load(broken_xpm,XPM_8_8_8_8,&imgBroken);
 }

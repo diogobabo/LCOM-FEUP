@@ -7,11 +7,14 @@ static SnakeBody snake;
 extern enum STATE GameState;
 extern int counter;
 static Object array[5000];
+static Object walls[5000];
 static int numObjects = 0;
 static int fruitEaten = 1;
 static int cleanMouseX = 0;
 static int cleanMouseY = 0;
 static int numFruits = 0;
+static int numBlocks = 0;
+bool start = true;
 
 // loads xpm
 extern uint8_t *snakeUp;
@@ -41,13 +44,20 @@ extern mouseInfo mouse;
 extern uint8_t *cursor;
 extern xpm_image_t imgCursor;
 
+extern uint8_t *brickD;
+extern xpm_image_t imgBrick;
+
+extern uint8_t *broken;
+extern xpm_image_t imgBroken;
+
+
 
 void MenuStarter(){
 
   MovGeneral = DOWN;
   snake.y = 96;
   snake.bodySize = 0;
-  snake.x = 96;
+  snake.x = 288;
   snake.bodyType = HEAD;
   velocity = 48;
 }
@@ -89,6 +99,10 @@ void spawnFruits() {
 
 void InterruptHandlerTimer(){
   cleanAllBG();
+  if(start) {
+     startBlocks();
+     start = false;
+  }
   spawnFruits();
   updateMov();
   if(counter % 8 == 0){
@@ -133,6 +147,16 @@ void drawObjects() {
   for(int i = 0; i < numObjects; i++) {
     if(array[i].active) {
       draw_pix_map(array[i].x * PIXELOFFSET,array[i].y  * PIXELOFFSET,fruitI,imgFruit);
+    }
+  }
+  for(int j = 0; j < numBlocks; j++) {
+    if(walls[j].active) {
+        if(walls[j].type == BLOCK) {
+          draw_pix_map(walls[j].x,walls[j].y,brickD,imgBrick);
+        }
+        else {
+          draw_pix_map(walls[j].x,walls[j].y,broken,imgBroken);
+        }
     }
   }
   cleanMouseX = mouse.delta_x;
@@ -202,6 +226,12 @@ int CheckColisions(){
       return 0;
     }
   }
+  for(int i = 0; i < numBlocks; i++) {
+    if((snake.x == walls[i].x) && (snake.y == walls[i].y) && walls[i].active) {
+      GameState = EXIT;
+      return 0;
+    }
+  }
   return 0;
 }
 
@@ -256,8 +286,8 @@ void InterruptHandlerMouse() {
   else if(mouse.delta_y < PIXELOFFSET) {
     mouse.delta_y = PIXELOFFSET;
   }
-  if(mouse.lb) {
-    mouse.lb = false;
+  if(mouse.rb) {
+    mouse.rb = false;
     if(checkFruit(mouse.delta_x / PIXELOFFSET,mouse.delta_y / PIXELOFFSET)) {
       return;
     }
@@ -269,6 +299,21 @@ void InterruptHandlerMouse() {
     array[numObjects] = obj;
     numObjects++;
     numFruits++;
+  }
+  if(mouse.lb) {
+     mouse.lb = false;
+     int idx = findIdxBlock(mouse.delta_x / PIXELOFFSET, mouse.delta_y / PIXELOFFSET);
+     printf("%d",idx);
+     if(idx == -1) {
+       return;
+     }
+     if(walls[idx].type == BLOCK) {
+       walls[idx].type = BROKEN;
+     }
+     else if(walls[idx].type == BROKEN) {
+       walls[idx].active = false;
+       cleanBG(walls[idx].x,walls[idx].y,PIXELOFFSET,PIXELOFFSET,imgGameBG,gameBG);
+     }
   }
 }
 
@@ -283,5 +328,73 @@ bool checkFruit(int x, int y) {
       return true;
     }
   }
+  for(int i = 0; i < numBlocks; i++) {
+    if(walls[i].x == x && walls[i].y == y && walls[i].active == true) {
+      return true;
+    }
+  }
   return false;
+}
+
+int findIdxBlock(int x, int y) {
+  for(int i = 0; i < numBlocks; i++) {
+    if((walls[i].x / PIXELOFFSET) == x && (walls[i].y  / PIXELOFFSET) == y && walls[i].active) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+void initBlock(int x, int y) {
+  Object w;
+  w.x = x * PIXELOFFSET;
+  w.y = y * PIXELOFFSET;
+  w.type = BLOCK;
+  w.active = true;
+  walls[numBlocks] = w;
+  numBlocks++;
+}
+
+void startBlocks() {
+
+  // 1st corner
+  initBlock(2,2);
+  initBlock(3,2);
+  initBlock(2,3);
+  initBlock(3,3);
+
+  // 2nd corner
+  initBlock(2,14);
+  initBlock(3,14);
+  initBlock(2,15);
+  initBlock(3,15);
+
+  // 3rd corner
+  initBlock(20,2);
+  initBlock(21,2);
+  initBlock(20,3);
+  initBlock(21,3);
+
+   // 3rd corner
+  initBlock(20,14);
+  initBlock(21,14);
+  initBlock(20,15);
+  initBlock(21,15);
+  
+  // midle
+  initBlock(11,8);
+  initBlock(12,8);
+  initBlock(11,9);
+  initBlock(12,9);
+
+  initBlock(6,8);
+  initBlock(7,8);
+  initBlock(6,9);
+  initBlock(7,9);
+
+  initBlock(16,8);
+  initBlock(17,8);
+  initBlock(16,9);
+  initBlock(17,9);
+
 }

@@ -69,18 +69,14 @@ int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
   }
   uint8_t* pix;
   pix = (uint8_t* ) buffer + (bytes_per_pixel * h_res * y + x * bytes_per_pixel);
-  for(unsigned int i = 0; i < bytes_per_pixel; i++) {
-    uint8_t colorTemp = color & 0x000000FF; // 1 byte de cada vez
-    *(i + pix) = colorTemp;
-    color = color >> 8;
-  }
+  memcpy(pix,&color,bytes_per_pixel);
   return 0;
 }
 
 int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
   for(unsigned int i=0; i < len; i++)
     {
-      vg_draw_pixel(x+i, y, color);
+      if(vg_draw_pixel(x+i, y, color) != 0) {return 1;}
     }
   return 0;
 }
@@ -89,7 +85,7 @@ int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
 
   for(unsigned int i=0; i < height; i++)
     {
-      vg_draw_hline(x,y+ i, width, color);
+      if(vg_draw_hline(x,y+ i, width, color) != 0){return 1;}
     }
   return 0;
 }
@@ -128,9 +124,11 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
   for(unsigned int i = 0; i < img.width; i++) {
     for(unsigned int j = 0; j < img.height; j++) {
       uint32_t color;
-      uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
+      uint8_t * pos = map +  j*img.width * bytes_per_pixel + i*bytes_per_pixel;
       memcpy(&color, pos, bytes_per_pixel);
-     if (color != xpm_transparency_color(img.type)) vg_draw_pixel(x + i, y + j, color);
+     if (color != xpm_transparency_color(img.type)) {
+       vg_draw_pixel(x + i, y + j, color);
+     }
     }
   }
   return 0;
@@ -149,9 +147,11 @@ void cleanBG(unsigned int x, unsigned int y, int width, int height, xpm_image_t 
    for(unsigned int i = x; i < width + x; i++) {
     for(unsigned int j = y; j < height + y; j++) {
       uint32_t color;
-      uint8_t * pos = map + (i + j*img.width) * bytes_per_pixel;
+      uint8_t * pos = map + j*img.width * bytes_per_pixel + i*bytes_per_pixel;
       memcpy(&color, pos, bytes_per_pixel);
-     if (color != xpm_transparency_color(img.type)) vg_draw_pixel(i,j, color);
+     if (color != xpm_transparency_color(img.type)) {
+       vg_draw_pixel(i,j, color);
+     } 
     }
   }
 }
