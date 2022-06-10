@@ -15,6 +15,7 @@ static int cleanMouseY = 0;
 static int numFruits = 0;
 static int numBlocks = 0;
 bool start = true;
+static int mouseUsed = 0;
 
 // loads xpm
 extern uint8_t *snakeUp;
@@ -286,8 +287,9 @@ void InterruptHandlerMouse() {
   else if(mouse.delta_y < PIXELOFFSET) {
     mouse.delta_y = PIXELOFFSET;
   }
-  if(mouse.rb) {
+  if(mouse.rb && ((counter - mouseUsed) > 60)) {
     mouse.rb = false;
+    mouseUsed = counter;
     if(checkFruit(mouse.delta_x / PIXELOFFSET,mouse.delta_y / PIXELOFFSET)) {
       return;
     }
@@ -300,8 +302,9 @@ void InterruptHandlerMouse() {
     numObjects++;
     numFruits++;
   }
-  if(mouse.lb) {
+  if(mouse.lb && ((counter - mouseUsed) > 60)) {
      mouse.lb = false;
+     mouseUsed = counter;
      int idx = findIdxBlock(mouse.delta_x / PIXELOFFSET, mouse.delta_y / PIXELOFFSET);
      printf("%d",idx);
      if(idx == -1) {
