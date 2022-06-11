@@ -3,24 +3,23 @@
 static enum KEY MovGeneral;
 static enum KEY MovAux;
 static double velocity;
-static SnakeBody snake;
-extern enum STATE GameState;
+static SnakeBody snake; // the snake object
+extern enum STATE GameState; // the game state
 extern int counter;
-static Object array[5000];
-static Object walls[5000];
-static int numObjects = 0;
-static int fruitEaten = 1;
-static int cleanMouseX = 0;
-static int cleanMouseY = 0;
-static int numFruits = 0;
-static int numBlocks = 0;
+static Object array[5000]; // array to store the fruits
+static Object walls[5000]; // array to store the blocks
+static int numObjects = 0; // number of objects
+static int fruitEaten = 1; // variable important to make a fruit spawn when there is none
+static int cleanMouseX = 0; // save mouse last X
+static int cleanMouseY = 0; // save mouse last Y
+static int numFruits = 0; // number of fruits
+static int numBlocks = 0; // number of blocks
 bool start = true;
 static int mouseUsed = 0;
 
-extern Character letters[40];
+extern Character letters[40]; // array of the letters
 
 // loads xpm
-
 extern uint8_t *font;
 extern xpm_image_t imgFont;
 
@@ -60,7 +59,6 @@ extern xpm_image_t imgBroken;
 
 
 void MenuStarter(){
-
   MovGeneral = DOWN;
   snake.y = 96;
   snake.bodySize = 0;

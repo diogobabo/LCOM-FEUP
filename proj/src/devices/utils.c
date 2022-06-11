@@ -3,17 +3,17 @@
 #include <stdint.h>
 
 int(util_get_LSB)(uint16_t val, uint8_t *lsb) {
-  uint16_t temp = 0x00FF; // mete tudo a 0, menos o LSB
+  uint16_t temp = 0x00FF;
   temp = temp & val;
-  *lsb = (uint8_t) temp; // cast para 8 bits
+  *lsb = (uint8_t) temp;
   return 0;
 }
 
 int(util_get_MSB)(uint16_t val, uint8_t *msb) {
-  uint16_t temp = 0xFF00; // mete tudo a 0, menos o MSB
+  uint16_t temp = 0xFF00;
   temp = temp & val;
-  temp = temp >> 8; // mete no sitio do LSB
-  *msb = (uint8_t) temp; // cast para 8 bits
+  temp = temp >> 8;
+  *msb = (uint8_t) temp;
   return 0;
 }
 
