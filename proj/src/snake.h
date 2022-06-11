@@ -16,6 +16,7 @@
 #include "xpms/fruit.xpm"
 #include "xpms/bodySnake.xpm"
 #include "kbcKeys.h"
+#include "leaderboard.h"
 
 #define PIXELOFFSET 48
 #define SNAKEMAXSIZE 864
@@ -95,5 +96,7 @@ void initBlock(int x, int y);
 void startBlocks();
 
 int findIdxBlock(int x, int y);
+
+int GameOverLeaderBoard();
 
 #endif

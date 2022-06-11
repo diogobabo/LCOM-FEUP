@@ -11,6 +11,7 @@
 #include "pause.h"
 #include "kbcKeys.h"
 #include "devices/graphics.h"
+#include "leaderboard.h"
 
 
 enum DEVICE{
