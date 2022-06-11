@@ -103,11 +103,11 @@ void spawnFruits() {
     canSpawn = false;
   } 
 
-  for(int i = 0; i < numBlocks; i++) {
+  /*for(int i = 0; i < numBlocks; i++) {
     if(x == walls[i].x && y == walls[i].y && walls[i].active) {
       canSpawn = false;
     }
-  }
+  }*/
 
   if(canSpawn && fruitEaten && (!numFruits)) {
     Object obj;
@@ -180,6 +180,7 @@ void drawObjects() {
         }
     }
   }
+
   for(int i = 0; i < numObjects; i++) {
     if(array[i].active) {
       draw_pix_map(array[i].x * PIXELOFFSET,array[i].y  * PIXELOFFSET,fruitI,imgFruit);
@@ -427,13 +428,11 @@ void startBlocks() {
 
 void drawScore() {
   int startPosX = 576;
-  int startPosY = 25;
   char score[4];
   sprintf(score,"%d",snake.bodySize);
-  /*for(int i = 0; i < (int) strlen(score); i++) {
-    draw_letter_map(startPosX,startPosY,font,imgFont,letters[(int)(score[i] - '0') + 26].x,letters[(int)(score[i] - '0') + 26].y);
-  }*/
-  draw_letter_map(startPosX,startPosY,font,imgFont,letters[26].x,letters[26].y);
-  draw_letter_map(startPosX,startPosY,font,imgFont,letters[27].x,letters[27].y);
+  cleanBG(startPosX,0,PIXELOFFSET * 4,PIXELOFFSET,imgGameBG,gameBG);
+  for(int i = 0; i < (int) strlen(score); i++) {
+    draw_letter_map(startPosX - ((int)(score[i] - '0')*37) + i * 20 ,-40,font,imgFont,letters[(int)(score[i] - '0') + 26].x,letters[(int)(score[i] - '0') + 26].y);
+  }
   free(score);
 }
