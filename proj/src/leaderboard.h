@@ -12,11 +12,32 @@
 #include "snake.h"
 
 
-
-int leaderboard();
+/**
+ * @brief function used to read and update the leaderboard text file
+ * 
+ */
+void leaderboard();
+/**
+ * @brief 
+ * 
+ */
 void BoardTimerHandler();
+/**
+ * @brief return to menu if user presses escape
+ * 
+ * @param k - key that user pressed
+ */
 void BoardHandlerKBC(enum KEY k);
+/**
+ * @brief draws leaderboard
+ * 
+ * @param opt - selected option
+ */
 void drawBoard(int opt);
+/**
+ * @brief draws background of leaderboard
+ * 
+ */
 void drawDefBoard();
 
 #endif

@@ -5,7 +5,7 @@ extern enum STATE GameState;
 extern uint8_t *BoardMenu;
 extern xpm_image_t imgBoard;
 
-int leaderboard(SnakeBody snake) {
+void leaderboard(SnakeBody snake) {
 
     FILE *fptr;
     char * buffer = 0;
@@ -77,7 +77,6 @@ int leaderboard(SnakeBody snake) {
     //printf com o resultado do jogador
 
     fclose(fptr);
-    return 0;
 }
 
 

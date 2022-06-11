@@ -6,25 +6,40 @@
 
 #define MIN_SLOPE 1.0
 
-typedef enum { INIT, DRAW_UP, DRAW_DOWN,DETECTED } state_t;
-typedef enum { RBDOWN, RBUP, LBDOWN, LBUP, MBDOWN,MBUP, MOVE } event_type_t;
-
-typedef struct {
-  event_type_t type;
-  uint8_t moveX;
-  uint8_t moveY;
-  bool lbdown, rbdown, mbdown;
-} mouse_event_t;
-
-
+/**
+ * @brief checks mouse status for errors
+ * 
+ */
 void (mouse_ih)();
+/**
+ * @brief subscribes to mouse interrupts
+ * 
+ */
 int (mouse_subscribe_int)(uint8_t *bit_no);
+/**
+ * @brief unsubscribes to mouse interrupts
+ * 
+ */
 int (mouse_unsubscribe_int)();
+/**
+ * @brief checks for errors and sends the mouse's command
+ * 
+ */
 int (send_mouse_cmd)(uint8_t cmd);
+/**
+ * @brief reads and updates the packets
+ * 
+ */
 void (mouse_set_packet)(struct packet *pacote);
+/**
+ * @brief checks mouse status to see if its input buffer is full
+ * 
+ */
 int (check_ibf_full)();
+/**
+ * @brief disables mouse's data reporting
+ * 
+ */
 int (mouse_disable_data_reporting)();
-bool (check_output_buffer)();
-int (gesture_handler)(uint8_t x_len, uint8_t tolerance, struct packet *pack);
 
 #endif
