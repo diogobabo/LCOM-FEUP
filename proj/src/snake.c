@@ -228,6 +228,12 @@ void moveSnake() {
   }
 }
 
+int GameOverLeaderBoard(){
+  leaderboard(snake);
+  GameState = DEAD;
+  return 0;
+}
+
 int CheckColisions(){
   for(int i = 0; i < numObjects; i++) {
     if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == FRUIT)) {
@@ -238,17 +244,20 @@ int CheckColisions(){
       return 0;
     }
     else if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == BLOCK)) {
-      GameState = DEAD;
+      //GameState = EXIT;
+      GameOverLeaderBoard();
       return 0;
     }
   }
   if(snake.x <= PIXELOFFSET - 1 || snake.x >= (23 * PIXELOFFSET) || snake.y <= PIXELOFFSET - 1 || snake.y >= ((17 * PIXELOFFSET) - 1)) {
-      GameState = DEAD;
+      //GameState = EXIT;
+      GameOverLeaderBoard();
       return 0;
     }
   for(int i = 0; i < snake.bodySize; i++) {
     if((snake.x == snake.bodyX[i] * PIXELOFFSET) && (snake.y == snake.bodyY[i] * PIXELOFFSET)) {
-      GameState = DEAD;
+      //GameState = EXIT;
+      GameOverLeaderBoard();
       return 0;
     }
   }

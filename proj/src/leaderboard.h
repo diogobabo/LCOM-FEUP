@@ -7,8 +7,13 @@
 #include "kbcKeys.h"
 #include <xpms/leaderMenu.xpm>
 #include "devices/graphics.h"
+#include <stdio.h>
+#include <string.h>
+#include "snake.h"
 
 
+
+int leaderboard();
 void BoardTimerHandler();
 void BoardHandlerKBC(enum KEY k);
 void drawBoard(int opt);
