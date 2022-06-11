@@ -13,6 +13,7 @@ struct packet pack;
 extern int counter;
 mouseInfo mouse;
 extern int option;
+Character letters[40];
 
 // loads xpm
 uint8_t *menuPlay;
@@ -20,6 +21,10 @@ xpm_image_t imgMenuPlay;
 
 uint8_t *menuExit;
 xpm_image_t imgMenuExit;
+
+
+uint8_t *menuLeader;
+xpm_image_t imgMenuLeader;
 
 uint8_t *menu;
 xpm_image_t imgMenu;
@@ -64,6 +69,14 @@ xpm_image_t imgBrick;
 uint8_t *broken;
 xpm_image_t imgBroken;
 
+uint8_t *font;
+xpm_image_t imgFont;
+
+uint8_t *BoardMenu;
+xpm_image_t imgBoard;
+
+
+
 
 /* Actual Functions */
 
@@ -74,6 +87,7 @@ void gameLoop() {
   int idx = 0;
   int numPacket = 0;
   bool firstTimeMenu = true;
+  bool firstTimeBoard = true;
   bool firstTimeGame = true;
   uint8_t array[2];
   mouse.delta_x = 576;
@@ -107,8 +121,28 @@ void gameLoop() {
                     firstTimeMenu = false;
                     switchBuffer();
                   }
+                  else if(firstTimeBoard && GameState == LEADERBOARD) {
+                    drawDefBoard();
+                    firstTimeBoard = false;
+                    firstTimeMenu = true;
+                    switchBuffer();
+                  }
                   if(GameState == PAUSE) {
                     firstTimeGame = true;
+                  }
+                  else if(GameState == LEADERBOARD) {
+                    firstTimeMenu = true;
+                    firstTimeGame = true;
+                  }
+                  else if(GameState == MENU) {
+                    firstTimeBoard = true;
+                    firstTimeGame = true;
+                  }
+                  else if(GameState == DEAD) {
+                    MenuStarter();
+                    firstTimeMenu = true;
+                    GameState = MENU;
+                    firstTimeBoard = true;
                   }
                   timer_int_handler();
                   switchBuffer();
@@ -189,6 +223,9 @@ void InterruptRouter(enum DEVICE device){
     case DEAD:
       DeadIH(device);
       break;
+    case LEADERBOARD:
+      BoardIH(device);
+      break;
     case EXIT:
       break;
   }
@@ -228,6 +265,23 @@ void PauseIH(enum DEVICE device){
   }
   return;
 }
+
+void BoardIH(enum DEVICE device){
+  switch (device)
+  {
+  case TIMER:
+    break;
+  
+  case KBC:
+    updateKBC();
+    BoardHandlerKBC(key);
+    break;
+  default:
+    break;
+  }
+  return;
+}
+
 void PlaySoloIH(enum DEVICE device){
   switch (device) {
     case TIMER:
@@ -243,6 +297,7 @@ void PlaySoloIH(enum DEVICE device){
       break;
   }
 }
+
 void PlayMultiplayerIH(enum DEVICE device){
   return;
 }
@@ -318,4 +373,39 @@ void loadAll() {
   gameBG = xpm_load(game_bg,XPM_8_8_8_8,&imgGameBG);
   brickD = xpm_load(brick,XPM_8_8_8_8,&imgBrick);
   broken = xpm_load(broken_xpm,XPM_8_8_8_8,&imgBroken);
+  font = xpm_load(font_xpm,XPM_8_8_8_8,&imgFont);
+  menuLeader = xpm_load(leader_part,XPM_8_8_8_8,&imgMenuLeader);
+  BoardMenu = xpm_load(leader_menu,XPM_8_8_8_8,&imgBoard);
+  initLetters();
+}
+
+void initLetters() {
+  int x = 0;
+  int y = 2;
+  int numL = 0;
+  int asci = 65;
+  for(int i = 0; i < 26; i++) {
+    Character tmp;
+    tmp.x = x;
+    tmp.y = y;
+    tmp.letter = asci;
+    x+=37;
+    letters[numL] = tmp;
+    asci++;
+    numL++;
+  }
+
+  x = 0;
+  y = 42;
+  int num = 0;
+  for(int i = 0; i < 10; i++) {
+    Character tmp;
+    tmp.x = x;
+    tmp.y = y;
+    tmp.letter = num;
+    x+=37;
+    letters[numL] = tmp;
+    num++;
+    numL++;
+  }
 }

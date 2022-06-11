@@ -134,6 +134,21 @@ int (draw_pix_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img) {
   return 0;
 }
 
+int (draw_letter_map)(uint16_t x, uint16_t y, uint8_t *map, xpm_image_t img, unsigned int startX, unsigned int startY) {
+  for(unsigned int i = startX; i < 37 + startX; i++) {
+    for(unsigned int j = startY; j < 40 + startY; j++) {
+      uint32_t color;
+      uint8_t * pos = map +  j*img.width * bytes_per_pixel + i*bytes_per_pixel;
+      memcpy(&color, pos, bytes_per_pixel);
+     if (color != xpm_transparency_color(img.type)) {
+       vg_draw_pixel(x + i, y + j, color);
+     }
+    }
+  }
+  return 0;
+}
+
+
 int (clear_pix_map)(uint16_t x, uint16_t y, xpm_image_t img) {
   vg_draw_rectangle(x,y,img.width,img.height,0);
   return 0;

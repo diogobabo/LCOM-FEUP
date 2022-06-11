@@ -16,7 +16,8 @@ enum STATE{
   PLAY_SOLO,
   PLAY_MULTIPLAYER,
   DEAD,
-  EXIT
+  EXIT,
+  LEADERBOARD,
 };
 
 typedef struct mouseInfo_t
@@ -25,5 +26,11 @@ typedef struct mouseInfo_t
   int16_t delta_x;  
   int16_t delta_y;
 } mouseInfo;
+
+typedef struct character_t {
+  int x;
+  int y;
+  int letter;
+}Character;
 
 #endif

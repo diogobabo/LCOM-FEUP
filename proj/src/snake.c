@@ -17,7 +17,13 @@ static int numBlocks = 0;
 bool start = true;
 static int mouseUsed = 0;
 
+extern Character letters[40];
+
 // loads xpm
+
+extern uint8_t *font;
+extern xpm_image_t imgFont;
+
 extern uint8_t *snakeUp;
 extern xpm_image_t imgSnakeUp;
 
@@ -61,6 +67,18 @@ void MenuStarter(){
   snake.x = 288;
   snake.bodyType = HEAD;
   velocity = 48;
+  numObjects = 0;
+  fruitEaten = 1;
+  cleanMouseX = 0;
+  cleanMouseY = 0;
+  numFruits = 0;
+  numBlocks = 0;
+  start = true;
+  mouseUsed = 0;
+  Object reset[5000];
+  memcpy(&array,&reset,sizeof(sizeof(Object) * 5000));
+  memcpy(&walls,&reset,sizeof(sizeof(Object) * 5000));
+  free(reset);
 }
 
 void spawnFruits() {
@@ -84,6 +102,12 @@ void spawnFruits() {
   if(x == snake.x && y == snake.y) {
     canSpawn = false;
   } 
+
+  for(int i = 0; i < numBlocks; i++) {
+    if(x == walls[i].x && y == walls[i].y && walls[i].active) {
+      canSpawn = false;
+    }
+  }
 
   if(canSpawn && fruitEaten && (!numFruits)) {
     Object obj;
@@ -112,6 +136,7 @@ void InterruptHandlerTimer(){
   CheckColisions();
   drawSnake();
   drawObjects();
+  drawScore();
 }
 
 void drawSnake() {
@@ -145,11 +170,6 @@ void drawSnake() {
 }
 
 void drawObjects() {
-  for(int i = 0; i < numObjects; i++) {
-    if(array[i].active) {
-      draw_pix_map(array[i].x * PIXELOFFSET,array[i].y  * PIXELOFFSET,fruitI,imgFruit);
-    }
-  }
   for(int j = 0; j < numBlocks; j++) {
     if(walls[j].active) {
         if(walls[j].type == BLOCK) {
@@ -160,10 +180,14 @@ void drawObjects() {
         }
     }
   }
+  for(int i = 0; i < numObjects; i++) {
+    if(array[i].active) {
+      draw_pix_map(array[i].x * PIXELOFFSET,array[i].y  * PIXELOFFSET,fruitI,imgFruit);
+    }
+  }
   cleanMouseX = mouse.delta_x;
   cleanMouseY = mouse.delta_y;
   draw_pix_map(mouse.delta_x,mouse.delta_y,cursor,imgCursor);
-
 }
 
 void drawBG() {
@@ -213,23 +237,23 @@ int CheckColisions(){
       return 0;
     }
     else if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == BLOCK)) {
-      GameState = EXIT;
+      GameState = DEAD;
       return 0;
     }
   }
   if(snake.x <= PIXELOFFSET - 1 || snake.x >= (23 * PIXELOFFSET) || snake.y <= PIXELOFFSET - 1 || snake.y >= ((17 * PIXELOFFSET) - 1)) {
-      GameState = EXIT;
+      GameState = DEAD;
       return 0;
     }
   for(int i = 0; i < snake.bodySize; i++) {
     if((snake.x == snake.bodyX[i] * PIXELOFFSET) && (snake.y == snake.bodyY[i] * PIXELOFFSET)) {
-      GameState = EXIT;
+      GameState = DEAD;
       return 0;
     }
   }
   for(int i = 0; i < numBlocks; i++) {
     if((snake.x == walls[i].x) && (snake.y == walls[i].y) && walls[i].active) {
-      GameState = EXIT;
+      GameState = DEAD;
       return 0;
     }
   }
@@ -399,5 +423,17 @@ void startBlocks() {
   initBlock(17,8);
   initBlock(16,9);
   initBlock(17,9);
+}
 
+void drawScore() {
+  int startPosX = 576;
+  int startPosY = 25;
+  char score[4];
+  sprintf(score,"%d",snake.bodySize);
+  /*for(int i = 0; i < (int) strlen(score); i++) {
+    draw_letter_map(startPosX,startPosY,font,imgFont,letters[(int)(score[i] - '0') + 26].x,letters[(int)(score[i] - '0') + 26].y);
+  }*/
+  draw_letter_map(startPosX,startPosY,font,imgFont,letters[26].x,letters[26].y);
+  draw_letter_map(startPosX,startPosY,font,imgFont,letters[27].x,letters[27].y);
+  free(score);
 }

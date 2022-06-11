@@ -11,6 +11,7 @@
 #include "pause.h"
 #include "kbcKeys.h"
 #include "devices/graphics.h"
+#include "leaderboard.h"
 
 
 enum DEVICE{
@@ -33,5 +34,7 @@ void DeadIH(enum DEVICE device);
 void changePosition();
 void updateKBC();
 void loadAll();
+void initLetters();
+void BoardIH(enum DEVICE device);
 
 #endif
