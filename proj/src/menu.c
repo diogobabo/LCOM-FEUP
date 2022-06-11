@@ -18,6 +18,10 @@ extern xpm_image_t imgMenuExit;
 extern uint8_t *menu;
 extern xpm_image_t imgMenu;
 
+extern uint8_t *menuLeader;
+extern xpm_image_t imgMenuLeader;
+
+
 extern uint8_t *cursor;
 extern xpm_image_t imgCursor;
 
@@ -35,11 +39,14 @@ void MenuMouseHandler() {
   else if(mouse.delta_y < 0) {
     mouse.delta_y = 0;
   }
-  if(mouse.delta_x > 490 && mouse.delta_y > 515 &&  mouse.delta_x < 700 && mouse.delta_y < 582) {
+  if(mouse.delta_x > 490 && mouse.delta_y > 495 &&  mouse.delta_x < 700 && mouse.delta_y < 570) {
     option = 1;
   }
-  else if(mouse.delta_x > 497 && mouse.delta_y > 636 && mouse.delta_x < 698 && mouse.delta_y < 720) {
+  else if(mouse.delta_x > 497 && mouse.delta_y > 734 && mouse.delta_x < 698 && mouse.delta_y < 820) {
     option = 2;
+  }
+  else if(mouse.delta_x > 285 && mouse.delta_y > 605 && mouse.delta_x < 937 && mouse.delta_y < 700) {
+    option = 3;
   }
   else {
     option = 0;
@@ -55,6 +62,10 @@ void changeState() {
   else if(option == 2 && mouse.lb) {
     mouse.lb = false;
     GameState = EXIT;
+  }
+  else if(option == 3 && mouse.lb) {
+    mouse.lb = false;
+    GameState = LEADERBOARD;
   }
 }
 
@@ -73,14 +84,17 @@ void MenuTimerHandler() {
 }
 
 void cleanMenuBG() {
-  cleanBG(490,510,400,400,imgMenu,menu);
+  cleanBG(275,500,665,600,imgMenu,menu);
   cleanBG(cleanX,cleanY,imgCursor.width,imgCursor.height,imgMenu,menu);
 }
 void drawMenu() {
   if(option == 1)  {
-    draw_pix_map(490,514,menuPlay,imgMenuPlay);
+    draw_pix_map(490,500,menuPlay,imgMenuPlay);
   }
   else if(option == 2) {
-    draw_pix_map(497,640,menuExit,imgMenuExit);
+    draw_pix_map(497,735,menuExit,imgMenuExit);
+  }
+  else if(option == 3) {
+    draw_pix_map(280,610,menuLeader,imgMenuLeader);
   }
 }

@@ -34,5 +34,7 @@ void DeadIH(enum DEVICE device);
 void changePosition();
 void updateKBC();
 void loadAll();
+void initLetters();
+void BoardIH(enum DEVICE device);
 
 #endif

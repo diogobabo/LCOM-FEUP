@@ -7,6 +7,7 @@
 #include <xpms/playPart.xpm>
 #include <xpms/exitPart.xpm>
 #include "kbcKeys.h"
+#include <xpms/leaderPart.xpm>
 #include <xpms/menu.xpm>
 #include <xpms/mouseCursor.xpm>
 #include "devices/graphics.h"
