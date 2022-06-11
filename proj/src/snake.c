@@ -261,7 +261,7 @@ int CheckColisions(){
   }
   for(int i = 0; i < numBlocks; i++) {
     if((snake.x == walls[i].x) && (snake.y == walls[i].y) && walls[i].active) {
-      GameState = DEAD;
+      GameOverLeaderBoard();
       return 0;
     }
   }
