@@ -93,7 +93,7 @@ void gameLoop() {
   loadAll();
   GameState = MENU;
   MenuStarter();
-
+  printf("ASDSAd");
   while(GameState != EXIT) { 
         if( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) {
           printf("driver_receive failed with: %d", r);

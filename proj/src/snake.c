@@ -227,7 +227,7 @@ void moveSnake() {
 }
 
 int GameOverLeaderBoard(){
-  leaderboard(snake);
+  leaderboard(snake.bodySize);
   GameState = DEAD;
   return 0;
 }

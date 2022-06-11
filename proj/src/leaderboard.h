@@ -9,7 +9,7 @@
 #include "devices/graphics.h"
 #include <stdio.h>
 #include <string.h>
-#include "snake.h"
+#include "pause.h"
 
 
 /**
@@ -31,9 +31,8 @@ void BoardHandlerKBC(enum KEY k);
 /**
  * @brief draws leaderboard
  * 
- * @param opt - selected option
  */
-void drawBoard(int opt);
+void drawBoard();
 /**
  * @brief draws background of leaderboard
  * 
