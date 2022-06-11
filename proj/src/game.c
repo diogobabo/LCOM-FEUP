@@ -1,19 +1,18 @@
 #include "game.h"
 
 enum STATE GameState;
-uint8_t bit_timer;
-uint8_t bit_kb;
-uint8_t bit_m;
-extern uint8_t scode;
-extern uint8_t scancode;
-extern int flag;
-extern int flag_m;
-enum KEY key;
-struct packet pack;
-extern int counter;
-mouseInfo mouse;
-extern int option;
-Character letters[40];
+uint8_t bit_timer; // timer bit used for the mask
+uint8_t bit_kb; // keyboard bit used for the mask
+uint8_t bit_m; // mouse bit used for the mask
+extern uint8_t scode; // scancode kb
+extern uint8_t scancode; // scancode mouse
+extern int flag; // flag to know if the data from keyboard is valid
+extern int flag_m; // flag to know if the data from mouse is valid
+enum KEY key; // key press
+struct packet pack; // packet
+extern int counter; //timer interrupt counter
+mouseInfo mouse; // mouseStruct
+Character letters[40]; //array to store the alphabet
 
 // loads xpm
 uint8_t *menuPlay;
@@ -35,7 +34,6 @@ xpm_image_t imgSnakeDown;
 uint8_t *snakeUp;
 xpm_image_t imgSnakeUp;
 
-
 uint8_t *snakeLeft;
 xpm_image_t imgSnakeLeft;
 
@@ -45,7 +43,6 @@ xpm_image_t imgSnakeRight;
 
 uint8_t *snakeTail;
 xpm_image_t imgSnakeTail;
-
 
 uint8_t *fruitI;
 xpm_image_t imgFruit;
@@ -58,7 +55,6 @@ xpm_image_t imgResume;
 
 uint8_t *pauseExit;
 xpm_image_t imgPauseExit;
-
 
 uint8_t *gameBG;
 xpm_image_t imgGameBG;
@@ -74,9 +70,6 @@ xpm_image_t imgFont;
 
 uint8_t *BoardMenu;
 xpm_image_t imgBoard;
-
-
-
 
 /* Actual Functions */
 

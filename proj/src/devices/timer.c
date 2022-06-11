@@ -9,7 +9,7 @@ static int hook_id = 2;
 int counter = 0;
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   
-  if(freq > TIMER_FREQ || freq<19){ // frequencias invalidas
+  if(freq > TIMER_FREQ || freq<19){
     return 1;
   }
 
@@ -19,9 +19,8 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
     return 1;
   }
 
-  st = st & 0x0F; // 4 primeiros bits q
-  st = st | TIMER_LSB_MSB; // resetar os bits todos menos os 4 lsbs
-
+  st = st & 0x0F;
+  st = st | TIMER_LSB_MSB;
   if(timer == 0){
     st = (st|TIMER_SEL0);
   }
@@ -32,7 +31,7 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
     st = (st|TIMER_SEL2);
   }
 
-  uint16_t timer_freq = TIMER_FREQ / freq; // dividir a freq default pela rate HZ;
+  uint16_t timer_freq = TIMER_FREQ / freq;
   
   uint8_t msb,lsb;
   if(util_get_LSB(timer_freq,&lsb) != 0) {
@@ -45,7 +44,6 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
     return 1;
   }
 
-  // envia a control word para o reg controlo e dps mete a frequencia nos timers
   return sys_outb(TIMER_CTRL,st)||sys_outb(TIMER_0+timer,lsb)||sys_outb(TIMER_0+timer,msb);
 }
 
@@ -85,10 +83,10 @@ int (timer_get_conf)(uint8_t timer, uint8_t *st) {
 
   return 0;
 }
-enum timer_init init_mode_func(uint8_t *st){ // funcao feita para saber o mode de inicialização
+enum timer_init init_mode_func(uint8_t *st){
 
-  *st = *st >> 4; // por os bits 4 e 5 no inicio
-  *st &= 0x03; // fazer & com 00000011, assim então dá os bits 4 e 5
+  *st = *st >> 4;
+  *st &= 0x03;
 
   if(*st == 0x01){
     return LSB_only;
@@ -100,10 +98,10 @@ enum timer_init init_mode_func(uint8_t *st){ // funcao feita para saber o mode d
     return MSB_after_LSB;
   }
   else{
-    return INVAL_val; // caso seja invalido
+    return INVAL_val;
   }
 }
-uint8_t count_mode_func(uint8_t st){ // funcao feita para ajudar a saber o count mode,
+uint8_t count_mode_func(uint8_t st){
 
   if(st == 0x06){
     return 2;
