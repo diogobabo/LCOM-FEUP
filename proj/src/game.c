@@ -360,7 +360,7 @@ void loadAll() {
   snakeTail = xpm_load(body_snake,XPM_8_8_8_8,&imgSnakeTail);
   snakeRight = xpm_load(snake_right,XPM_8_8_8_8,&imgSnakeRight);
   fruitI = xpm_load(game_fruit,XPM_8_8_8_8,&imgFruit);
-  cursor = xpm_load(mouse_cursor,XPM_8_8_8_8,&imgCursor);
+  cursor = xpm_load(mouse_xpm,XPM_8_8_8_8,&imgCursor);
   pauseExit = xpm_load(exit_pause,XPM_8_8_8_8,&imgPauseExit);
   resume = xpm_load(resume_game,XPM_8_8_8_8,&imgResume);
   gameBG = xpm_load(game_bg,XPM_8_8_8_8,&imgGameBG);

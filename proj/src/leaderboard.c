@@ -12,7 +12,7 @@ extern Character letters[40];
 void leaderboard(int Score) {
 
     FILE *fptr;
-    char * buffer = 0;
+    char * buffer1 = 0;
     long length;
     size_t size;
     int scores[5];
@@ -23,28 +23,28 @@ void leaderboard(int Score) {
         fseek (fptr, 0, SEEK_END);
         length = ftell (fptr);
         fseek (fptr, 0, SEEK_SET);
-        buffer = malloc(length);
-        if (buffer){
-            fread (buffer, 1, length, fptr);
+        buffer1 = malloc(length);
+        if (buffer1){
+            fread (buffer1, 1, length, fptr);
         }
             fclose(fptr);
         }
 
-        if (buffer)
+        if (buffer1)
         {
             int i = 0;
             char* auxStr =  malloc(65536);
             char *p1, *p2;
             while(1) {
-                p1 = strstr(buffer, "-");
+                p1 = strstr(buffer1, "-");
                 if (p1) {
-                    p2 = strstr(buffer, "\n");
+                    p2 = strstr(buffer1, "\n");
                     if (p2){
                         size = p2-p1;
                         memset(auxStr,0,65536);
                         memcpy(auxStr,(p1+2),size-2);
                         scores[i] = atoi(auxStr);
-                        buffer = p2+1;
+                        buffer1 = p2+1;
                         i++;
                     } else {
                         size = strlen(p1) - 1;
@@ -83,6 +83,7 @@ void leaderboard(int Score) {
 
     fclose(fptr);
     free(scores);
+    free(buffer1);
 }
 
 
@@ -107,7 +108,7 @@ void drawDefBoard() {
 
 void drawBoard() {
     FILE *fptr;
-    char * buffer = 0;
+    char * buffer1 = 0;
     long length;
     size_t size;
     int scores[5];
@@ -118,26 +119,26 @@ void drawBoard() {
         fseek (fptr, 0, SEEK_END);
         length = ftell (fptr);
         fseek (fptr, 0, SEEK_SET);
-        buffer = malloc(length);
-        if (buffer){
-            fread (buffer, 1, length, fptr);
+        buffer1 = malloc(length);
+        if (buffer1){
+            fread (buffer1, 1, length, fptr);
         }
             fclose(fptr);
     }
-    if (buffer){
+    if (buffer1){
         int i = 0;
         char* auxStr =  malloc(65536);
         char *p1, *p2;
         while(1) {
-            p1 = strstr(buffer, "-");
+            p1 = strstr(buffer1, "-");
             if (p1) {
-                p2 = strstr(buffer, "\n");
+                p2 = strstr(buffer1, "\n");
                 if (p2){
                     size = p2-p1;
                     memset(auxStr,0,65536);
                     memcpy(auxStr,(p1+2),size-2);
                     scores[i] = atoi(auxStr);
-                    buffer = p2+1;
+                    buffer1 = p2+1;
                     i++;
                 } else {
                     size = strlen(p1) - 1;
@@ -170,5 +171,5 @@ void drawBoard() {
     }
     free(score);
     free(scores);
-
+    free(buffer1);
 }

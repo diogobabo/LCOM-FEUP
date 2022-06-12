@@ -242,26 +242,23 @@ int CheckColisions(){
       return 0;
     }
     else if((snake.x == array[i].x * PIXELOFFSET) && (snake.y == array[i].y * PIXELOFFSET) && (array[i].active) && (array[i].type == BLOCK)) {
-      //GameState = EXIT;
       GameOverLeaderBoard();
       return 0;
     }
   }
   if(snake.x <= PIXELOFFSET - 1 || snake.x >= (23 * PIXELOFFSET) || snake.y <= PIXELOFFSET - 1 || snake.y >= ((17 * PIXELOFFSET) - 1)) {
-      //GameState = EXIT;
       GameOverLeaderBoard();
       return 0;
     }
   for(int i = 0; i < snake.bodySize; i++) {
     if((snake.x == snake.bodyX[i] * PIXELOFFSET) && (snake.y == snake.bodyY[i] * PIXELOFFSET)) {
-      //GameState = EXIT;
       GameOverLeaderBoard();
       return 0;
     }
   }
   for(int i = 0; i < numBlocks; i++) {
     if((snake.x == walls[i].x) && (snake.y == walls[i].y) && walls[i].active) {
-      GameState = DEAD;
+      GameOverLeaderBoard();
       return 0;
     }
   }
